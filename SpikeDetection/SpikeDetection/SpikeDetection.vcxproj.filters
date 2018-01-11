@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="ChannelFilter.h" />
+    <ClInclude Include="ClassifierController.h" />
+    <ClInclude Include="DataLoader.h" />
+    <ClInclude Include="KernelFilter.h" />
+    <ClInclude Include="NXCOR.h" />
+    <ClInclude Include="NXCORController.h" />
+    <ClInclude Include="ProjectDefinitions.h" />
+    <ClInclude Include="ProjectInfo.h" />
+    <ClInclude Include="SpikeDetection.h" />
+    <ClInclude Include="TemplateController.h" />
+    <ClInclude Include="TemplateHandler.h" />
+    <ClInclude Include="TTClassifier.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="CUDAKernels.cu" />
+  </ItemGroup>
+</Project>
