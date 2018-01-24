@@ -21,8 +21,8 @@ int main(void)
 	
 	SpikeDetection<USED_DATATYPE> spikeDetecter;
 	
-	spikeDetecter.runTrainingCUDA();
-	//spikeDetecter.runTraining();
+	//spikeDetecter.runTrainingCUDA();
+	spikeDetecter.runTraining();
 
 	spikeDetecter.runPrediction();
 	

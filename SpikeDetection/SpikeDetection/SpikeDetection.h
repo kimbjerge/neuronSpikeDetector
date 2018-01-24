@@ -307,12 +307,14 @@ cudaError_t SpikeDetection<T>::runTrainingCUDA(void)
 	// Perform classification part 1 on GPU
 	classifierController.performTrainingBasedOnTemplatesPart1_CUDA(dev_NXCOROutput, dev_aboveThresholdIndicator, dev_FoundTimes, dev_FoundTimesCounter, dev_TPCounter, dev_spikesPeakOffset,
 		dev_grundTruth, dev_grundTruthSizes, dev_grundTruthStartInd);
-
+	
+	/*
 	if (CheckForCudaError() != cudaError_t::cudaSuccess)
 	{
 		std::cout << "CUDA Error launching or synchronizing, processing stopped" << std::endl;
 		return CheckForCudaError();
 	}
+	*/
 
 	uint32_t host_FoundTimesCounters[(uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES*NUMBER_OF_THRESHOLDS_TO_TEST];
 	if (RetreiveResultsU32(dev_FoundTimesCounter, host_FoundTimesCounters, (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)NUMBER_OF_THRESHOLDS_TO_TEST, (uint16_t)sizeof(uint32_t)) != cudaError_t::cudaSuccess)
@@ -424,7 +426,7 @@ void SpikeDetection<T>::runTraining(void)
 	// Perform classification part 1 on GPU
 	classifierController.performTrainingBasedOnTemplatesPart1_CUDA(dev_NXCOROutput, dev_aboveThresholdIndicator, dev_FoundTimes, dev_FoundTimesCounter, dev_TPCounter, dev_spikesPeakOffset,
 																	dev_grundTruth, dev_grundTruthSizes, dev_grundTruthStartInd);
-																	
+
 	if (CheckForCudaError() != cudaError_t::cudaSuccess)
 	{
 		CUDACleanUpTraining();
