@@ -11,7 +11,7 @@
 
 #ifdef _DEBUG
 #ifdef USE_CUDA
-#error ChannelFilter CUDA kernel does not work correctly in debug mode!
+//#error ChannelFilter CUDA kernel does not work correctly in debug mode!
 #endif
 #endif
 
@@ -21,7 +21,8 @@ int main(void)
 	
 	SpikeDetection<USED_DATATYPE> spikeDetecter;
 	
-	spikeDetecter.runTraining();
+	spikeDetecter.runTrainingCUDA();
+	//spikeDetecter.runTraining();
 
 	spikeDetecter.runPrediction();
 	

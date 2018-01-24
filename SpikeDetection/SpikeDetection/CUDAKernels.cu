@@ -79,6 +79,100 @@ __global__ void runChannelFilterGPU(
 	}
 }
 
+__global__ void runChannelFilterForwardGPU(
+	float* d_intermediateResult,
+	float* d_signal,
+	float* d_coeffsA,
+	float* d_coeffsB,
+	uint16_t signalWidth,
+	uint32_t signalLength)
+{
+	// Forward filtering
+	//int x = blockIdx.x; // counts the channels (width)
+	uint16_t x = threadIdx.x; // counts the channels (width)
+
+	/*
+	for (int i = 0; i < signalLength; i++)
+	{
+		uint32_t index = ((i*signalWidth) + x);
+		d_intermediateResult[index] = 0.f;
+	}
+	__syncthreads();
+	*/
+
+	for (int i = 0; i < signalLength; i++)
+	{
+		uint32_t index = ((i*signalWidth) + x);
+		float tmp = 0.f;
+		d_intermediateResult[index] = 0.f;
+		for (int16_t j = 0; j < (int16_t)NUMBER_OF_B_COEFF; j++)
+		{
+			// Every second b coefficient is 0.
+			if ((i - (j * 2)) < 0) continue;
+			tmp += d_coeffsB[j] * d_signal[index - (j * 2)*signalWidth];
+		}
+
+
+		for (int16_t j = 0; j < (int16_t)NUMBER_OF_A_COEFF; j++)
+		{
+			// The first a coefficient is 1.
+			if ((i - (j + 1)) < 0) continue;
+			tmp -= d_coeffsA[j] * d_intermediateResult[index - (j + 1)*signalWidth];
+		}
+
+		d_intermediateResult[index] = tmp;
+	}
+}
+
+__global__ void runChannelFilterReverseGPU(
+	float* d_result,
+	float* d_intermediateResult,
+	float* d_coeffsA,
+	float* d_coeffsB,
+	uint16_t signalWidth,
+	uint32_t signalLength)
+{
+	// Forward filtering
+	//int x = blockIdx.x; // counts the channels (width)
+	uint16_t x = threadIdx.x; // counts the channels (width)
+
+	//x = (gridDim.x - 1) - blockIdx.x;
+	//x = (blockDim.x - 1) - threadIdx.x;
+	// Reverse filtering
+	/*
+	for (int i = 0; i < signalLength; i++)
+	{
+		uint32_t index = ((i*signalWidth) + x);
+		d_result[index] = 0.f;
+	}
+	__syncthreads();
+	*/
+
+	for (int i = signalLength - 1; i >= 0; i--)
+	{
+		uint32_t index = ((i*signalWidth) + x);
+		float tmp = 0.;
+		d_result[index] = 0.f;
+		for (int16_t j = 0; j < (int16_t)NUMBER_OF_B_COEFF; j++)
+		{
+			// Every second b coefficient is 0.
+			//if ((i + (j * 2)) > (signalLength - 1)) continue;
+			if ((index + (j * 2)*signalWidth) >= (signalLength*signalWidth)) continue;
+			tmp += d_coeffsB[j] * d_intermediateResult[index + (j * 2)*signalWidth];
+		}
+
+		for (int16_t j = 0; j < (int16_t)NUMBER_OF_A_COEFF; j++)
+		{
+			// The first a coefficient is 1.
+			//if ((i + (j + 1)) > (signalLength - 1)) continue;
+			if ((index + (j + 1)*signalWidth) >= (signalLength*signalWidth)) continue;
+			tmp -= d_coeffsA[j] * d_result[index + (j + 1)*signalWidth];
+		}
+
+		d_result[index] = tmp;
+	}
+}
+
 __global__ void runFilterReplicateGPU(
 	float* d_result,
 	const float* d_Signal,
@@ -728,6 +822,7 @@ extern "C" void TrainPart1CUDA(const float *dev_signal, char *dev_aboveThreshold
 
 extern "C" void NXCOR_CUDA_3D(float *dev_result, const float *dev_templates, const float *dev_signal, uint16_t templateLength, uint16_t templateChannels, uint32_t signalLength, uint16_t signalChannels, uint16_t numberOfTemplates, uint16_t* dev_signalLowerIndex)
 {
+	cudaError_t cudaStatus;
 	uint32_t GridXSize = signalLength / MAXIMUM_NUMBER_OF_THREADS;
 
 	if (signalLength % MAXIMUM_NUMBER_OF_THREADS != 0)
@@ -739,12 +834,18 @@ extern "C" void NXCOR_CUDA_3D(float *dev_result, const float *dev_templates, con
 	const dim3 gridsize(GridXSize, numberOfTemplates, 1);
 
 	naive_custom_normalized_cross_correlation3D << <gridsize, blockSize >> >(dev_result, dev_signal, dev_templates, templateLength, templateChannels, signalLength, signalChannels, dev_signalLowerIndex);
-	
+	cudaDeviceSynchronize();
+	cudaStatus = cudaGetLastError();
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "naive_custom_normalized_cross_correlation3D launch failed: %s\n", cudaGetErrorString(cudaStatus));
+	}
+
 }
 
 extern "C" void NXCOR_CUDA_3D_Drift(float *dev_result, const float *dev_templates, const float *dev_signal, uint16_t templateLength, uint16_t templateChannels, uint32_t signalLength,
 	uint16_t signalChannels, uint16_t numberOfTemplates, uint16_t* dev_signalLowerIndex)
 {
+	cudaError_t cudaStatus;
 	uint32_t GridXSize = signalLength / MAXIMUM_NUMBER_OF_THREADS_DRIFT_HANDLING;
 
 	if (signalLength % MAXIMUM_NUMBER_OF_THREADS_DRIFT_HANDLING != 0)
@@ -756,11 +857,18 @@ extern "C" void NXCOR_CUDA_3D_Drift(float *dev_result, const float *dev_template
 	const dim3 gridsize(GridXSize, numberOfTemplates, 1);
 
 	naive_custom_normalized_cross_correlation3D_STD << <gridsize, blockSize >> >(dev_result, dev_signal, dev_templates, templateLength, templateChannels, signalLength, signalChannels, dev_signalLowerIndex);
+	cudaDeviceSynchronize();
+	cudaStatus = cudaGetLastError();
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "naive_custom_normalized_cross_correlation3D_STD launch failed: %s\n", cudaGetErrorString(cudaStatus));
+	}
+
 }
 
 
 extern "C" void KernelFilterWithCudaV2(const float *dev_kernel, const float *dev_signal, float *dev_result, uint16_t templateChannels, uint16_t kernelDim, uint32_t signalLength)
 {
+	cudaError_t cudaStatus;
 	// Launch a kernel on the GPU with one thread for each element.
 	int xBlocks = MAXIMUM_NUMBER_OF_THREADS / templateChannels;
 	int xGrids = signalLength / xBlocks;
@@ -774,14 +882,35 @@ extern "C" void KernelFilterWithCudaV2(const float *dev_kernel, const float *dev
 	const dim3 gridsize(xGrids, 1, 1);
 
 	runFilterReplicateGPU << <gridsize, blockSize >> >(dev_result, dev_signal, dev_kernel, kernelDim, signalLength, templateChannels);
+	cudaDeviceSynchronize();
+	cudaStatus = cudaGetLastError();
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "runFilterReplicateGPU launch failed: %s\n", cudaGetErrorString(cudaStatus));
+	}
 }
 
 extern "C" void ChannelFilterWithCuda(float *dev_result, float *dev_signal, float *dev_resultInt, float* dev_coeffsA, float* dev_coeffsB, uint16_t signalWidth, uint32_t signalLength)
 {
+	cudaError_t cudaStatus;
 	const dim3 blockSize(signalWidth, 1, 1);
 	//const dim3 blockSize(1, 1, 1);
 	const dim3 gridsize(1, 1, 1);
-	runChannelFilterGPU << <gridsize, blockSize >> >(dev_result, dev_resultInt, dev_signal, dev_coeffsA, dev_coeffsB, signalWidth, signalLength);
+	//runChannelFilterGPU << <gridsize, blockSize >> >(dev_result, dev_resultInt, dev_signal, dev_coeffsA, dev_coeffsB, signalWidth, signalLength);
+
+	runChannelFilterForwardGPU << <gridsize, blockSize >> >(dev_resultInt, dev_signal, dev_coeffsA, dev_coeffsB, signalWidth, signalLength);
+	cudaDeviceSynchronize();
+	cudaStatus = cudaGetLastError();
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "runChannelFilterForwardGPU launch failed: %s\n", cudaGetErrorString(cudaStatus));
+		return;
+	}
+
+	runChannelFilterReverseGPU << <gridsize, blockSize >> >(dev_result, dev_resultInt, dev_coeffsA, dev_coeffsB, signalWidth, signalLength);
+	cudaDeviceSynchronize();
+	cudaStatus = cudaGetLastError();
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "runChannelFilterReverseGPU launch failed: %s\n", cudaGetErrorString(cudaStatus));
+	}
 }
 
 extern "C" cudaError_t SelectCUDA_GPU_Unit(void)

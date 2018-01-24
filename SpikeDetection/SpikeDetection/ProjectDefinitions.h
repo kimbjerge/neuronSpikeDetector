@@ -8,8 +8,8 @@
 #define PROJECT_DEFINITIONS_H
 
 /*********************************** GENERAL SETUP ****************************************************/
-#define					USE_OPENCV
-//#define					USE_CUDA
+//#define					USE_OPENCV
+#define					USE_CUDA // Working with 2 seconds train and predict
 
 #define					PRINT_OUTPUT_INFO
 
@@ -29,8 +29,8 @@
 /*********************************** SAMPLING *********************************************************/
 #define					USED_DATATYPE						float
 #define					SAMPLING_FREQUENCY					30000
-#define					TRAINING_DATA_TIME					10 // 10 s
-#define					RUNTIME_DATA_TIME					10 // 4 ms // The runtime/prediction data is assumed to be consecutive to the training data
+#define					TRAINING_DATA_TIME					1 // 10 s, must be same size
+#define					RUNTIME_DATA_TIME					1 // 4 ms // The runtime/prediction data is assumed to be consecutive to the training data
 #define					TRAINING_DATA_LENGTH				SAMPLING_FREQUENCY*TRAINING_DATA_TIME
 #define					RUNTIME_DATA_LENGTH					SAMPLING_FREQUENCY*RUNTIME_DATA_TIME
 #define					DATA_CHANNELS						32		
