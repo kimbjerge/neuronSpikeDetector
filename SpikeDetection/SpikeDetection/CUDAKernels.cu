@@ -90,42 +90,35 @@ __global__ void runChannelFilterForwardGPU(
 	uint32_t signalLength)
 {
 	// Forward filtering
-	//int x = blockIdx.x; // counts the channels (width)
 	uint16_t x = threadIdx.x; // counts the channels (width)
-	uint32_t signalSize = signalWidth * signalLength;
-
-	for (int i = 0; i < signalLength; i++)
-	{
-		uint32_t index = ((i*signalWidth) + x);
-		d_intermediateResult[index] = 0.f;
-	}
-	__syncthreads();
+	int32_t signalSize = signalWidth * signalLength;
 	
 	for (int i = 0; i < signalLength; i++)
 	{
-		uint32_t index = ((i*signalWidth) + x);
+		int32_t index = ((i*signalWidth) + x);
 		float tmp = 0.f;
 		//d_intermediateResult[index] = 0.f;
+
 		for (int16_t j = 0; j < (int16_t)NUMBER_OF_B_COEFF; j++)
 		{
+			int32_t currIdx = (index - (j * 2)*signalWidth);
 			// Every second b coefficient is 0.
-			//if ((i - (j * 2)) < 0) continue;
-			if ((index - (j * 2)*signalWidth) >= signalSize) continue;
-			tmp += d_coeffsB[j] * d_signal[index - (j * 2)*signalWidth];
+			if (currIdx >= 0) 
+				tmp += d_coeffsB[j] * d_signal[currIdx];
 		}
-
 
 		for (int16_t j = 0; j < (int16_t)NUMBER_OF_A_COEFF; j++)
 		{
+			int32_t currIdx = (index - (j + 1)*signalWidth);
 			// The first a coefficient is 1.
-			//if ((i - (j + 1)) < 0) continue;
-			if ((index - (j + 1)*signalWidth) >= signalSize) continue;
-			tmp -= d_coeffsA[j] * d_intermediateResult[index - (j + 1)*signalWidth];
+			if (currIdx >= 0) 
+ 				tmp -= d_coeffsA[j] * d_intermediateResult[currIdx];
 		}
 
 		d_intermediateResult[index] = tmp;
+		//__syncthreads();
 	}
-	__syncthreads();
+
 }
 
 __global__ void runChannelFilterReverseGPU(
@@ -136,45 +129,35 @@ __global__ void runChannelFilterReverseGPU(
 	uint16_t signalWidth,
 	uint32_t signalLength)
 {
-	// Forward filtering
-	//int x = blockIdx.x; // counts the channels (width)
-	uint16_t x = threadIdx.x; // counts the channels (width)
-	uint32_t signalSize = signalWidth * signalLength;
-
-	//x = (gridDim.x - 1) - blockIdx.x;
-	//x = (blockDim.x - 1) - threadIdx.x;
 	// Reverse filtering
-	for (int i = 0; i < signalLength; i++)
-	{
-		uint32_t index = ((i*signalWidth) + x);
-		d_result[index] = 0.f;
-	}
-	__syncthreads();
+	uint16_t x = threadIdx.x; // counts the channels (width)
+	int32_t signalSize = signalWidth * signalLength;
 
 	for (int i = signalLength - 1; i >= 0; i--)
 	{
-		uint32_t index = ((i*signalWidth) + x);
+		int32_t index = ((i*signalWidth) + x);
 		float tmp = 0.;
 		//d_result[index] = 0.f;
+
 		for (int16_t j = 0; j < (int16_t)NUMBER_OF_B_COEFF; j++)
 		{
+			int32_t currIdx = index + (j * 2)*signalWidth;
 			// Every second b coefficient is 0.
-			//if ((i + (j * 2)) > (signalLength - 1)) continue;
-			if ((index + (j * 2)*signalWidth) >= signalSize) continue;
-			tmp += d_coeffsB[j] * d_intermediateResult[index + (j * 2)*signalWidth];
+			if (currIdx < signalSize)
+  				tmp += d_coeffsB[j] * d_intermediateResult[currIdx];
 		}
 
 		for (int16_t j = 0; j < (int16_t)NUMBER_OF_A_COEFF; j++)
 		{
+			int32_t currIdx = index + (j + 1)*signalWidth;
 			// The first a coefficient is 1.
-			//if ((i + (j + 1)) > (signalLength - 1)) continue;
-			if ((index + (j + 1)*signalWidth) >= signalSize) continue;
-			tmp -= d_coeffsA[j] * d_result[index + (j + 1)*signalWidth];
+			if (currIdx < signalSize)
+  				tmp -= d_coeffsA[j] * d_result[currIdx];
 		}
 
 		d_result[index] = tmp;
+		//__syncthreads();
 	}
-	__syncthreads();
 }
 
 __global__ void runFilterReplicateGPU(
