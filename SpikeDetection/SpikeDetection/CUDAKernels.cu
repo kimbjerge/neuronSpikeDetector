@@ -888,9 +888,9 @@ extern "C" void ChannelFilterWithCuda(float *dev_result, float *dev_signal, floa
 	//const dim3 blockSize(1, 1, 1);
 	const dim3 gridsize(1, 1, 1);
 
+	CheckForError("ChannelFilterWithCuda");
 	//runChannelFilterGPU << <gridsize, blockSize >> >(dev_result, dev_resultInt, dev_signal, dev_coeffsA, dev_coeffsB, signalWidth, signalLength);
 	//CheckForError("runChannelFilterGPU");
-	CheckForError("ChannelFilterWithCuda");
 
 	runChannelFilterForwardGPU << <gridsize, blockSize >> >(dev_resultInt, dev_signal, dev_coeffsA, dev_coeffsB, signalWidth, signalLength);
 	CheckForError("runChannelFilterForwardGPU");

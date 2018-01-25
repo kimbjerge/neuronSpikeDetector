@@ -204,9 +204,12 @@ void ClassifierController<T>::performTrainingBasedOnTemplatesPart2(uint32_t *hos
 		if (projectInfoRefPtr->isTemplateUsedTraining(i + 1) > 0)
 		{
 			pointer->TrainFromCUDAResults(projectInfoRefPtr->isTemplateUsedTraining(i + 1), PredictionCountsForTemplate, TPScoresForTemplate);
+#ifdef PRINT_OUTPUT_INFO
+			float wF1Score = pointer->calculateWF1Score(pointer->getLatestTrainingPrecision(), pointer->getLatestTrainingRecall());
+			std::cout << "Training using template : " << i + 1 << " best thredshold :" << pointer->getThreshold() << " Gave a score W-F1 of: " << wF1Score << std::endl;
+#endif
 		}
 	}
-
 
 	t2 = high_resolution_clock::now();
 
