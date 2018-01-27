@@ -1,0 +1,294 @@
+************* TRAINING **************
+TestData default
+*************************************
+1D filtering time: 361.253 ms. processing 10 seconds of data
+2D filtering time: 59.805 ms. processing 10 seconds of data
+NXCOR all templates time: 2460.95 ms. processing 10 seconds of data
+Train all template models time: 671.175 ms. processing 10 seconds of data
+Total CPU Training time: 3567.18 ms. processing 10 seconds of data
+************* PREDICTION **************
+1D filtering time: 377.24 ms. processing 10 seconds of data
+2D filtering time: 61.39 ms. processing 10 seconds of data
+NXCOR all templates time: 2465.73 ms. processing 10 seconds of data
+Prediction using template : 1 Gave a score W-F1 of: 0.819737
+Prediction using template : 2 Gave a score W-F1 of: 0.984615
+Prediction using template : 3 Gave a score W-F1 of: 0.992857
+Prediction using template : 5 Gave a score W-F1 of: 0.996
+Prediction using template : 7 Gave a score W-F1 of: 0.99186
+Prediction using template : 8 Gave a score W-F1 of: 0.994
+Prediction using template : 10 Gave a score W-F1 of: 0.952273
+Prediction using template : 11 Gave a score W-F1 of: 1
+Prediction using template : 12 Gave a score W-F1 of: 0.968641
+Prediction using template : 20 Gave a score W-F1 of: 0.969118
+Prediction using template : 22 Gave a score W-F1 of: 0.904575
+Prediction using template : 23 Gave a score W-F1 of: 0.801743
+Prediction using template : 25 Gave a score W-F1 of: 0.979542
+Prediction using template : 26 Gave a score W-F1 of: 0.916129
+Prediction using template : 27 Gave a score W-F1 of: 0.98
+Prediction using template : 30 Gave a score W-F1 of: 0.991026
+Prediction using template : 32 Gave a score W-F1 of: 0.988608
+Prediction using template : 35 Gave a score W-F1 of: 0.994118
+Prediction using template : 40 Gave a score W-F1 of: 0.485294
+Prediction using template : 42 Gave a score W-F1 of: 0.981818
+Prediction using template : 47 Gave a score W-F1 of: 1
+Prediction using template : 48 Gave a score W-F1 of: 0.96875
+Prediction using template : 57 Gave a score W-F1 of: 0.939506
+Prediction using template : 60 Gave a score W-F1 of: 0.893162
+Prediction using template : 61 Gave a score W-F1 of: 0.95259
+Prediction using template : 62 Gave a score W-F1 of: 1
+Prediction using template : 64 Gave a score W-F1 of: 0.75
+Prediction, all models time: 120.083 ms. processing 10 seconds of data
+Total CPU Prediction time: 3052.19 ms. processing 10 seconds of data
+Press any key to continue . . .
+
+************* TRAINING **************
+TestData10sV - data from C:\neuronSpikeDetector\Matlab\ConvertToC++:
+--------------------------------------------------------------------
+1D filtering time: 326.674 ms. processing 10 seconds of data
+2D filtering time: 60.02 ms. processing 10 seconds of data
+NXCOR all templates time: 2467.64 ms. processing 10 seconds of data
+Train all template models time: 2093.39 ms. processing 10 seconds of data
+Total CPU Training time: 4960.05 ms. processing 10 seconds of data
+************* PREDICTION **************
+1D filtering time: 344.018 ms. processing 10 seconds of data
+2D filtering time: 62.254 ms. processing 10 seconds of data
+NXCOR all templates time: 2429.59 ms. processing 10 seconds of data
+Prediction using template : 1 Gave a score W-F1 of: 0.211041
+Prediction using template : 2 Gave a score W-F1 of: 0.215988
+Prediction using template : 3 Gave a score W-F1 of: 0.214883
+Prediction using template : 5 Gave a score W-F1 of: 0.245183
+Prediction using template : 7 Gave a score W-F1 of: 0.244839
+Prediction using template : 8 Gave a score W-F1 of: 0.240819
+Prediction using template : 10 Gave a score W-F1 of: 0.137044
+Prediction using template : 11 Gave a score W-F1 of: 0.177918
+Prediction using template : 12 Gave a score W-F1 of: 0.272915
+Prediction using template : 20 Gave a score W-F1 of: 0.0012822
+Prediction using template : 22 Gave a score W-F1 of: 0.21202
+Prediction using template : 23 Gave a score W-F1 of: 0.268056
+Prediction using template : 25 Gave a score W-F1 of: 0.263206
+Prediction using template : 26 Gave a score W-F1 of: 0.17241
+Prediction using template : 27 Gave a score W-F1 of: 0.291837
+Prediction using template : 30 Gave a score W-F1 of: 0.266362
+Prediction using template : 32 Gave a score W-F1 of: 0.247943
+Prediction using template : 35 Gave a score W-F1 of: 0.194844
+Prediction using template : 40 Gave a score W-F1 of: 0.233635
+Prediction using template : 42 Gave a score W-F1 of: 0.229305
+Prediction using template : 47 Gave a score W-F1 of: 0.103476
+Prediction using template : 48 Gave a score W-F1 of: 0.213185
+Prediction using template : 57 Gave a score W-F1 of: 0.228065
+Prediction using template : 60 Gave a score W-F1 of: 0.00111914
+Prediction using template : 61 Gave a score W-F1 of: 0.237375
+Prediction using template : 62 Gave a score W-F1 of: 0.198553
+Prediction using template : 64 Gave a score W-F1 of: 0.292302
+Prediction, all models time: 350.622 ms. processing 10 seconds of data
+Total CPU Prediction time: 3199.28 ms. processing 10 seconds of data
+Press any key to continue . . .
+
+TestData - data generated from C:\neuronSpikeDetector\Matlab\ConvertToC++:
+************* TRAINING **************
+1D filtering time: 359.767 ms. processing 10 seconds of data
+2D filtering time: 60.732 ms. processing 10 seconds of data
+NXCOR all templates time: 2466.82 ms. processing 10 seconds of data
+Train all template models time: 2195.03 ms. processing 10 seconds of data
+Total CPU Training time: 5100.21 ms. processing 10 seconds of data
+************* PREDICTION **************
+1D filtering time: 379.13 ms. processing 10 seconds of data
+2D filtering time: 60.324 ms. processing 10 seconds of data
+NXCOR all templates time: 2458.69 ms. processing 10 seconds of data
+Prediction using template : 1 Gave a score W-F1 of: 0.211041
+Prediction using template : 2 Gave a score W-F1 of: 0.215988
+Prediction using template : 3 Gave a score W-F1 of: 0.214883
+Prediction using template : 5 Gave a score W-F1 of: 0.245183
+Prediction using template : 7 Gave a score W-F1 of: 0.244839
+Prediction using template : 8 Gave a score W-F1 of: 0.240819
+Prediction using template : 10 Gave a score W-F1 of: 0.137044
+Prediction using template : 11 Gave a score W-F1 of: 0.177918
+Prediction using template : 12 Gave a score W-F1 of: 0.272915
+Prediction using template : 20 Gave a score W-F1 of: 0.0012822
+Prediction using template : 22 Gave a score W-F1 of: 0.21202
+Prediction using template : 23 Gave a score W-F1 of: 0.268056
+Prediction using template : 25 Gave a score W-F1 of: 0.263206
+Prediction using template : 26 Gave a score W-F1 of: 0.17241
+Prediction using template : 27 Gave a score W-F1 of: 0.291837
+Prediction using template : 30 Gave a score W-F1 of: 0.266362
+Prediction using template : 32 Gave a score W-F1 of: 0.247943
+Prediction using template : 35 Gave a score W-F1 of: 0.194844
+Prediction using template : 40 Gave a score W-F1 of: 0.233635
+Prediction using template : 42 Gave a score W-F1 of: 0.229305
+Prediction using template : 47 Gave a score W-F1 of: 0.103476
+Prediction using template : 48 Gave a score W-F1 of: 0.213185
+Prediction using template : 57 Gave a score W-F1 of: 0.228065
+Prediction using template : 60 Gave a score W-F1 of: 0.00111914
+Prediction using template : 61 Gave a score W-F1 of: 0.237375
+Prediction using template : 62 Gave a score W-F1 of: 0.198553
+Prediction using template : 64 Gave a score W-F1 of: 0.292302
+Prediction, all models time: 316.582 ms. processing 10 seconds of data
+Total CPU Prediction time: 3227.18 ms. processing 10 seconds of data
+Press any key to continue . . .
+
+
+************* TRAINING **************
+Gain = 6 equal to 15.6 dB
+
+1D filtering time: 297.749 ms. processing 10 seconds of data
+2D filtering time: 58.851 ms. processing 10 seconds of data
+NXCOR all templates time: 2448.35 ms. processing 10 seconds of data
+Train all template models time: 2184.95 ms. processing 10 seconds of data
+Total CPU Training time: 5005.56 ms. processing 10 seconds of data
+************* PREDICTION **************
+1D filtering time: 291.766 ms. processing 10 seconds of data
+2D filtering time: 59.082 ms. processing 10 seconds of data
+NXCOR all templates time: 2450.3 ms. processing 10 seconds of data
+Prediction using template : 1 Gave a score W-F1 of: 0.211041
+Prediction using template : 2 Gave a score W-F1 of: 0.215988
+Prediction using template : 3 Gave a score W-F1 of: 0.214883
+Prediction using template : 5 Gave a score W-F1 of: 0.245183
+Prediction using template : 7 Gave a score W-F1 of: 0.244839
+Prediction using template : 8 Gave a score W-F1 of: 0.240819
+Prediction using template : 10 Gave a score W-F1 of: 0.137044
+Prediction using template : 11 Gave a score W-F1 of: 0.177918
+Prediction using template : 12 Gave a score W-F1 of: 0.272915
+Prediction using template : 20 Gave a score W-F1 of: 0.0012822
+Prediction using template : 22 Gave a score W-F1 of: 0.21202
+Prediction using template : 23 Gave a score W-F1 of: 0.268056
+Prediction using template : 25 Gave a score W-F1 of: 0.263206
+Prediction using template : 26 Gave a score W-F1 of: 0.17241
+Prediction using template : 27 Gave a score W-F1 of: 0.291837
+Prediction using template : 30 Gave a score W-F1 of: 0.266362
+Prediction using template : 32 Gave a score W-F1 of: 0.247943
+Prediction using template : 35 Gave a score W-F1 of: 0.194844
+Prediction using template : 40 Gave a score W-F1 of: 0.233635
+Prediction using template : 42 Gave a score W-F1 of: 0.229305
+Prediction using template : 47 Gave a score W-F1 of: 0.103476
+Prediction using template : 48 Gave a score W-F1 of: 0.213185
+Prediction using template : 57 Gave a score W-F1 of: 0.228065
+Prediction using template : 60 Gave a score W-F1 of: 0.00111914
+Prediction using template : 61 Gave a score W-F1 of: 0.237375
+Prediction using template : 62 Gave a score W-F1 of: 0.198553
+Prediction using template : 64 Gave a score W-F1 of: 0.292302
+Prediction, all models time: 328.756 ms. processing 10 seconds of data
+Total CPU Prediction time: 3147.56 ms. processing 10 seconds of data
+Press any key to continue . . .
+
+************* TRAINING **************
+1D filtering time: 303.217 ms. processing 10 seconds of data
+2D filtering time: 58.376 ms. processing 10 seconds of data
+NXCOR all templates time: 2453.8 ms. processing 10 seconds of data
+Train all template models time: 2160 ms. processing 10 seconds of data
+Total CPU Training time: 4992.22 ms. processing 10 seconds of data
+************* PREDICTION **************
+1D filtering time: 298.941 ms. processing 10 seconds of data
+2D filtering time: 57.696 ms. processing 10 seconds of data
+NXCOR all templates time: 2461.08 ms. processing 10 seconds of data
+Prediction using template : 1 Gave a score W-F1 of: 0.211041
+Prediction using template : 2 Gave a score W-F1 of: 0.215988
+Prediction using template : 3 Gave a score W-F1 of: 0.214883
+Prediction using template : 5 Gave a score W-F1 of: 0.245183
+Prediction using template : 7 Gave a score W-F1 of: 0.244839
+Prediction using template : 8 Gave a score W-F1 of: 0.240819
+Prediction using template : 10 Gave a score W-F1 of: 0.137044
+Prediction using template : 11 Gave a score W-F1 of: 0.177918
+Prediction using template : 12 Gave a score W-F1 of: 0.272915
+Prediction using template : 20 Gave a score W-F1 of: 0.0012822
+Prediction using template : 22 Gave a score W-F1 of: 0.21202
+Prediction using template : 23 Gave a score W-F1 of: 0.268056
+Prediction using template : 25 Gave a score W-F1 of: 0.263206
+Prediction using template : 26 Gave a score W-F1 of: 0.17241
+Prediction using template : 27 Gave a score W-F1 of: 0.291837
+Prediction using template : 30 Gave a score W-F1 of: 0.266362
+Prediction using template : 32 Gave a score W-F1 of: 0.247943
+Prediction using template : 35 Gave a score W-F1 of: 0.194844
+Prediction using template : 40 Gave a score W-F1 of: 0.233635
+Prediction using template : 42 Gave a score W-F1 of: 0.229305
+Prediction using template : 47 Gave a score W-F1 of: 0.103476
+Prediction using template : 48 Gave a score W-F1 of: 0.213185
+Prediction using template : 57 Gave a score W-F1 of: 0.228065
+Prediction using template : 60 Gave a score W-F1 of: 0.00111914
+Prediction using template : 61 Gave a score W-F1 of: 0.237375
+Prediction using template : 62 Gave a score W-F1 of: 0.198553
+Prediction using template : 64 Gave a score W-F1 of: 0.292302
+Prediction, all models time: 347.488 ms. processing 10 seconds of data
+Total CPU Prediction time: 3182.42 ms. processing 10 seconds of data
+Press any key to continue . . .
+
+************* TRAINING **************
+1D filtering time: 1374.01 ms. processing 30 seconds of data
+2D filtering time: 176.581 ms. processing 30 seconds of data
+NXCOR all templates time: 7442.31 ms. processing 30 seconds of data
+Train all template models time: 13577.9 ms. processing 30 seconds of data
+Total CPU Training time: 22600 ms. processing 30 seconds of data
+************* PREDICTION **************
+1D filtering time: 1342.95 ms. processing 30 seconds of data
+2D filtering time: 177.159 ms. processing 30 seconds of data
+NXCOR all templates time: 7332.11 ms. processing 30 seconds of data
+Prediction using template : 1 Gave a score W-F1 of: 0.204955
+Prediction using template : 2 Gave a score W-F1 of: 0.22957
+Prediction using template : 3 Gave a score W-F1 of: 0.259845
+Prediction using template : 5 Gave a score W-F1 of: 0.276209
+Prediction using template : 7 Gave a score W-F1 of: 0.234203
+Prediction using template : 8 Gave a score W-F1 of: 0.28092
+Prediction using template : 10 Gave a score W-F1 of: 0.120617
+Prediction using template : 11 Gave a score W-F1 of: 0.193179
+Prediction using template : 12 Gave a score W-F1 of: 0.271668
+Prediction using template : 20 Gave a score W-F1 of: 0.236183
+Prediction using template : 22 Gave a score W-F1 of: 0.262412
+Prediction using template : 23 Gave a score W-F1 of: 0.248422
+Prediction using template : 25 Gave a score W-F1 of: 0.267727
+Prediction using template : 26 Gave a score W-F1 of: 0.1923
+Prediction using template : 27 Gave a score W-F1 of: 0.229848
+Prediction using template : 30 Gave a score W-F1 of: 0.254399
+Prediction using template : 32 Gave a score W-F1 of: 0.285178
+Prediction using template : 35 Gave a score W-F1 of: 0.217671
+Prediction using template : 40 Gave a score W-F1 of: 0.228512
+Prediction using template : 42 Gave a score W-F1 of: 0.226575
+Prediction using template : 47 Gave a score W-F1 of: 0.127804
+Prediction using template : 48 Gave a score W-F1 of: 0.227298
+Prediction using template : 57 Gave a score W-F1 of: 0.274219
+Prediction using template : 60 Gave a score W-F1 of: 0.285385
+Prediction using template : 61 Gave a score W-F1 of: 0.23421
+Prediction using template : 62 Gave a score W-F1 of: 0.173062
+Prediction using template : 64 Gave a score W-F1 of: 0.265339
+Prediction, all models time: 2092.12 ms. processing 30 seconds of data
+Total CPU Prediction time: 10977.8 ms. processing 30 seconds of data
+Press any key to continue . . .
+
+************* TRAINING **************
+1D filtering time: 303.217 ms. processing 10 seconds of data
+2D filtering time: 58.376 ms. processing 10 seconds of data
+NXCOR all templates time: 2453.8 ms. processing 10 seconds of data
+Train all template models time: 2160 ms. processing 10 seconds of data
+Total CPU Training time: 4992.22 ms. processing 10 seconds of data
+************* PREDICTION **************
+1D filtering time: 298.941 ms. processing 10 seconds of data
+2D filtering time: 57.696 ms. processing 10 seconds of data
+NXCOR all templates time: 2461.08 ms. processing 10 seconds of data
+Prediction using template : 1 Gave a score W-F1 of: 0.211041
+Prediction using template : 2 Gave a score W-F1 of: 0.215988
+Prediction using template : 3 Gave a score W-F1 of: 0.214883
+Prediction using template : 5 Gave a score W-F1 of: 0.245183
+Prediction using template : 7 Gave a score W-F1 of: 0.244839
+Prediction using template : 8 Gave a score W-F1 of: 0.240819
+Prediction using template : 10 Gave a score W-F1 of: 0.137044
+Prediction using template : 11 Gave a score W-F1 of: 0.177918
+Prediction using template : 12 Gave a score W-F1 of: 0.272915
+Prediction using template : 20 Gave a score W-F1 of: 0.0012822
+Prediction using template : 22 Gave a score W-F1 of: 0.21202
+Prediction using template : 23 Gave a score W-F1 of: 0.268056
+Prediction using template : 25 Gave a score W-F1 of: 0.263206
+Prediction using template : 26 Gave a score W-F1 of: 0.17241
+Prediction using template : 27 Gave a score W-F1 of: 0.291837
+Prediction using template : 30 Gave a score W-F1 of: 0.266362
+Prediction using template : 32 Gave a score W-F1 of: 0.247943
+Prediction using template : 35 Gave a score W-F1 of: 0.194844
+Prediction using template : 40 Gave a score W-F1 of: 0.233635
+Prediction using template : 42 Gave a score W-F1 of: 0.229305
+Prediction using template : 47 Gave a score W-F1 of: 0.103476
+Prediction using template : 48 Gave a score W-F1 of: 0.213185
+Prediction using template : 57 Gave a score W-F1 of: 0.228065
+Prediction using template : 60 Gave a score W-F1 of: 0.00111914
+Prediction using template : 61 Gave a score W-F1 of: 0.237375
+Prediction using template : 62 Gave a score W-F1 of: 0.198553
+Prediction using template : 64 Gave a score W-F1 of: 0.292302
+Prediction, all models time: 347.488 ms. processing 10 seconds of data
+Total CPU Prediction time: 3182.42 ms. processing 10 seconds of data
+Press any key to continue . . .

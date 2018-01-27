@@ -5,8 +5,8 @@ load(strcat(DiectoryToEvaluate, '\rez.mat')); % Loads the rez file from KiloSort
 isKiloSortTemplateMerged = 'YES'; % Has KiloSort merged the templates?
 
 
-PathToOutputFiles = strcat(PrePath,'ConvertToC++');
-
+%PathToOutputFiles = strcat(PrePath,'ConvertToC++');
+PathToOutputFiles = 'C:\neuronSpikeDetector\SpikeDetection\SpikeDetection\TestData\'
 
 %% Generate Rez-info file
 fullFileName = fullfile(PathToOutputFiles, 'RezInfo.bin');
@@ -64,9 +64,10 @@ fclose('all');
 %% Make training data
 RecordFile = strcat(DiectoryToEvaluate, '\sim_binary.dat');
 signalOffset = 0;
-signalLength_s = 10;
-signalGain = 1;
-ViewFiguresRunning = 'NO';
+signalLength_s = 30;
+signalGain = 1; 
+%signalGain = 6; % 15.6 db
+ViewFiguresRunning = 'YES';
 ShowFunctionExcTime = 'NO';
 
 Oldsignal = PrepareData( RecordFile, 1:32, rez, signalOffset, ...
@@ -87,9 +88,10 @@ fclose('all');
 
 %% Make Prediction data
 RecordFile = strcat(DiectoryToEvaluate, '\sim_binary.dat');
-signalOffset = 10;
-signalLength_s = 10;
+signalOffset = 30;
+signalLength_s = 30;
 signalGain = 1;
+%signalGain = 6; % 15.6 db
 ViewFiguresRunning = 'NO';
 ShowFunctionExcTime = 'NO';
 
@@ -113,8 +115,9 @@ fclose('all');
 TemplatesFile = strcat(DiectoryToEvaluate,'\templates.npy');
 MaximumChannelsToUse = 32;
 templateGain = 1;
+%templateGain = 6; % 15.6 db
 pathToNPYMaster = strcat(PrePath, 'MatlabLibs\npy-matlab-master'); % Path to NPY matlab reader project
-ViewFiguresRunning = 'NO';
+ViewFiguresRunning = 'YES';
 ShowFunctionExcTime = 'NO';
 
 
