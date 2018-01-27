@@ -570,6 +570,11 @@ void SpikeDetection<T>::runPrediction(void)
 		return;
 	}
 
+#ifdef PRINT_OUTPUT_INFO
+	for (int i = 0; i < MAXIMUM_NUMBER_OF_TEMPLATES; i++)
+		std::cout << "Template: " << i + 1 << " found number of times: " << host_FoundTimesCounters[i] << std::endl;
+#endif
+
 	// Clean up GPU
 	CUDACleanUpPrediction();
 #else
