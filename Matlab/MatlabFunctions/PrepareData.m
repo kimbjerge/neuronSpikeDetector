@@ -63,13 +63,14 @@ if( strcmp(PlotRunning, 'YES') == 1)
     sizeChannelData = size(ChannelsInDataToUse);
     
     figure
-    if(sizeChannelData(1) > 1)
+    if(sizeChannelData(2) > 1)
         surf(channelData);
+        xlabel('Channel [#]'),ylabel('sampling points'), zlabel('Amplitude')
     else
        plot( channelData );
+       xlabel('Amplitude'),xlabel('sampling points')
     end
     title('Unfiltered Raw Data')
-    xlabel('Channel [#]'),ylabel('sampling points'), zlabel('Amplitude')
 end
 
 end

@@ -1,6 +1,7 @@
 
 PrePath = 'C:\neuronSpikeDetector\Matlab\'; % Path to the root of this project
 DiectoryToEvaluate = strcat(PrePath,'Simulation_10min_30kHz_DefVals'); % Path to the data, rez file and more
+%DiectoryToEvaluate = strcat(PrePath,'Simulation_CVLAB'); % Path to the data, rez file and more
 load(strcat(DiectoryToEvaluate, '\rez.mat')); % Loads the rez file from KiloSort
 isKiloSortTemplateMerged = 'YES'; % Has KiloSort merged the templates?
 
@@ -64,10 +65,10 @@ fclose('all');
 %% Make training data
 RecordFile = strcat(DiectoryToEvaluate, '\sim_binary.dat');
 signalOffset = 0;
-signalLength_s = 30;
+signalLength_s = 10;
 signalGain = 1; 
 %signalGain = 6; % 15.6 db
-ViewFiguresRunning = 'YES';
+ViewFiguresRunning = 'NO';
 ShowFunctionExcTime = 'NO';
 
 Oldsignal = PrepareData( RecordFile, 1:32, rez, signalOffset, ...
@@ -88,8 +89,8 @@ fclose('all');
 
 %% Make Prediction data
 RecordFile = strcat(DiectoryToEvaluate, '\sim_binary.dat');
-signalOffset = 30;
-signalLength_s = 30;
+signalOffset = 10;
+signalLength_s = 10;
 signalGain = 1;
 %signalGain = 6; % 15.6 db
 ViewFiguresRunning = 'NO';
@@ -117,7 +118,7 @@ MaximumChannelsToUse = 32;
 templateGain = 1;
 %templateGain = 6; % 15.6 db
 pathToNPYMaster = strcat(PrePath, 'MatlabLibs\npy-matlab-master'); % Path to NPY matlab reader project
-ViewFiguresRunning = 'YES';
+ViewFiguresRunning = 'NO';
 ShowFunctionExcTime = 'NO';
 
 
