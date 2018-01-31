@@ -48,7 +48,7 @@ for I = startIndex: (startIndex-1) + NumberOfSamples*NumberOfChannelsReal
 end
 
 
-channelData = channelData(:, 3:34);
+%channelData = channelData(:, 3:34);
 
 channelData = channelData(:, ChannelsInDataToUse);
 

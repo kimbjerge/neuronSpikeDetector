@@ -45,33 +45,16 @@ if length(meassage) == 0
 end
 fclose('all');
 
-%% Project info file
-
-fullFileName = fullfile(PathToOutputFiles, 'projectInfo.bin');
-
-if exist(PathToOutputFiles) == 0
-    mkdir(PathToOutputFiles);
-end
-
-rezFileSize = size(rez.st3);
-projectInfo = rezFileSize(1);
-
-[fileID meassage] = fopen(fullFileName, 'w');
-if length(meassage) == 0
-    fwrite(fileID, projectInfo, 'float');
-end
-fclose('all');
-
 %% Make training data
 RecordFile = strcat(DiectoryToEvaluate, '\sim_binary.dat');
 signalOffset = 0;
 signalLength_s = 10;
 signalGain = 1; 
 %signalGain = 6; % 15.6 db
-ViewFiguresRunning = 'NO';
+ViewFiguresRunning = 'YES';
 ShowFunctionExcTime = 'NO';
 
-Oldsignal = PrepareData( RecordFile, 1:32, rez, signalOffset, ...
+Oldsignal = PrepareData( RecordFile, 3:34, rez, signalOffset, ...
                          signalLength_s, signalGain, fs, ViewFiguresRunning, ShowFunctionExcTime);
 
 fullFileName = fullfile(PathToOutputFiles, 'rawData300000x32.bin');
@@ -83,7 +66,7 @@ end
 
 [fileID meassage] = fopen(fullFileName, 'w');
 if length(meassage) == 0
-    fwrite(fileID, Oldsignal, 'float');
+    fwrite(fileID, Oldsignal', 'float');
 end
 fclose('all');
 
@@ -93,10 +76,10 @@ signalOffset = 10;
 signalLength_s = 10;
 signalGain = 1;
 %signalGain = 6; % 15.6 db
-ViewFiguresRunning = 'NO';
+ViewFiguresRunning = 'YES';
 ShowFunctionExcTime = 'NO';
 
-Oldsignal = PrepareData( RecordFile, 1:32, rez, signalOffset, ...
+Oldsignal = PrepareData( RecordFile, 3:34, rez, signalOffset, ...
                          signalLength_s, signalGain, fs, ViewFiguresRunning, ShowFunctionExcTime);
 
 fullFileName = fullfile(PathToOutputFiles, 'rawDataForPrediction300000x32.bin');
@@ -108,7 +91,7 @@ end
 
 [fileID meassage] = fopen(fullFileName, 'w');
 if length(meassage) == 0
-    fwrite(fileID, Oldsignal, 'float');
+    fwrite(fileID, Oldsignal', 'float');
 end
 fclose('all');
 
@@ -136,7 +119,7 @@ for Y = 1: 64
 
     [fileID meassage] = fopen(fullFileName, 'w');
     if length(meassage) == 0
-        fwrite(fileID, template, 'float');
+        fwrite(fileID, template', 'float');
     else
         fprintf('Error writing!\n');
     end
