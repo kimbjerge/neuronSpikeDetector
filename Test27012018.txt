@@ -292,3 +292,133 @@ Prediction using template : 64 Gave a score W-F1 of: 0.292302
 Prediction, all models time: 347.488 ms. processing 10 seconds of data
 Total CPU Prediction time: 3182.42 ms. processing 10 seconds of data
 Press any key to continue . . .
+
+
+CUDA test med ConvertToC++
+************* TRAINING **************
+Training using template : 1 best thredshold :0.38 Gave a score W-F1 of: 0.092173
+Training using template : 2 best thredshold :0.34 Gave a score W-F1 of: 0.0951843
+Training using template : 3 best thredshold :0.32 Gave a score W-F1 of: 0.130706
+Training using template : 5 best thredshold :0.34 Gave a score W-F1 of: 0.0884607
+Training using template : 7 best thredshold :0.44 Gave a score W-F1 of: 0.0735153
+Training using template : 8 best thredshold :0.22 Gave a score W-F1 of: 0.150263
+Training using template : 10 best thredshold :0.2 Gave a score W-F1 of: 0.0548189
+Training using template : 11 best thredshold :0.38 Gave a score W-F1 of: 0.0638244
+Training using template : 12 best thredshold :0.22 Gave a score W-F1 of: 0.109141
+Training using template : 20 best thredshold :0.38 Gave a score W-F1 of: 0.102245
+Training using template : 22 best thredshold :0.32 Gave a score W-F1 of: 0.0885176
+Training using template : 23 best thredshold :0.34 Gave a score W-F1 of: 0.0876277
+Training using template : 25 best thredshold :0.46 Gave a score W-F1 of: 0.0951539
+Training using template : 26 best thredshold :0.36 Gave a score W-F1 of: 0.0869133
+Training using template : 27 best thredshold :0.4 Gave a score W-F1 of: 0.0831688
+Training using template : 30 best thredshold :0.34 Gave a score W-F1 of: 0.0799551
+Training using template : 32 best thredshold :0.42 Gave a score W-F1 of: 0.0694492
+Training using template : 35 best thredshold :0.28 Gave a score W-F1 of: 0.123312
+Training using template : 40 best thredshold :0.42 Gave a score W-F1 of: 0.0669754
+Training using template : 42 best thredshold :0.24 Gave a score W-F1 of: 0.088116
+Training using template : 47 best thredshold :0.22 Gave a score W-F1 of: 0.0957967
+Training using template : 48 best thredshold :0.34 Gave a score W-F1 of: 0.123057
+Training using template : 57 best thredshold :0.24 Gave a score W-F1 of: 0.140522
+Training using template : 60 best thredshold :0.3 Gave a score W-F1 of: 0.0798073
+Training using template : 61 best thredshold :0.36 Gave a score W-F1 of: 0.0676786
+Training using template : 62 best thredshold :0.28 Gave a score W-F1 of: 0.0943824
+Training using template : 64 best thredshold :0.28 Gave a score W-F1 of: 0.0839373
+Total CUDA Training time: 885.779 ms. processing 10 seconds of data
+************* PREDICTION **************
+Template: 1 found number of times: 10890
+Template: 2 found number of times: 18677
+Template: 3 found number of times: 31226
+Template: 4 found number of times: 0
+Template: 5 found number of times: 25551
+Template: 6 found number of times: 0
+Template: 7 found number of times: 11648
+Template: 8 found number of times: 53189
+Template: 9 found number of times: 0
+Template: 10 found number of times: 15848
+Template: 11 found number of times: 8276
+Template: 12 found number of times: 51941
+Template: 13 found number of times: 0
+Template: 14 found number of times: 0
+Template: 15 found number of times: 0
+Template: 16 found number of times: 0
+Template: 17 found number of times: 0
+Template: 18 found number of times: 0
+Template: 19 found number of times: 0
+Template: 20 found number of times: 21950
+Template: 21 found number of times: 0
+Template: 22 found number of times: 24670
+Template: 23 found number of times: 23719
+Template: 24 found number of times: 0
+Template: 25 found number of times: 12599
+Template: 26 found number of times: 11458
+Template: 27 found number of times: 13648
+Template: 28 found number of times: 0
+Template: 29 found number of times: 0
+Template: 30 found number of times: 16658
+Template: 31 found number of times: 0
+Template: 32 found number of times: 22154
+Template: 33 found number of times: 0
+Template: 34 found number of times: 0
+Template: 35 found number of times: 32270
+Template: 36 found number of times: 0
+Template: 37 found number of times: 0
+Template: 38 found number of times: 0
+Template: 39 found number of times: 0
+Template: 40 found number of times: 9141
+Template: 41 found number of times: 0
+Template: 42 found number of times: 31392
+Template: 43 found number of times: 0
+Template: 44 found number of times: 0
+Template: 45 found number of times: 0
+Template: 46 found number of times: 0
+Template: 47 found number of times: 16310
+Template: 48 found number of times: 23125
+Template: 49 found number of times: 0
+Template: 50 found number of times: 0
+Template: 51 found number of times: 0
+Template: 52 found number of times: 0
+Template: 53 found number of times: 0
+Template: 54 found number of times: 0
+Template: 55 found number of times: 0
+Template: 56 found number of times: 0
+Template: 57 found number of times: 46781
+Template: 58 found number of times: 0
+Template: 59 found number of times: 0
+Template: 60 found number of times: 42338
+Template: 61 found number of times: 21355
+Template: 62 found number of times: 19174
+Template: 63 found number of times: 0
+Template: 64 found number of times: 38616
+Total CUDA Prediction time: 740.845 ms. processing 10 seconds of data
+Press any key to continue . . .
+
+Default data
+************* TRAINING **************
+Training using template : 1 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 2 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 3 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 5 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 7 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 8 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 10 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 11 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 12 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 20 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 22 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 23 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 25 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 26 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 27 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 30 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 32 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 35 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 40 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 42 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 47 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 48 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 57 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 60 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 61 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 62 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 64 best thredshold :0.2 Gave a score W-F1 of: 0
+Total CUDA Training time: 811.004 ms. processing 10 seconds of data
