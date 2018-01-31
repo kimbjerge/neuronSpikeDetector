@@ -1,0 +1,225 @@
+Problemer fundet med SpikeDetection 31-01-2018:
+----------------------------------------------
+
+---------------------------------------------------------------------------------------------
+1. ConvertToC++ for 10 sec. giver ikke det samme resultat som data i SpikeDetection\TestData?
+---------------------------------------------------------------------------------------------
+
+SpikeDetection\TestData default (C++/OpenCV)
+************* TRAINING **************
+1D filtering time: 361.253 ms. processing 10 seconds of data
+2D filtering time: 59.805 ms. processing 10 seconds of data
+NXCOR all templates time: 2460.95 ms. processing 10 seconds of data
+Train all template models time: 671.175 ms. processing 10 seconds of data
+Total CPU Training time: 3567.18 ms. processing 10 seconds of data
+************* PREDICTION **************
+1D filtering time: 377.24 ms. processing 10 seconds of data
+2D filtering time: 61.39 ms. processing 10 seconds of data
+NXCOR all templates time: 2465.73 ms. processing 10 seconds of data
+Prediction using template : 1 Gave a score W-F1 of: 0.819737
+Prediction using template : 2 Gave a score W-F1 of: 0.984615
+Prediction using template : 3 Gave a score W-F1 of: 0.992857
+Prediction using template : 5 Gave a score W-F1 of: 0.996
+Prediction using template : 7 Gave a score W-F1 of: 0.99186
+Prediction using template : 8 Gave a score W-F1 of: 0.994
+Prediction using template : 10 Gave a score W-F1 of: 0.952273
+Prediction using template : 11 Gave a score W-F1 of: 1
+Prediction using template : 12 Gave a score W-F1 of: 0.968641
+Prediction using template : 20 Gave a score W-F1 of: 0.969118
+Prediction using template : 22 Gave a score W-F1 of: 0.904575
+Prediction using template : 23 Gave a score W-F1 of: 0.801743
+Prediction using template : 25 Gave a score W-F1 of: 0.979542
+Prediction using template : 26 Gave a score W-F1 of: 0.916129
+Prediction using template : 27 Gave a score W-F1 of: 0.98
+Prediction using template : 30 Gave a score W-F1 of: 0.991026
+Prediction using template : 32 Gave a score W-F1 of: 0.988608
+Prediction using template : 35 Gave a score W-F1 of: 0.994118
+Prediction using template : 40 Gave a score W-F1 of: 0.485294
+Prediction using template : 42 Gave a score W-F1 of: 0.981818
+Prediction using template : 47 Gave a score W-F1 of: 1
+Prediction using template : 48 Gave a score W-F1 of: 0.96875
+Prediction using template : 57 Gave a score W-F1 of: 0.939506
+Prediction using template : 60 Gave a score W-F1 of: 0.893162
+Prediction using template : 61 Gave a score W-F1 of: 0.95259
+Prediction using template : 62 Gave a score W-F1 of: 1
+Prediction using template : 64 Gave a score W-F1 of: 0.75
+Prediction, all models time: 120.083 ms. processing 10 seconds of data
+Total CPU Prediction time: 3052.19 ms. processing 10 seconds of data
+Press any key to continue . . .
+---------------------------------------------------------------------------------
+Data from C:\neuronSpikeDetector\Matlab\ConvertToC++:
+************* TRAINING **************
+1D filtering time: 326.674 ms. processing 10 seconds of data
+2D filtering time: 60.02 ms. processing 10 seconds of data
+NXCOR all templates time: 2467.64 ms. processing 10 seconds of data
+Train all template models time: 2093.39 ms. processing 10 seconds of data
+Total CPU Training time: 4960.05 ms. processing 10 seconds of data
+************* PREDICTION **************
+1D filtering time: 344.018 ms. processing 10 seconds of data
+2D filtering time: 62.254 ms. processing 10 seconds of data
+NXCOR all templates time: 2429.59 ms. processing 10 seconds of data
+Prediction using template : 1 Gave a score W-F1 of: 0.211041
+Prediction using template : 2 Gave a score W-F1 of: 0.215988
+Prediction using template : 3 Gave a score W-F1 of: 0.214883
+Prediction using template : 5 Gave a score W-F1 of: 0.245183
+Prediction using template : 7 Gave a score W-F1 of: 0.244839
+Prediction using template : 8 Gave a score W-F1 of: 0.240819
+Prediction using template : 10 Gave a score W-F1 of: 0.137044
+Prediction using template : 11 Gave a score W-F1 of: 0.177918
+Prediction using template : 12 Gave a score W-F1 of: 0.272915
+Prediction using template : 20 Gave a score W-F1 of: 0.0012822
+Prediction using template : 22 Gave a score W-F1 of: 0.21202
+Prediction using template : 23 Gave a score W-F1 of: 0.268056
+Prediction using template : 25 Gave a score W-F1 of: 0.263206
+Prediction using template : 26 Gave a score W-F1 of: 0.17241
+Prediction using template : 27 Gave a score W-F1 of: 0.291837
+Prediction using template : 30 Gave a score W-F1 of: 0.266362
+Prediction using template : 32 Gave a score W-F1 of: 0.247943
+Prediction using template : 35 Gave a score W-F1 of: 0.194844
+Prediction using template : 40 Gave a score W-F1 of: 0.233635
+Prediction using template : 42 Gave a score W-F1 of: 0.229305
+Prediction using template : 47 Gave a score W-F1 of: 0.103476
+Prediction using template : 48 Gave a score W-F1 of: 0.213185
+Prediction using template : 57 Gave a score W-F1 of: 0.228065
+Prediction using template : 60 Gave a score W-F1 of: 0.00111914
+Prediction using template : 61 Gave a score W-F1 of: 0.237375
+Prediction using template : 62 Gave a score W-F1 of: 0.198553
+Prediction using template : 64 Gave a score W-F1 of: 0.292302
+Prediction, all models time: 350.622 ms. processing 10 seconds of data
+Total CPU Prediction time: 3199.28 ms. processing 10 seconds of data
+Press any key to continue . . .
+
+---------------------------------------------------------------------------------------------
+2. CUDA for 10 sec. giver ikke samme resultat som C++/OpenCV versionen?
+(Tilføjet print af training W-F1 score og thredsholds)
+----------------------------------------------------------------------------
+
+SpikeDetection\TestData default (C++/OpenCV)
+************* TRAINING **************
+Training using template : 1 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 2 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 3 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 5 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 7 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 8 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 10 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 11 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 12 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 20 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 22 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 23 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 25 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 26 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 27 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 30 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 32 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 35 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 40 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 42 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 47 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 48 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 57 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 60 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 61 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 62 best thredshold :0.2 Gave a score W-F1 of: 0
+Training using template : 64 best thredshold :0.2 Gave a score W-F1 of: 0
+Total CUDA Training time: 811.004 ms. processing 10 seconds of data
+---------------------------------------------------------------------------------
+Data from C:\neuronSpikeDetector\Matlab\ConvertToC++:
+************* TRAINING **************
+Training using template : 1 best thredshold :0.38 Gave a score W-F1 of: 0.092173
+Training using template : 2 best thredshold :0.34 Gave a score W-F1 of: 0.0951843
+Training using template : 3 best thredshold :0.32 Gave a score W-F1 of: 0.130706
+Training using template : 5 best thredshold :0.34 Gave a score W-F1 of: 0.0884607
+Training using template : 7 best thredshold :0.44 Gave a score W-F1 of: 0.0735153
+Training using template : 8 best thredshold :0.22 Gave a score W-F1 of: 0.150263
+Training using template : 10 best thredshold :0.2 Gave a score W-F1 of: 0.0548189
+Training using template : 11 best thredshold :0.38 Gave a score W-F1 of: 0.0638244
+Training using template : 12 best thredshold :0.22 Gave a score W-F1 of: 0.109141
+Training using template : 20 best thredshold :0.38 Gave a score W-F1 of: 0.102245
+Training using template : 22 best thredshold :0.32 Gave a score W-F1 of: 0.0885176
+Training using template : 23 best thredshold :0.34 Gave a score W-F1 of: 0.0876277
+Training using template : 25 best thredshold :0.46 Gave a score W-F1 of: 0.0951539
+Training using template : 26 best thredshold :0.36 Gave a score W-F1 of: 0.0869133
+Training using template : 27 best thredshold :0.4 Gave a score W-F1 of: 0.0831688
+Training using template : 30 best thredshold :0.34 Gave a score W-F1 of: 0.0799551
+Training using template : 32 best thredshold :0.42 Gave a score W-F1 of: 0.0694492
+Training using template : 35 best thredshold :0.28 Gave a score W-F1 of: 0.123312
+Training using template : 40 best thredshold :0.42 Gave a score W-F1 of: 0.0669754
+Training using template : 42 best thredshold :0.24 Gave a score W-F1 of: 0.088116
+Training using template : 47 best thredshold :0.22 Gave a score W-F1 of: 0.0957967
+Training using template : 48 best thredshold :0.34 Gave a score W-F1 of: 0.123057
+Training using template : 57 best thredshold :0.24 Gave a score W-F1 of: 0.140522
+Training using template : 60 best thredshold :0.3 Gave a score W-F1 of: 0.0798073
+Training using template : 61 best thredshold :0.36 Gave a score W-F1 of: 0.0676786
+Training using template : 62 best thredshold :0.28 Gave a score W-F1 of: 0.0943824
+Training using template : 64 best thredshold :0.28 Gave a score W-F1 of: 0.0839373
+Total CUDA Training time: 885.779 ms. processing 10 seconds of data
+************* PREDICTION **************
+Template: 1 found number of times: 10890
+Template: 2 found number of times: 18677
+Template: 3 found number of times: 31226
+Template: 4 found number of times: 0
+Template: 5 found number of times: 25551
+Template: 6 found number of times: 0
+Template: 7 found number of times: 11648
+Template: 8 found number of times: 53189
+Template: 9 found number of times: 0
+Template: 10 found number of times: 15848
+Template: 11 found number of times: 8276
+Template: 12 found number of times: 51941
+Template: 13 found number of times: 0
+Template: 14 found number of times: 0
+Template: 15 found number of times: 0
+Template: 16 found number of times: 0
+Template: 17 found number of times: 0
+Template: 18 found number of times: 0
+Template: 19 found number of times: 0
+Template: 20 found number of times: 21950
+Template: 21 found number of times: 0
+Template: 22 found number of times: 24670
+Template: 23 found number of times: 23719
+Template: 24 found number of times: 0
+Template: 25 found number of times: 12599
+Template: 26 found number of times: 11458
+Template: 27 found number of times: 13648
+Template: 28 found number of times: 0
+Template: 29 found number of times: 0
+Template: 30 found number of times: 16658
+Template: 31 found number of times: 0
+Template: 32 found number of times: 22154
+Template: 33 found number of times: 0
+Template: 34 found number of times: 0
+Template: 35 found number of times: 32270
+Template: 36 found number of times: 0
+Template: 37 found number of times: 0
+Template: 38 found number of times: 0
+Template: 39 found number of times: 0
+Template: 40 found number of times: 9141
+Template: 41 found number of times: 0
+Template: 42 found number of times: 31392
+Template: 43 found number of times: 0
+Template: 44 found number of times: 0
+Template: 45 found number of times: 0
+Template: 46 found number of times: 0
+Template: 47 found number of times: 16310
+Template: 48 found number of times: 23125
+Template: 49 found number of times: 0
+Template: 50 found number of times: 0
+Template: 51 found number of times: 0
+Template: 52 found number of times: 0
+Template: 53 found number of times: 0
+Template: 54 found number of times: 0
+Template: 55 found number of times: 0
+Template: 56 found number of times: 0
+Template: 57 found number of times: 46781
+Template: 58 found number of times: 0
+Template: 59 found number of times: 0
+Template: 60 found number of times: 42338
+Template: 61 found number of times: 21355
+Template: 62 found number of times: 19174
+Template: 63 found number of times: 0
+Template: 64 found number of times: 38616
+Total CUDA Prediction time: 740.845 ms. processing 10 seconds of data
+Press any key to continue . . .
+
