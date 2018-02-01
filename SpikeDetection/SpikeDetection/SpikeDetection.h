@@ -141,7 +141,7 @@ float SpikeDetection<T>::getLatestExecutionTime(void)
 
 /*----------------------------------------------------------------------------*/
 /**
-* @brief The training of the model.
+* @brief The training of the model, reduced memory usage version
 *
 * @retval void : none
 */
@@ -361,6 +361,12 @@ cudaError_t SpikeDetection<T>::runTrainingCUDA(void)
 	return cudaStatus;
 }
 
+/*----------------------------------------------------------------------------*/
+/**
+* @brief The training of the model.
+*
+* @retval void : none
+*/
 template <class T>
 void SpikeDetection<T>::runTraining(void)
 {
@@ -381,10 +387,12 @@ void SpikeDetection<T>::runTraining(void)
 	channelFilter.runFilterCUDA(dev_DataPointer, dev_DataPointer, dev_interMfilteredDataPointer, dev_ChannelFilterCoeffA, dev_ChannelFilterCoeffB);
 
 #ifdef CUDA_VERIFY
-	USED_DATATYPE* filteredResultsCUDA = new USED_DATATYPE[(uint32_t)(TRAINING_DATA_LENGTH*DATA_CHANNELS)];
-	RetreiveResults(dev_DataPointer, filteredResultsCUDA, TRAINING_DATA_LENGTH, DATA_CHANNELS, sizeof(USED_DATATYPE));
 	USED_DATATYPE* filteredResults = new USED_DATATYPE[(uint32_t)(TRAINING_DATA_LENGTH*DATA_CHANNELS)];
 	channelFilter.runFilter(filteredResults, projectInfo.getTraningData(), DATA_CHANNELS, TRAINING_DATA_LENGTH);
+
+	USED_DATATYPE* filteredResultsCUDA = new USED_DATATYPE[(uint32_t)(TRAINING_DATA_LENGTH*DATA_CHANNELS)];
+	RetreiveResults(dev_DataPointer, filteredResultsCUDA, TRAINING_DATA_LENGTH, DATA_CHANNELS, sizeof(USED_DATATYPE));
+
 	int error = 0;
 	for (int i = 0; i < TRAINING_DATA_LENGTH*DATA_CHANNELS; i++) {
 		if (round(filteredResultsCUDA[i]) < floor(filteredResults[i]) || round(filteredResultsCUDA[i]) > ceil(filteredResults[i])) {
@@ -396,6 +404,7 @@ void SpikeDetection<T>::runTraining(void)
 		}
 	}
 	std::cout << "Channel filter errors : " << error << std::endl;
+	free(filteredResultsCUDA);
 #endif
 
 #else
@@ -412,10 +421,11 @@ void SpikeDetection<T>::runTraining(void)
 	kernelFilter.runFilterReplicateCUDA(dev_interMfilteredDataPointer, dev_DataPointer, dev_kernelFilterCoeff, DEFAULT_KERNEL_DIM, TRAINING_DATA_LENGTH, DATA_CHANNELS);
 
 #ifdef CUDA_VERIFY
-	USED_DATATYPE* kernelResultsCUDA = new USED_DATATYPE[(uint32_t)(TRAINING_DATA_LENGTH*DATA_CHANNELS)];
-	RetreiveResults(dev_interMfilteredDataPointer, kernelResultsCUDA, TRAINING_DATA_LENGTH, DATA_CHANNELS, sizeof(USED_DATATYPE));
 	USED_DATATYPE* kernelResults = new USED_DATATYPE[(uint32_t)(TRAINING_DATA_LENGTH*DATA_CHANNELS)];
 	kernelFilter.runFilterReplicate(kernelResults, filteredResults, DEFAULT_KERNEL_DIM, TRAINING_DATA_LENGTH, DATA_CHANNELS);
+
+	USED_DATATYPE* kernelResultsCUDA = new USED_DATATYPE[(uint32_t)(TRAINING_DATA_LENGTH*DATA_CHANNELS)];
+	RetreiveResults(dev_interMfilteredDataPointer, kernelResultsCUDA, TRAINING_DATA_LENGTH, DATA_CHANNELS, sizeof(USED_DATATYPE));
 
 	error = 0;
 	for (int i = 0; i < TRAINING_DATA_LENGTH*DATA_CHANNELS; i++) {
@@ -429,15 +439,15 @@ void SpikeDetection<T>::runTraining(void)
 	}
 	std::cout << "Kernel filter errors : " << error << std::endl;
 	free(filteredResults);
+	free(kernelResultsCUDA);
 #endif
 
 #else 
 #ifdef USE_OPENCV
-	//KBE??? changed
-	//USED_DATATYPE* kernelResults = new USED_DATATYPE[(uint32_t)(TRAINING_DATA_LENGTH*DATA_CHANNELS)];
-	//kernelFilter.runFilterOpenCV(kernelResults, filteredResults, DEFAULT_KERNEL_DIM, TRAINING_DATA_LENGTH, DATA_CHANNELS);
+	USED_DATATYPE* kernelResults = new USED_DATATYPE[(uint32_t)(TRAINING_DATA_LENGTH*DATA_CHANNELS)];
+	kernelFilter.runFilterOpenCV(kernelResults, filteredResults, DEFAULT_KERNEL_DIM, TRAINING_DATA_LENGTH, DATA_CHANNELS);
 #ifdef PRINT_OUTPUT_INFO
-	//std::cout << "2D filtering time: " << kernelFilter.getLatestExecutionTime() / 1000 << " ms. processing " << TRAINING_DATA_TIME << " seconds of data" << std::endl;
+	std::cout << "2D filtering time: " << kernelFilter.getLatestExecutionTime() / 1000 << " ms. processing " << TRAINING_DATA_TIME << " seconds of data" << std::endl;
 #endif	
 #else
 	USED_DATATYPE* kernelResults = new USED_DATATYPE[(uint32_t)(TRAINING_DATA_LENGTH*DATA_CHANNELS)];
@@ -454,28 +464,31 @@ void SpikeDetection<T>::runTraining(void)
 	nxcorController.performNXCORWithTemplatesCUDA(dev_NXCOROutput, dev_templates, dev_interMfilteredDataPointer, (uint16_t)TEMPLATE_CROPPED_LENGTH, (uint16_t)TEMPLATE_CROPPED_WIDTH, TRAINING_DATA_LENGTH, DATA_CHANNELS, MAXIMUM_NUMBER_OF_TEMPLATES, dev_lowerChannelIndex);
 
 #ifdef CUDA_VERIFY
+	nxcorController.performNXCORWithTemplates(kernelResults);
+
 	USED_DATATYPE* NXCOROutputCUDA = new USED_DATATYPE[(uint32_t)(TRAINING_DATA_LENGTH*MAXIMUM_NUMBER_OF_TEMPLATES)];
 	RetreiveResults(dev_NXCOROutput, NXCOROutputCUDA, TRAINING_DATA_LENGTH, MAXIMUM_NUMBER_OF_TEMPLATES, sizeof(USED_DATATYPE));
-	nxcorController.performNXCORWithTemplates(kernelResults);
-	std::cout << "NXCOR filter " << std::endl;
 
 	error = 0;
-	for (int t = 0; t < 2; t++) {
-		USED_DATATYPE* featureArray = nxcorController.getFeatureForTemplate(t+1);
-		for (int i = 0; i < (TRAINING_DATA_LENGTH - TEMPLATE_CROPPED_LENGTH - 10); i++) {
-			float feature = featureArray[i];
-			float featureCUDA = NXCOROutputCUDA[t*MAXIMUM_NUMBER_OF_TEMPLATES + i];
-			//if (round(featureCUDA) < floor(feature) || round(featureCUDA) > ceil(feature)) {
-				error++;
-				if (i < 10) {
-					printf("%0.4f %0.4f, ", feature, featureCUDA);
-					if (i == 9) std::cout << endl;
+	float precision = 1000;
+	for (int t = 0; t < MAXIMUM_NUMBER_OF_TEMPLATES; t++) {
+		if (projectInfo.isTemplateUsedTraining(t + 1) > 0)
+		{
+			USED_DATATYPE* featureArray = nxcorController.getFeatureForTemplate(t + 1);
+			for (int i = 0; i < (TRAINING_DATA_LENGTH - TEMPLATE_CROPPED_LENGTH - 10); i++) {
+				float feature = featureArray[i];
+				float featureCUDA = NXCOROutputCUDA[t*TRAINING_DATA_LENGTH + i];
+				if (round(featureCUDA*precision) < floor(feature*precision) || round(featureCUDA*precision) > ceil(feature*precision)) {
+					error++;
+					printf("T%i %0.4f %0.4f, ", t+1, feature, featureCUDA);
+					if ((error+1)%10 == 0) std::cout << endl;
 				}
-			//}
+			}
 		}
 	}
 	std::cout << "NXCOR filter errors : " << error << std::endl;
-
+	free(kernelResults);
+	free(NXCOROutputCUDA);
 #endif
 
 #else
@@ -489,6 +502,11 @@ void SpikeDetection<T>::runTraining(void)
 
 	/**** TRAIN ****/
 #ifdef USE_CUDA
+
+#ifdef CUDA_VERIFY
+	classifierController.performTrainingBasedOnTemplates(&nxcorController, &templateController);
+#endif
+
 	// Perform classification part 1 on GPU
 	classifierController.performTrainingBasedOnTemplatesPart1_CUDA(dev_NXCOROutput, dev_aboveThresholdIndicator, dev_FoundTimes, dev_FoundTimesCounter, dev_TPCounter, dev_spikesPeakOffset,
 																	dev_grundTruth, dev_grundTruthSizes, dev_grundTruthStartInd);
@@ -531,8 +549,7 @@ void SpikeDetection<T>::runTraining(void)
 
 
 #ifndef USE_CUDA
-	//KBE???
-	//delete kernelResults;
+	delete kernelResults;
 	delete filteredResults;
 #endif
 
@@ -609,6 +626,7 @@ void SpikeDetection<T>::runPrediction(void)
 	nxcorController.performNXCORWithTemplatesCUDA(dev_NXCOROutputP, dev_templatesP, dev_interMfilteredDataPointerP, (uint16_t)TEMPLATE_CROPPED_LENGTH, (uint16_t)TEMPLATE_CROPPED_WIDTH, TRAINING_DATA_LENGTH, DATA_CHANNELS, MAXIMUM_NUMBER_OF_TEMPLATES, dev_lowerChannelIndexP);
 #else
 	// KBE??? changed
+	//nxcorController.performNXCORWithTemplates(kernelResults);
 	nxcorController.performNXCORWithTemplates(filteredResults);
 #ifdef PRINT_OUTPUT_INFO
 	std::cout << "NXCOR all templates time: " << nxcorController.getLatestExecutionTime() / 1000 << " ms. processing " << TRAINING_DATA_TIME << " seconds of data" << std::endl;
@@ -805,7 +823,8 @@ cudaError_t SpikeDetection<T>::prepareCUDATraining(void)
 
 	/* Memory copy truth table start indecis to the GPU */
 	cudaStatus = MemCpyCUDADataU32(dev_grundTruthStartInd, projectInfo.getTruthTableStartIndencis(), (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)1, (uint16_t)sizeof(uint32_t));
-	if (cudaStatus != cudaSuccess) return cudaStatus;
+	
+	return cudaStatus;
 }
 
 
@@ -913,7 +932,7 @@ cudaError_t SpikeDetection<T>::prepareCUDAPrediction(void)
 	cudaStatus = MemCpyCUDADataU16(dev_spikesPeakOffsetP, templateController.getAllTemplatesPeaksOffset(), (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)1, (uint16_t)sizeof(uint16_t));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 	
-	/* Memory copy Kernel filter coeff to data */
+	/* Memory copy trained thresholds to GPU */
 	float thresholdsArray[MAXIMUM_NUMBER_OF_TEMPLATES];
 	for (uint32_t i = 0; i < MAXIMUM_NUMBER_OF_TEMPLATES; i++) { thresholdsArray[i] = classifierController.getTemplateThreshold(i + 1); }
 	cudaStatus = MemCpyCUDAData(dev_thresholdsP, thresholdsArray, (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)1, (uint16_t)sizeof(USED_DATATYPE));
