@@ -379,6 +379,25 @@ void SpikeDetection<T>::runTraining(void)
 	/**** 1D Filter ****/
 #ifdef USE_CUDA 
 	channelFilter.runFilterCUDA(dev_DataPointer, dev_DataPointer, dev_interMfilteredDataPointer, dev_ChannelFilterCoeffA, dev_ChannelFilterCoeffB);
+
+#ifdef CUDA_VERIFY
+	USED_DATATYPE* filteredResultsCUDA = new USED_DATATYPE[(uint32_t)(TRAINING_DATA_LENGTH*DATA_CHANNELS)];
+	RetreiveResults(dev_DataPointer, filteredResultsCUDA, TRAINING_DATA_LENGTH, DATA_CHANNELS, sizeof(USED_DATATYPE));
+	USED_DATATYPE* filteredResults = new USED_DATATYPE[(uint32_t)(TRAINING_DATA_LENGTH*DATA_CHANNELS)];
+	channelFilter.runFilter(filteredResults, projectInfo.getTraningData(), DATA_CHANNELS, TRAINING_DATA_LENGTH);
+	int error = 0;
+	for (int i = 0; i < TRAINING_DATA_LENGTH*DATA_CHANNELS; i++) {
+		if (round(filteredResultsCUDA[i]) < floor(filteredResults[i]) || round(filteredResultsCUDA[i]) > ceil(filteredResults[i])) {
+			error++;
+			if (i < 32 * 10) {
+				printf("%0.4f %0.4f, ", filteredResults[i], filteredResultsCUDA[i]);
+				if (i+1 % 32 == 0) std::cout << endl;
+			}
+		}
+	}
+	std::cout << "Channel filter errors : " << error << std::endl;
+#endif
+
 #else
 	USED_DATATYPE* filteredResults = new USED_DATATYPE[(uint32_t)(TRAINING_DATA_LENGTH*DATA_CHANNELS)];
 	channelFilter.runFilter(filteredResults, projectInfo.getTraningData(), DATA_CHANNELS, TRAINING_DATA_LENGTH);
@@ -391,6 +410,27 @@ void SpikeDetection<T>::runTraining(void)
 	/**** 2D Filter ****/
 #ifdef USE_CUDA
 	kernelFilter.runFilterReplicateCUDA(dev_interMfilteredDataPointer, dev_DataPointer, dev_kernelFilterCoeff, DEFAULT_KERNEL_DIM, TRAINING_DATA_LENGTH, DATA_CHANNELS);
+
+#ifdef CUDA_VERIFY
+	USED_DATATYPE* kernelResultsCUDA = new USED_DATATYPE[(uint32_t)(TRAINING_DATA_LENGTH*DATA_CHANNELS)];
+	RetreiveResults(dev_interMfilteredDataPointer, kernelResultsCUDA, TRAINING_DATA_LENGTH, DATA_CHANNELS, sizeof(USED_DATATYPE));
+	USED_DATATYPE* kernelResults = new USED_DATATYPE[(uint32_t)(TRAINING_DATA_LENGTH*DATA_CHANNELS)];
+	kernelFilter.runFilterReplicate(kernelResults, filteredResults, DEFAULT_KERNEL_DIM, TRAINING_DATA_LENGTH, DATA_CHANNELS);
+
+	error = 0;
+	for (int i = 0; i < TRAINING_DATA_LENGTH*DATA_CHANNELS; i++) {
+		if (round(kernelResultsCUDA[i]) < floor(kernelResults[i]) || round(kernelResultsCUDA[i]) > ceil(kernelResults[i])) {
+			error++;
+			if (i < 32 * 10) {
+				printf("%0.4f %0.4f, ", kernelResults[i], kernelResultsCUDA[i]);
+				if (i + 1 % 32 == 0) std::cout << endl;
+			}
+		}
+	}
+	std::cout << "Kernel filter errors : " << error << std::endl;
+	free(filteredResults);
+#endif
+
 #else 
 #ifdef USE_OPENCV
 	//KBE??? changed
@@ -412,6 +452,32 @@ void SpikeDetection<T>::runTraining(void)
 	/**** NXCOR Filter ****/
 #ifdef USE_CUDA
 	nxcorController.performNXCORWithTemplatesCUDA(dev_NXCOROutput, dev_templates, dev_interMfilteredDataPointer, (uint16_t)TEMPLATE_CROPPED_LENGTH, (uint16_t)TEMPLATE_CROPPED_WIDTH, TRAINING_DATA_LENGTH, DATA_CHANNELS, MAXIMUM_NUMBER_OF_TEMPLATES, dev_lowerChannelIndex);
+
+#ifdef CUDA_VERIFY
+	USED_DATATYPE* NXCOROutputCUDA = new USED_DATATYPE[(uint32_t)(TRAINING_DATA_LENGTH*MAXIMUM_NUMBER_OF_TEMPLATES)];
+	RetreiveResults(dev_NXCOROutput, NXCOROutputCUDA, TRAINING_DATA_LENGTH, MAXIMUM_NUMBER_OF_TEMPLATES, sizeof(USED_DATATYPE));
+	nxcorController.performNXCORWithTemplates(kernelResults);
+	std::cout << "NXCOR filter " << std::endl;
+
+	error = 0;
+	for (int t = 0; t < 2; t++) {
+		USED_DATATYPE* featureArray = nxcorController.getFeatureForTemplate(t+1);
+		for (int i = 0; i < (TRAINING_DATA_LENGTH - TEMPLATE_CROPPED_LENGTH - 10); i++) {
+			float feature = featureArray[i];
+			float featureCUDA = NXCOROutputCUDA[t*MAXIMUM_NUMBER_OF_TEMPLATES + i];
+			//if (round(featureCUDA) < floor(feature) || round(featureCUDA) > ceil(feature)) {
+				error++;
+				if (i < 10) {
+					printf("%0.4f %0.4f, ", feature, featureCUDA);
+					if (i == 9) std::cout << endl;
+				}
+			//}
+		}
+	}
+	std::cout << "NXCOR filter errors : " << error << std::endl;
+
+#endif
+
 #else
 	//KBE??? changed
 	nxcorController.performNXCORWithTemplates(filteredResults);
