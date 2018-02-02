@@ -117,6 +117,13 @@ void ClassifierController<T>::performTrainingBasedOnTemplates(NXCORController<T>
 
 			TTClassifier<T>* pointer = arrayOfClassifier[i];
 
+#if 0 // KBE for debugging
+			T* featuresForTemplate = nxcorControllerRef->getFeatureForTemplate(i + 1);
+			std::cout << "T" << i + 1 << " features : ";
+			for (int j = 0; j < 20; j++) printf("%0.4f, ", featuresForTemplate[j]);
+			std::cout << std::endl;
+#endif
+
 			pointer->Train(nxcorControllerRef->getFeatureForTemplate(i + 1), projectInfoRefPtr->getTemplateTruthTableTraining(i+1), projectInfoRefPtr->isTemplateUsedTraining(i + 1), (TRAINING_DATA_LENGTH - TEMPLATE_CROPPED_LENGTH), templateController->getTemplatePeakOffset(i+1));
 
 #ifdef PRINT_OUTPUT_INFO

@@ -50,7 +50,7 @@ public:
 	/* Constructor */
 	SpikeDetection();
 	/* Methods */
-	cudaError_t runTrainingCUDA(void);
+	//cudaError_t runTrainingCUDA(void);
 	void runTraining(void);
 	void runPrediction(void);
 	/* Helper functions */
@@ -145,6 +145,8 @@ float SpikeDetection<T>::getLatestExecutionTime(void)
 *
 * @retval void : none
 */
+/* KBE??? - not used yet!! */
+#if 0
 template <class T>
 cudaError_t SpikeDetection<T>::runTrainingCUDA(void)
 {
@@ -154,33 +156,33 @@ cudaError_t SpikeDetection<T>::runTrainingCUDA(void)
 	
 	t1 = high_resolution_clock::now();
 
-	/************************************************* Channel filtering **************************************************************************************************/
+	//************************************************ Channel filtering **************************************************************************************************
 
-	/* Allocate Buffer for data */
+	// Allocate Buffer for data 
 	cudaStatus = AllocateCUDAData(&dev_DataPointer, (uint32_t)TRAINING_DATA_LENGTH, (uint32_t)DATA_CHANNELS, (uint16_t)sizeof(USED_DATATYPE));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Allocate Temporary filtered Result Buffer for raw data */
+	// Allocate Temporary filtered Result Buffer for raw data 
 	cudaStatus = AllocateCUDAData(&dev_interMfilteredDataPointer, (uint32_t)TRAINING_DATA_LENGTH, (uint32_t)DATA_CHANNELS, (uint16_t)sizeof(USED_DATATYPE));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Allocate Space for channel filter A coeff. */
+	// Allocate Space for channel filter A coeff. 
 	cudaStatus = AllocateCUDAData(&dev_ChannelFilterCoeffA, (uint32_t)NUMBER_OF_A_COEFF, (uint32_t)1, (uint16_t)sizeof(USED_DATATYPE));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Allocate Space for channel filter B coeff. */
+	// Allocate Space for channel filter B coeff. 
 	cudaStatus = AllocateCUDAData(&dev_ChannelFilterCoeffB, (uint32_t)NUMBER_OF_B_COEFF, (uint32_t)1, (uint16_t)sizeof(USED_DATATYPE));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Memory copy raw data to GPU*/
+	// Memory copy raw data to GPU
 	cudaStatus = MemCpyCUDAData(dev_DataPointer, projectInfo.getTraningData(), (uint32_t)TRAINING_DATA_LENGTH, (uint32_t)DATA_CHANNELS, (uint16_t)sizeof(USED_DATATYPE));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Memory copy Kernel filter coeff to data */
+	// Memory copy Kernel filter coeff to data 
 	cudaStatus = MemCpyCUDAData(dev_ChannelFilterCoeffA, channelFilter.getFilterCoeffsA(), (uint32_t)NUMBER_OF_A_COEFF, (uint32_t)1, (uint16_t)sizeof(USED_DATATYPE));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Memory copy Kernel filter coeff to data */
+	// Memory copy Kernel filter coeff to data 
 	cudaStatus = MemCpyCUDAData(dev_ChannelFilterCoeffB, channelFilter.getFilterCoeffsB(), (uint32_t)NUMBER_OF_B_COEFF, (uint32_t)1, (uint16_t)sizeof(USED_DATATYPE));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
@@ -193,13 +195,13 @@ cudaError_t SpikeDetection<T>::runTrainingCUDA(void)
 	std::cout << "CUDA Channel Filter Completed" << std::endl;
 #endif
 
-	/************************************************* Kernel filtering ****************************************************************************************************/
+	//************************************************ Kernel filtering ***************************************************************************************************
 
-	/* Allocate Space for kernel filter coeff. */
+	// Allocate Space for kernel filter coeff. 
 	cudaStatus = AllocateCUDAData(&dev_kernelFilterCoeff, (uint32_t)DEFAULT_KERNEL_DIM, (uint32_t)DEFAULT_KERNEL_DIM, (uint16_t)sizeof(USED_DATATYPE));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Memory copy Kernel filter coeff to data */
+	// Memory copy Kernel filter coeff to data 
 	cudaStatus = MemCpyCUDAData(dev_kernelFilterCoeff, kernelFilter.getKernelFilterCoeff(), (uint32_t)DEFAULT_KERNEL_DIM, (uint32_t)DEFAULT_KERNEL_DIM, (uint16_t)sizeof(USED_DATATYPE));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
@@ -212,17 +214,17 @@ cudaError_t SpikeDetection<T>::runTrainingCUDA(void)
 	std::cout << "CUDA Kernel Filter Completed" << std::endl;
 #endif
 
-	/************************************************* NXCOR Template Matching ***********************************************************************************************/
+	//************************************************ NXCOR Template Matching **********************************************************************************************
 
-	/* Allocate Space for NXCOR Output */
+	// Allocate Space for NXCOR Output 
 	cudaStatus = AllocateCUDAData(&dev_NXCOROutput, (uint32_t)TRAINING_DATA_LENGTH, (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint16_t)sizeof(USED_DATATYPE));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Allocate Space for Templates */
+	// Allocate Space for Templates 
 	cudaStatus = AllocateCUDAData(&dev_templates, (uint32_t)TEMPLATE_CROPPED_LENGTH*TEMPLATE_CROPPED_WIDTH, (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint16_t)sizeof(USED_DATATYPE));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Memory copy filterTemplates to GPU */
+	// Memory copy filterTemplates to GPU 
 	cudaStatus = MemCpyCUDAData(dev_templates, templateController.getAllCroppedTemplates(), (uint32_t)TEMPLATE_CROPPED_LENGTH*TEMPLATE_CROPPED_WIDTH, (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint16_t)sizeof(USED_DATATYPE));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
@@ -237,70 +239,70 @@ cudaError_t SpikeDetection<T>::runTrainingCUDA(void)
 	std::cout << "CUDA Template Matching Completed" << std::endl;
 #endif
 
-	/************************************************* Training Threshold ***********************************************************************************************/
+	//************************************************ Training Threshold ***********************************************************************************************
 
-	/* Allocate Space lower channel index */
+	// Allocate Space lower channel index 
 	cudaStatus = AllocateCUDADataU16(&dev_lowerChannelIndex, (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)1, (uint16_t)sizeof(uint16_t));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Allocate Space For TP counts */
+	// Allocate Space For TP counts 
 	cudaStatus = AllocateCUDADataU32(&dev_TPCounter, (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)NUMBER_OF_THRESHOLDS_TO_TEST, (uint16_t)sizeof(uint32_t));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Allocate Space For spike detection counts */
+	// Allocate Space For spike detection counts 
 	cudaStatus = AllocateCUDADataU32(&dev_FoundTimesCounter, (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)NUMBER_OF_THRESHOLDS_TO_TEST, (uint16_t)sizeof(uint32_t));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Allocate Space for threshold indication */
+	// Allocate Space for threshold indication 
 	cudaStatus = AllocateCUDADataChar(&dev_aboveThresholdIndicator, (uint32_t)TRAINING_DATA_LENGTH, (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint16_t)sizeof(char));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Allocate Space For spike detection counts */
+	// Allocate Space For spike detection counts 
 	cudaStatus = AllocateCUDADataU32(&dev_FoundTimes, (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)MAXIMUM_PREDICTION_SAMPLES, (uint16_t)sizeof(uint32_t));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Allocate Space for peak offsets */
+	// Allocate Space for peak offsets 
 	cudaStatus = AllocateCUDADataU16(&dev_spikesPeakOffset, (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)1, (uint16_t)sizeof(uint16_t));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Allocate Space For grund truth to compare against */
+	// Allocate Space For grund truth to compare against 
 	cudaStatus = AllocateCUDADataU32(&dev_grundTruth, (uint32_t)projectInfo.getNumberTotalTruthTableSize(), (uint32_t)1, (uint16_t)sizeof(uint32_t));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Allocate Space For grund truth sizes */
+	// Allocate Space For grund truth sizes 
 	cudaStatus = AllocateCUDADataU32(&dev_grundTruthSizes, (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)1, (uint16_t)sizeof(uint32_t));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Allocate Space For grund truth start indencis */
+	// Allocate Space For grund truth start indencis 
 	cudaStatus = AllocateCUDADataU32(&dev_grundTruthStartInd, (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)1, (uint16_t)sizeof(uint32_t));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Memory copy lower index channel number to GPU */
+	// Memory copy lower index channel number to GPU 
 	cudaStatus = MemCpyCUDADataU16(dev_lowerChannelIndex, templateController.getAllTemplatesLowerIndex(), (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)1, (uint16_t)sizeof(uint16_t));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Memory copy TP counter to GPU - zero init. */
+	// Memory copy TP counter to GPU - zero init. 
 	uint32_t myArray[(uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES*(uint32_t)NUMBER_OF_THRESHOLDS_TO_TEST] = { 0 };
 	cudaStatus = MemCpyCUDADataU32(dev_TPCounter, myArray, (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)NUMBER_OF_THRESHOLDS_TO_TEST, (uint16_t)sizeof(uint32_t));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Memory copy Found times counter to GPU - zero init. */
+	// Memory copy Found times counter to GPU - zero init. 
 	cudaStatus = MemCpyCUDADataU32(dev_FoundTimesCounter, myArray, (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)NUMBER_OF_THRESHOLDS_TO_TEST, (uint16_t)sizeof(uint32_t));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Memory copy templates peaks offsets to GPU */
+	// Memory copy templates peaks offsets to GPU 
 	cudaStatus = MemCpyCUDADataU16(dev_spikesPeakOffset, templateController.getAllTemplatesPeaksOffset(), (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)1, (uint16_t)sizeof(uint16_t));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Memory copy truth table to GPU */
+	// Memory copy truth table to GPU 
 	cudaStatus = MemCpyCUDADataU32(dev_grundTruth, projectInfo.getTruthTableCombined(), (uint32_t)projectInfo.getNumberTotalTruthTableSize(), (uint32_t)1, (uint16_t)sizeof(uint32_t));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Memory copy truth table sizes to the GPU */
+	// Memory copy truth table sizes to the GPU 
 	cudaStatus = MemCpyCUDADataU32(dev_grundTruthSizes, projectInfo.getTruthTableSizes(), (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)1, (uint16_t)sizeof(uint32_t));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
-	/* Memory copy truth table start indecis to the GPU */
+	// Memory copy truth table start indecis to the GPU 
 	cudaStatus = MemCpyCUDADataU32(dev_grundTruthStartInd, projectInfo.getTruthTableStartIndencis(), (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)1, (uint16_t)sizeof(uint32_t));
 	if (cudaStatus != cudaSuccess) return cudaStatus;
 
@@ -308,13 +310,11 @@ cudaError_t SpikeDetection<T>::runTrainingCUDA(void)
 	classifierController.performTrainingBasedOnTemplatesPart1_CUDA(dev_NXCOROutput, dev_aboveThresholdIndicator, dev_FoundTimes, dev_FoundTimesCounter, dev_TPCounter, dev_spikesPeakOffset,
 		dev_grundTruth, dev_grundTruthSizes, dev_grundTruthStartInd);
 	
-	/*
 	if (CheckForCudaError() != cudaError_t::cudaSuccess)
 	{
 		std::cout << "CUDA Error launching or synchronizing, processing stopped" << std::endl;
 		return CheckForCudaError();
-	}
-	*/
+    }
 
 	uint32_t host_FoundTimesCounters[(uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES*NUMBER_OF_THRESHOLDS_TO_TEST];
 	if (RetreiveResultsU32(dev_FoundTimesCounter, host_FoundTimesCounters, (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)NUMBER_OF_THRESHOLDS_TO_TEST, (uint16_t)sizeof(uint32_t)) != cudaError_t::cudaSuccess)
@@ -360,6 +360,8 @@ cudaError_t SpikeDetection<T>::runTrainingCUDA(void)
 #endif
 	return cudaStatus;
 }
+
+#endif
 
 /*----------------------------------------------------------------------------*/
 /**
@@ -492,8 +494,9 @@ void SpikeDetection<T>::runTraining(void)
 #endif
 
 #else
-	//KBE??? changed
-	nxcorController.performNXCORWithTemplates(filteredResults);
+	//KBE??? changed when not using kernel filter
+	//nxcorController.performNXCORWithTemplates(filteredResults);
+	nxcorController.performNXCORWithTemplates(kernelResults);
 #ifdef PRINT_OUTPUT_INFO
 	std::cout << "NXCOR all templates time: " << nxcorController.getLatestExecutionTime() / 1000 << " ms. processing " << TRAINING_DATA_TIME << " seconds of data" << std::endl;
 #endif
@@ -605,11 +608,10 @@ void SpikeDetection<T>::runPrediction(void)
 	kernelFilter.runFilterReplicateCUDA(dev_interMfilteredDataPointerP, dev_DataPointerP, dev_kernelFilterCoeffP, DEFAULT_KERNEL_DIM, TRAINING_DATA_LENGTH, DATA_CHANNELS);
 #else
 #ifdef USE_OPENCV
-	// KBE??? changed
-	//USED_DATATYPE* kernelResults = new USED_DATATYPE[(uint32_t)(TRAINING_DATA_LENGTH*DATA_CHANNELS)];
-	//kernelFilter.runFilterOpenCV(kernelResults, filteredResults, DEFAULT_KERNEL_DIM, TRAINING_DATA_LENGTH, DATA_CHANNELS);
+	USED_DATATYPE* kernelResults = new USED_DATATYPE[(uint32_t)(TRAINING_DATA_LENGTH*DATA_CHANNELS)];
+	kernelFilter.runFilterOpenCV(kernelResults, filteredResults, DEFAULT_KERNEL_DIM, TRAINING_DATA_LENGTH, DATA_CHANNELS);
 #ifdef PRINT_OUTPUT_INFO
-	//std::cout << "2D filtering time: " << kernelFilter.getLatestExecutionTime() / 1000 << " ms. processing " << TRAINING_DATA_TIME << " seconds of data" << std::endl;
+	std::cout << "2D filtering time: " << kernelFilter.getLatestExecutionTime() / 1000 << " ms. processing " << TRAINING_DATA_TIME << " seconds of data" << std::endl;
 #endif
 #else
 	USED_DATATYPE* kernelResults = new USED_DATATYPE[(uint32_t)(TRAINING_DATA_LENGTH*DATA_CHANNELS)];
@@ -625,9 +627,9 @@ void SpikeDetection<T>::runPrediction(void)
 #ifdef USE_CUDA
 	nxcorController.performNXCORWithTemplatesCUDA(dev_NXCOROutputP, dev_templatesP, dev_interMfilteredDataPointerP, (uint16_t)TEMPLATE_CROPPED_LENGTH, (uint16_t)TEMPLATE_CROPPED_WIDTH, TRAINING_DATA_LENGTH, DATA_CHANNELS, MAXIMUM_NUMBER_OF_TEMPLATES, dev_lowerChannelIndexP);
 #else
-	// KBE??? changed
-	//nxcorController.performNXCORWithTemplates(kernelResults);
-	nxcorController.performNXCORWithTemplates(filteredResults);
+	// KBE??? changed when not using kernel filter
+	//nxcorController.performNXCORWithTemplates(filteredResults);
+	nxcorController.performNXCORWithTemplates(kernelResults);
 #ifdef PRINT_OUTPUT_INFO
 	std::cout << "NXCOR all templates time: " << nxcorController.getLatestExecutionTime() / 1000 << " ms. processing " << TRAINING_DATA_TIME << " seconds of data" << std::endl;
 #endif
@@ -672,8 +674,7 @@ void SpikeDetection<T>::runPrediction(void)
 	// TODO:
 	// Make the arrays static instead an save time by avoiding Allocation and deallocation runtime!!
 #ifndef USE_CUDA
-	//KBE???
-	//delete kernelResults;
+	delete kernelResults;
 	delete filteredResults;
 #endif
 

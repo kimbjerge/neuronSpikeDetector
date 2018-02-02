@@ -10,7 +10,7 @@
 /*********************************** GENERAL SETUP ****************************************************/
 //#define					USE_OPENCV
 #define					USE_CUDA // Working with 2 seconds train and predict
-//#define                 CUDA_VERIFY
+#define                 CUDA_VERIFY
 #define					PRINT_OUTPUT_INFO
 
 #ifdef USE_OPENCV

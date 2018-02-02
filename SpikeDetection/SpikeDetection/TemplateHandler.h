@@ -75,16 +75,17 @@ TemplateHandler<T>::TemplateHandler(uint32_t templateID, std::string pathToTempl
 	templateLength = TEMPLATE_ORIGINAL_LENGTH;
 	templateWidth = TEMPLATE_ORIGINAL_WIDTH;
 
-	//templateDataPointer_ = new T[TEMPLATE_CROPPED_LENGTH*TEMPLATE_CROPPED_WIDTH];
+	templateDataPointer_ = new T[TEMPLATE_CROPPED_LENGTH*TEMPLATE_CROPPED_WIDTH];
 	filteredtemplateDataPointer_ = new T[TEMPLATE_CROPPED_LENGTH*TEMPLATE_CROPPED_WIDTH];
 
-	//cropTemplate(templateLoader.getDataPointer(), templateDataPointer_, TEMPLATE_CROPPED_LENGTH, TEMPLATE_CROPPED_WIDTH, templateLength, templateWidth);
-	cropTemplate(templateLoader.getDataPointer(), filteredtemplateDataPointer_, TEMPLATE_CROPPED_LENGTH, TEMPLATE_CROPPED_WIDTH, templateLength, templateWidth);
+	cropTemplate(templateLoader.getDataPointer(), templateDataPointer_, TEMPLATE_CROPPED_LENGTH, TEMPLATE_CROPPED_WIDTH, templateLength, templateWidth);
 
-	// Filter template - KBE??? to be removed or changed
-	//kernelFilterPointer->runFilterReplicate(filteredtemplateDataPointer_, templateDataPointer_, DEFAULT_KERNEL_DIM, TEMPLATE_CROPPED_LENGTH, TEMPLATE_CROPPED_WIDTH);
+	// Filter template - KBE??? to be removed or changed when not using kernel filtering
+	//cropTemplate(templateLoader.getDataPointer(), filteredtemplateDataPointer_, TEMPLATE_CROPPED_LENGTH, TEMPLATE_CROPPED_WIDTH, templateLength, templateWidth);
 
-	//delete templateDataPointer_;
+	kernelFilterPointer->runFilterReplicate(filteredtemplateDataPointer_, templateDataPointer_, DEFAULT_KERNEL_DIM, TEMPLATE_CROPPED_LENGTH, TEMPLATE_CROPPED_WIDTH);
+
+	delete templateDataPointer_;
 }
 
 /*----------------------------------------------------------------------------*/
