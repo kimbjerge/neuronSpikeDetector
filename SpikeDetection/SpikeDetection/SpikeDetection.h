@@ -580,7 +580,7 @@ template <class T>
 void SpikeDetection<T>::runPrediction(void)
 {
 	std::cout << "************* PREDICTION **************" << std::endl;
-	
+
 #ifdef USE_CUDA
 	if (prepareCUDAPrediction() != cudaError_t::cudaSuccess)
 	{
@@ -602,7 +602,7 @@ void SpikeDetection<T>::runPrediction(void)
 #endif
 #endif
 
-	
+
 	// 2D Filter 
 #ifdef USE_CUDA
 	kernelFilter.runFilterReplicateCUDA(dev_interMfilteredDataPointerP, dev_DataPointerP, dev_kernelFilterCoeffP, DEFAULT_KERNEL_DIM, TRAINING_DATA_LENGTH, DATA_CHANNELS);
@@ -621,8 +621,8 @@ void SpikeDetection<T>::runPrediction(void)
 #endif
 #endif
 #endif
-	
-	
+
+
 	/**** NXCOR Filter ****/
 #ifdef USE_CUDA
 	nxcorController.performNXCORWithTemplatesCUDA(dev_NXCOROutputP, dev_templatesP, dev_interMfilteredDataPointerP, (uint16_t)TEMPLATE_CROPPED_LENGTH, (uint16_t)TEMPLATE_CROPPED_WIDTH, TRAINING_DATA_LENGTH, DATA_CHANNELS, MAXIMUM_NUMBER_OF_TEMPLATES, dev_lowerChannelIndexP);
@@ -635,7 +635,7 @@ void SpikeDetection<T>::runPrediction(void)
 #endif
 #endif
 
-	
+
 	// Predict
 #ifdef USE_CUDA
 	// Perform prediction on GPU
@@ -656,9 +656,16 @@ void SpikeDetection<T>::runPrediction(void)
 		return;
 	}
 
+	uint32_t host_FoundTimesP[(uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES*MAXIMUM_PREDICTION_SAMPLES];
+	if (RetreiveResultsU32(dev_FoundTimesP, host_FoundTimesP, (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)MAXIMUM_PREDICTION_SAMPLES, (uint16_t)sizeof(uint32_t)) != cudaError_t::cudaSuccess)
+	{
+		CUDACleanUpPrediction();
+		std::cout << "CUDA Error fetching times array" << std::endl;
+		return;
+	}
+
 #ifdef PRINT_OUTPUT_INFO
-	for (int i = 0; i < MAXIMUM_NUMBER_OF_TEMPLATES; i++)
-		std::cout << "Template: " << i + 1 << " found number of times: " << host_FoundTimesCounters[i] << std::endl;
+	classifierController.verifyPredictionBasedOnTemplatesCUDA(host_FoundTimesCounters, host_FoundTimesP, &templateController);
 #endif
 
 	// Clean up GPU

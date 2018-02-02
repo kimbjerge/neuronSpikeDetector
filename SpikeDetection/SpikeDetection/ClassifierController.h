@@ -42,6 +42,7 @@ public:
 	void performTrainingBasedOnTemplatesPart2(uint32_t *host_TPCounter, uint32_t *host_predictionSize);
 
 	void performPredictionBasedOnTemplatesCUDA(const float *dev_signal, char *dev_aboveThreshold, uint32_t *dev_foundTimes, uint32_t *dev_foundTimesCounter, float *dev_threshold);
+	void verifyPredictionBasedOnTemplatesCUDA(uint32_t* foundTimesCounter, uint32_t* foundTimesP, TemplateController<T> * templateController);
 #endif	
 	void performPredictionBasedOnTemplates(NXCORController<T>* nxcorRef, TemplateController<T> * templateController);
 	float getTemplateThreshold(uint32_t number);
@@ -254,6 +255,44 @@ void ClassifierController<T>::performPredictionBasedOnTemplatesCUDA(const float 
 
 	auto duration = duration_cast<microseconds>(t2 - t1).count();
 	f_latestExecutionTime = (float)duration;
+}
+
+/*----------------------------------------------------------------------------*/
+/**
+* @brief verifies prediction based on the amount of templates used, using CUDA
+* @note
+*
+* @param T* foundTimesCounter			           : Pointer to array that holds number of times template found
+* @param T* foundTimesP     			           : Pointer to array that holds number of times template found
+* @param TemplateController<T>* templateController : Pointer to the TemplateController class holding the templates.
+*
+* @retval void : none
+*/
+template <class T>
+void ClassifierController<T>::verifyPredictionBasedOnTemplatesCUDA(uint32_t* foundTimesCounter, uint32_t* foundTimesP, TemplateController<T> * templateController)
+{
+	float precision, recall, wF1Score;
+
+	for (int i = 0; i < MAXIMUM_NUMBER_OF_TEMPLATES; i++) {
+		std::cout << "Template: " << i + 1 << " found number of times: " << foundTimesCounter[i];
+		if (projectInfoRefPtr->isTemplateUsedPrediction(i + 1) > 0)
+		{
+			TTClassifier<T>* pointer = arrayOfClassifier[i];
+			printf("(%d) threshold %0.2f", projectInfoRefPtr->isTemplateUsedPrediction(i + 1), pointer->getThreshold());
+			pointer->compareWithTruthTable(&precision, 
+				                           &recall, 
+				                           projectInfoRefPtr->getTemplateTruthTablePrediction(i + 1), 
+				                           projectInfoRefPtr->isTemplateUsedPrediction(i + 1),
+										   &foundTimesP[i*MAXIMUM_PREDICTION_SAMPLES], 
+										   foundTimesCounter[i],
+				                           3, 
+				                           templateController->getTemplatePeakOffset(i + 1));
+
+			wF1Score = pointer->calculateWF1Score(precision, recall);
+			std::cout <<", Gave a score W-F1 of: " << wF1Score;
+		}
+		std::cout << std::endl;
+	}
 }
 
 #endif
