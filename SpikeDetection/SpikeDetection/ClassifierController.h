@@ -129,7 +129,7 @@ void ClassifierController<T>::performTrainingBasedOnTemplates(NXCORController<T>
 
 #ifdef PRINT_OUTPUT_INFO
 			float wF1Score = pointer->calculateWF1Score(pointer->getLatestTrainingPrecision(), pointer->getLatestTrainingRecall());
-			std::cout << "Training using template : " << i + 1 << " best thredshold :" << pointer->getThreshold() << " Gave a score W-F1 of: " << wF1Score << std::endl;
+			std::cout << "Train template: " << i + 1 << " thredshold: " << pointer->getThreshold() << " W-F1 score: " << wF1Score << std::endl;
 #endif
 		}
 	}
@@ -205,6 +205,10 @@ void ClassifierController<T>::performTrainingBasedOnTemplatesPart2(uint32_t *hos
 	uint32_t TPScoresForTemplate[NUMBER_OF_THRESHOLDS_TO_TEST];
 	uint32_t PredictionCountsForTemplate[NUMBER_OF_THRESHOLDS_TO_TEST];
 
+#ifdef PRINT_OUTPUT_INFO
+	std::cout << "----------- CUDA training results ------------" << std::endl;
+#endif
+
 	for (uint32_t i = 0; i < MAXIMUM_NUMBER_OF_TEMPLATES; i++)
 	{
 		for (uint32_t y = 0; y < NUMBER_OF_THRESHOLDS_TO_TEST; y++)
@@ -220,7 +224,7 @@ void ClassifierController<T>::performTrainingBasedOnTemplatesPart2(uint32_t *hos
 			pointer->TrainFromCUDAResults(projectInfoRefPtr->isTemplateUsedTraining(i + 1), PredictionCountsForTemplate, TPScoresForTemplate);
 #ifdef PRINT_OUTPUT_INFO
 			float wF1Score = pointer->calculateWF1Score(pointer->getLatestTrainingPrecision(), pointer->getLatestTrainingRecall());
-			std::cout << "CUDA Training using template : " << i + 1 << " best threshold :" << pointer->getThreshold() << " Gave a score W-F1 of: " << wF1Score << std::endl;
+			std::cout << "Train template: " << i + 1 << " threshold: " << pointer->getThreshold() << " W-F1 score: " << wF1Score << std::endl;
 #endif
 		}
 	}
@@ -274,11 +278,11 @@ void ClassifierController<T>::verifyPredictionBasedOnTemplatesCUDA(uint32_t* fou
 	float precision, recall, wF1Score;
 
 	for (int i = 0; i < MAXIMUM_NUMBER_OF_TEMPLATES; i++) {
-		std::cout << "Template: " << i + 1 << " found number of times: " << foundTimesCounter[i];
+		printf("T%02d times: %3d", i + 1, foundTimesCounter[i]);
 		if (projectInfoRefPtr->isTemplateUsedPrediction(i + 1) > 0)
 		{
 			TTClassifier<T>* pointer = arrayOfClassifier[i];
-			printf("(%d) threshold %0.2f", projectInfoRefPtr->isTemplateUsedPrediction(i + 1), pointer->getThreshold());
+			printf("(%3d) threshold %0.2f", projectInfoRefPtr->isTemplateUsedPrediction(i + 1), pointer->getThreshold());
 			pointer->compareWithTruthTable(&precision, 
 				                           &recall, 
 				                           projectInfoRefPtr->getTemplateTruthTablePrediction(i + 1), 
@@ -289,7 +293,7 @@ void ClassifierController<T>::verifyPredictionBasedOnTemplatesCUDA(uint32_t* fou
 				                           templateController->getTemplatePeakOffset(i + 1));
 
 			wF1Score = pointer->calculateWF1Score(precision, recall);
-			std::cout <<", Gave a score W-F1 of: " << wF1Score;
+			std::cout <<" W-F1 score: " << wF1Score;
 		}
 		std::cout << std::endl;
 	}
@@ -321,7 +325,7 @@ void ClassifierController<T>::performPredictionBasedOnTemplates(NXCORController<
 			TTClassifier<T>* pointer = arrayOfClassifier[i];
 			wF1Score = pointer->PredictAndCompare(nxcorControllerRef->getFeatureForTemplate(i + 1), projectInfoRefPtr->getTemplateTruthTablePrediction(i + 1), projectInfoRefPtr->isTemplateUsedPrediction(i + 1), (TRAINING_DATA_LENGTH - TEMPLATE_CROPPED_LENGTH), templateController->getTemplatePeakOffset(i + 1));
 #ifdef PRINT_OUTPUT_INFO
-			std::cout << "Prediction using template : " << i+1 << " Gave a score W-F1 of: " << wF1Score << std::endl;
+			std::cout << "Predict template: " << i+1 << " W-F1 score: " << wF1Score << std::endl;
 #endif	
 		}
 	}
