@@ -521,7 +521,7 @@ void SpikeDetection<T>::runTraining(void)
 		return;
 	}
 
-	uint32_t host_FoundTimesCounters[(uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES*NUMBER_OF_THRESHOLDS_TO_TEST];
+	uint32_t* host_FoundTimesCounters = new uint32_t[MAXIMUM_NUMBER_OF_TEMPLATES*NUMBER_OF_THRESHOLDS_TO_TEST];
 	if (RetreiveResultsU32(dev_FoundTimesCounter, host_FoundTimesCounters, (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)NUMBER_OF_THRESHOLDS_TO_TEST, (uint16_t)sizeof(uint32_t)) != cudaError_t::cudaSuccess)
 	{
 		CUDACleanUpTraining();
@@ -529,7 +529,7 @@ void SpikeDetection<T>::runTraining(void)
 		return;
 	}
 
-	uint32_t host_TPCounters[(uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES*NUMBER_OF_THRESHOLDS_TO_TEST];
+	uint32_t* host_TPCounters = new uint32_t[MAXIMUM_NUMBER_OF_TEMPLATES*NUMBER_OF_THRESHOLDS_TO_TEST];
 	if (RetreiveResultsU32(dev_TPCounter, host_TPCounters, (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)NUMBER_OF_THRESHOLDS_TO_TEST, (uint16_t)sizeof(uint32_t)) != cudaError_t::cudaSuccess)
 	{
 		CUDACleanUpTraining();
@@ -542,6 +542,10 @@ void SpikeDetection<T>::runTraining(void)
 
 	// Clean up GPU
 	CUDACleanUpTraining();
+
+	delete host_FoundTimesCounters;
+	delete host_TPCounters;
+
 #else
 	classifierController.performTrainingBasedOnTemplates(&nxcorController, &templateController);
 #ifdef PRINT_OUTPUT_INFO
@@ -648,7 +652,7 @@ void SpikeDetection<T>::runPrediction(void)
 		return;
 	}
 
-	uint32_t host_FoundTimesCounters[(uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES];
+	uint32_t* host_FoundTimesCounters = new uint32_t[MAXIMUM_NUMBER_OF_TEMPLATES];
 	if (RetreiveResultsU32(dev_FoundTimesCounterP, host_FoundTimesCounters, (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)1, (uint16_t)sizeof(uint32_t)) != cudaError_t::cudaSuccess)
 	{
 		CUDACleanUpPrediction();
@@ -656,7 +660,7 @@ void SpikeDetection<T>::runPrediction(void)
 		return;
 	}
 
-	uint32_t host_FoundTimesP[(uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES*MAXIMUM_PREDICTION_SAMPLES];
+	uint32_t* host_FoundTimesP = new uint32_t[MAXIMUM_NUMBER_OF_TEMPLATES*MAXIMUM_PREDICTION_SAMPLES];
 	if (RetreiveResultsU32(dev_FoundTimesP, host_FoundTimesP, (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)MAXIMUM_PREDICTION_SAMPLES, (uint16_t)sizeof(uint32_t)) != cudaError_t::cudaSuccess)
 	{
 		CUDACleanUpPrediction();
@@ -670,6 +674,10 @@ void SpikeDetection<T>::runPrediction(void)
 
 	// Clean up GPU
 	CUDACleanUpPrediction();
+
+	delete host_FoundTimesCounters;
+	delete host_FoundTimesP;
+
 #else
 	classifierController.performPredictionBasedOnTemplates(&nxcorController, &templateController);
 #ifdef PRINT_OUTPUT_INFO

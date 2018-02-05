@@ -48,7 +48,7 @@ fclose('all');
 %% Make training data
 RecordFile = strcat(DiectoryToEvaluate, '\sim_binary.dat');
 signalOffset = 0;
-signalLength_s = 10;
+signalLength_s = 50;
 signalGain = 1; 
 %signalGain = 6; % 15.6 db
 ViewFiguresRunning = 'YES';
@@ -72,8 +72,8 @@ fclose('all');
 
 %% Make Prediction data
 RecordFile = strcat(DiectoryToEvaluate, '\sim_binary.dat');
-signalOffset = 10;
-signalLength_s = 10;
+signalOffset = 50;
+signalLength_s = 50;
 signalGain = 1;
 %signalGain = 6; % 15.6 db
 ViewFiguresRunning = 'YES';
