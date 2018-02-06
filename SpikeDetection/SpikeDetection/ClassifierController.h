@@ -253,7 +253,7 @@ void ClassifierController<T>::performPredictionBasedOnTemplatesCUDA(const float 
 {
 	t1 = high_resolution_clock::now();
 
-	PredictCUDA(dev_signal, dev_aboveThreshold, dev_foundTimes, dev_foundTimesCounter, (uint16_t)TEMPLATE_CROPPED_LENGTH, (uint32_t)TRAINING_DATA_LENGTH, (uint16_t)MAXIMUM_NUMBER_OF_TEMPLATES, dev_threshold);
+	PredictCUDA(dev_signal, dev_aboveThreshold, dev_foundTimes, dev_foundTimesCounter, (uint16_t)TEMPLATE_CROPPED_LENGTH, (uint32_t)RUNTIME_DATA_LENGTH, (uint16_t)MAXIMUM_NUMBER_OF_TEMPLATES, dev_threshold);
 
 	t2 = high_resolution_clock::now();
 

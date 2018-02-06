@@ -264,10 +264,10 @@ void SpikeDetectCUDA<T>::runPrediction(void)
 	channelFilter.runFilterCUDA(dev_DataPointerP, dev_DataPointerP, dev_interMfilteredDataPointerP, dev_ChannelFilterCoeffAP, dev_ChannelFilterCoeffBP);
 
 	// 2D Filter 
-	kernelFilter.runFilterReplicateCUDA(dev_interMfilteredDataPointerP, dev_DataPointerP, dev_kernelFilterCoeffP, DEFAULT_KERNEL_DIM, TRAINING_DATA_LENGTH, DATA_CHANNELS);
+	kernelFilter.runFilterReplicateCUDA(dev_interMfilteredDataPointerP, dev_DataPointerP, dev_kernelFilterCoeffP, DEFAULT_KERNEL_DIM, RUNTIME_DATA_LENGTH, DATA_CHANNELS);
 
 	/**** NXCOR Filter ****/
-	nxcorController.performNXCORWithTemplatesCUDA(dev_NXCOROutputP, dev_templatesP, dev_interMfilteredDataPointerP, (uint16_t)TEMPLATE_CROPPED_LENGTH, (uint16_t)TEMPLATE_CROPPED_WIDTH, TRAINING_DATA_LENGTH, DATA_CHANNELS, MAXIMUM_NUMBER_OF_TEMPLATES, dev_lowerChannelIndexP);
+	nxcorController.performNXCORWithTemplatesCUDA(dev_NXCOROutputP, dev_templatesP, dev_interMfilteredDataPointerP, (uint16_t)TEMPLATE_CROPPED_LENGTH, (uint16_t)TEMPLATE_CROPPED_WIDTH, RUNTIME_DATA_LENGTH, DATA_CHANNELS, MAXIMUM_NUMBER_OF_TEMPLATES, dev_lowerChannelIndexP);
 
 	// Perform prediction on GPU
 	classifierController.performPredictionBasedOnTemplatesCUDA(dev_NXCOROutputP, dev_aboveThresholdIndicatorP, dev_FoundTimesP, dev_FoundTimesCounterP, dev_thresholdsP);
@@ -310,7 +310,7 @@ void SpikeDetectCUDA<T>::runPrediction(void)
 	f_latestExecutionTime = (float)duration;
 
 #ifdef PRINT_OUTPUT_INFO
-	std::cout << "Total CUDA Prediction time: " << f_latestExecutionTime / 1000 << " ms. processing " << TRAINING_DATA_TIME << " seconds of data" << std::endl;
+	std::cout << "Total CUDA Prediction time: " << f_latestExecutionTime / 1000 << " ms. processing " << RUNTIME_DATA_TIME << " seconds of data" << std::endl;
 #endif
 
 }

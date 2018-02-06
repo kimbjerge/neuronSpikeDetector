@@ -31,7 +31,7 @@ public:
 	NXCORController(ProjectInfo *projectRef, TemplateController<T> *templateRef);
 	~NXCORController(void);
 	/* Handling functions */
-	void performNXCORWithTemplates(T* signalPointer);
+	void performNXCORWithTemplates(T* signalPointer, uint32_t dataLenght);
 #ifdef USE_CUDA
 	void performNXCORWithTemplatesCUDA(T *dev_result, const T *dev_templates, const T *dev_signal, uint16_t templateLength, uint16_t templateChannels, uint32_t signalLength, uint16_t signalChannels, uint16_t numberOfTemplates, uint16_t* dev_signalLowerIndex);
 #endif
@@ -98,7 +98,7 @@ NXCORController<T>::~NXCORController(void)
 * @retval void : none
 */
 template <class T>
-void NXCORController<T>::performNXCORWithTemplates(T* signalPointer)
+void NXCORController<T>::performNXCORWithTemplates(T* signalPointer, uint32_t dataLenght)
 {
 	t1 = high_resolution_clock::now();
 	for (uint32_t i = 0; i < MAXIMUM_NUMBER_OF_TEMPLATES; i++)
@@ -106,12 +106,12 @@ void NXCORController<T>::performNXCORWithTemplates(T* signalPointer)
 		if (projectRefPtr->isTemplateUsedTraining(i + 1) > 0)
 		{
 #ifdef USE_OPENCV
-			nxcor.runNXCOROpenCV(arrayOfFeatures[i], signalPointer, templateControllerRefPtr->getCroppedTemplate(i + 1), TEMPLATE_CROPPED_LENGTH, TEMPLATE_CROPPED_WIDTH, TRAINING_DATA_LENGTH, templateControllerRefPtr->getTemplateLowerIndex(i+1));
+			nxcor.runNXCOROpenCV(arrayOfFeatures[i], signalPointer, templateControllerRefPtr->getCroppedTemplate(i + 1), TEMPLATE_CROPPED_LENGTH, TEMPLATE_CROPPED_WIDTH, dataLenght, templateControllerRefPtr->getTemplateLowerIndex(i+1));
 #else
 	#if NUMBER_OF_DRIFT_CHANNELS_HANDLED > 0
-			nxcor.runNXCOR_STD(arrayOfFeatures[i], signalPointer, templateControllerRefPtr->getCroppedTemplate(i + 1), TEMPLATE_CROPPED_LENGTH, TEMPLATE_CROPPED_WIDTH, TRAINING_DATA_LENGTH, templateControllerRefPtr->getTemplateLowerIndex(i + 1), NUMBER_OF_DRIFT_CHANNELS_HANDLED);
+			nxcor.runNXCOR_STD(arrayOfFeatures[i], signalPointer, templateControllerRefPtr->getCroppedTemplate(i + 1), TEMPLATE_CROPPED_LENGTH, TEMPLATE_CROPPED_WIDTH, dataLenght, templateControllerRefPtr->getTemplateLowerIndex(i + 1), NUMBER_OF_DRIFT_CHANNELS_HANDLED);
 	#else
-			nxcor.runNXCOR(arrayOfFeatures[i], signalPointer, templateControllerRefPtr->getCroppedTemplate(i + 1), TEMPLATE_CROPPED_LENGTH, TEMPLATE_CROPPED_WIDTH, TRAINING_DATA_LENGTH, templateControllerRefPtr->getTemplateLowerIndex(i + 1));
+			nxcor.runNXCOR(arrayOfFeatures[i], signalPointer, templateControllerRefPtr->getCroppedTemplate(i + 1), TEMPLATE_CROPPED_LENGTH, TEMPLATE_CROPPED_WIDTH, dataLenght, templateControllerRefPtr->getTemplateLowerIndex(i + 1));
 	#endif
 #endif
 		}
