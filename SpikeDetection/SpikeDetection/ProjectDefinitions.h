@@ -8,14 +8,16 @@
 #define PROJECT_DEFINITIONS_H
 
 /*********************************** GENERAL SETUP ****************************************************/
-//#define					USE_OPENCV
+//
+#define					USE_OPENCV
+//
 #define					USE_CUDA // Working with 2 seconds train and predict
-#define                 CUDA_VERIFY
+//#define                 CUDA_VERIFY
 #define					PRINT_OUTPUT_INFO
 
 #ifdef USE_OPENCV
 #ifdef USE_CUDA
-#error Selecting both USE_OPENCV and USE_CUDA is not allowed
+//#error Selecting both USE_OPENCV and USE_CUDA is not allowed
 #endif
 #endif
 

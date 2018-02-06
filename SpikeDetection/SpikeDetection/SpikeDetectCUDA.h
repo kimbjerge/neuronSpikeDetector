@@ -34,7 +34,7 @@ public:
 	/* Constructor */
 	SpikeDetectCUDA();
 	/* Methods */
-	virtual void runTraining(void);
+	void runTrainingCUDA(void);
 	virtual void runPrediction(void);
 private:
 	cudaError_t prepareCUDATraining(void);
@@ -94,7 +94,7 @@ SpikeDetectCUDA<T>::SpikeDetectCUDA() :
 * @retval void : none
 */
 template <class T>
-void SpikeDetectCUDA<T>::runTraining(void)
+void SpikeDetectCUDA<T>::runTrainingCUDA(void)
 {
 	std::cout << "************* TRAINING CUDA **************" << std::endl;
 
