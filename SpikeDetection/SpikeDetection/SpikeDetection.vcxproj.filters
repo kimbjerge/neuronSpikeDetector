@@ -9,10 +9,11 @@
     <ClInclude Include="NXCORController.h" />
     <ClInclude Include="ProjectDefinitions.h" />
     <ClInclude Include="ProjectInfo.h" />
-    <ClInclude Include="SpikeDetection.h" />
     <ClInclude Include="TemplateController.h" />
     <ClInclude Include="TemplateHandler.h" />
     <ClInclude Include="TTClassifier.h" />
+    <ClInclude Include="SpikeDetect.h" />
+    <ClInclude Include="SpikeDetectCUDA.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

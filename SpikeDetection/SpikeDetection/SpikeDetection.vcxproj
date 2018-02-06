@@ -102,7 +102,8 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClInclude Include="NXCORController.h" />
     <ClInclude Include="ProjectDefinitions.h" />
     <ClInclude Include="ProjectInfo.h" />
-    <ClInclude Include="SpikeDetection.h" />
+    <ClInclude Include="SpikeDetect.h" />
+    <ClInclude Include="SpikeDetectCUDA.h" />
     <ClInclude Include="TemplateController.h" />
     <ClInclude Include="TemplateHandler.h" />
     <ClInclude Include="TTClassifier.h" />
