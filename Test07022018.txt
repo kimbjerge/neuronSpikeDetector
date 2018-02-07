@@ -1,0 +1,410 @@
+Training OpenCV - 240 sec. data (175 sec.)
+Predition CUDA - 30 sec. data (2.1 sec.)
+
+************* TRAINING **************
+1D filtering time: 16850.7 ms. processing 240 seconds of data
+2D OpenCV filtering time: 2462.9 ms. processing 240 seconds of data
+NXCOR all templates time: 54659.8 ms. processing 240 seconds of data
+Train template: 1 thredshold: 0.88 W-F1 score: 0.928228
+Train template: 2 thredshold: 0.8 W-F1 score: 0.984333
+Train template: 3 thredshold: 0.72 W-F1 score: 0.992802
+Train template: 5 thredshold: 0.74 W-F1 score: 0.99084
+Train template: 7 thredshold: 0.72 W-F1 score: 0.995466
+Train template: 8 thredshold: 0.74 W-F1 score: 0.996175
+Train template: 10 thredshold: 0.7 W-F1 score: 0.984117
+Train template: 11 thredshold: 0.52 W-F1 score: 0.999483
+Train template: 12 thredshold: 0.78 W-F1 score: 0.968549
+Train template: 20 thredshold: 0.62 W-F1 score: 0.996535
+Train template: 22 thredshold: 0.8 W-F1 score: 0.992833
+Train template: 23 thredshold: 0.84 W-F1 score: 0.956439
+Train template: 25 thredshold: 0.94 W-F1 score: 0.987283
+Train template: 26 thredshold: 0.74 W-F1 score: 0.885141
+Train template: 27 thredshold: 0.6 W-F1 score: 0.988714
+Train template: 30 thredshold: 0.76 W-F1 score: 0.987434
+Train template: 32 thredshold: 0.72 W-F1 score: 0.99084
+Train template: 35 thredshold: 0.96 W-F1 score: 0.976764
+Train template: 40 thredshold: 0.96 W-F1 score: 0.865486
+Train template: 42 thredshold: 0.7 W-F1 score: 0.997796
+Train template: 47 thredshold: 0.66 W-F1 score: 0.996774
+Train template: 48 thredshold: 0.66 W-F1 score: 0.987349
+Train template: 57 thredshold: 0.78 W-F1 score: 0.993162
+Train template: 60 thredshold: 0.88 W-F1 score: 0.983503
+Train template: 61 thredshold: 0.78 W-F1 score: 0.985846
+Train template: 62 thredshold: 0.48 W-F1 score: 0.996408
+Train template: 64 thredshold: 0.94 W-F1 score: 0.96936
+Train all template models time: 101285 ms. processing 240 seconds of data
+Total CPU Training time: 175486 ms. processing 240 seconds of data
+************* PREDICTION CUDA **************
+T01 times: 212(207) threshold 0.88 W-F1 score: 0.931228
+T02 times:  92( 97) threshold 0.80 W-F1 score: 0.984536
+T03 times: 125(126) threshold 0.72 W-F1 score: 0.997619
+T04 times:   0
+T05 times: 195(198) threshold 0.74 W-F1 score: 0.99035
+T06 times:   0
+T07 times: 274(276) threshold 0.72 W-F1 score: 0.997826
+T08 times: 124(123) threshold 0.74 W-F1 score: 0.994355
+T09 times:   0
+T10 times: 122(124) threshold 0.70 W-F1 score: 0.987004
+T11 times: 162(162) threshold 0.52 W-F1 score: 1
+T12 times: 255(252) threshold 0.78 W-F1 score: 0.979958
+T13 times:   0
+T14 times:   0
+T15 times:   0
+T16 times:   0
+T17 times:   0
+T18 times:   0
+T19 times:   0
+T20 times: 200(197) threshold 0.62 W-F1 score: 0.9895
+T21 times:   0
+T22 times:  66( 66) threshold 0.80 W-F1 score: 1
+T23 times: 204(206) threshold 0.84 W-F1 score: 0.953098
+T24 times:   0
+T25 times: 275(281) threshold 0.94 W-F1 score: 0.993594
+T26 times: 162(242) threshold 0.74 W-F1 score: 0.878584
+T27 times:  79( 79) threshold 0.60 W-F1 score: 1
+T28 times:   0
+T29 times:   0
+T30 times: 231(234) threshold 0.76 W-F1 score: 0.987529
+T31 times:   0
+T32 times: 222(225) threshold 0.72 W-F1 score: 0.991513
+T33 times:   0
+T34 times:   0
+T35 times: 183(181) threshold 0.96 W-F1 score: 0.970419
+T36 times:   0
+T37 times:   0
+T38 times:   0
+T39 times:   0
+T40 times:  21( 41) threshold 0.96 W-F1 score: 0.853659
+T41 times:   0
+T42 times: 222(222) threshold 0.70 W-F1 score: 1
+T43 times:   0
+T44 times:   0
+T45 times:   0
+T46 times:   0
+T47 times: 262(261) threshold 0.66 W-F1 score: 0.993507
+T48 times: 124(125) threshold 0.66 W-F1 score: 0.9976
+T49 times:   0
+T50 times:   0
+T51 times:   0
+T52 times:   0
+T53 times:   0
+T54 times:   0
+T55 times:   0
+T56 times:   0
+T57 times: 296(301) threshold 0.78 W-F1 score: 0.991655
+T58 times:   0
+T59 times:   0
+T60 times: 136(143) threshold 0.88 W-F1 score: 0.985315
+T61 times: 247(248) threshold 0.78 W-F1 score: 0.978572
+T62 times: 235(235) threshold 0.48 W-F1 score: 0.987234
+T63 times:   0
+T64 times: 102(123) threshold 0.94 W-F1 score: 0.94878
+Total CUDA Prediction time: 2162.19 ms. processing 30 seconds of data
+Press any key to continue . . .
+
+Training OpenCV - 60 sec. data (29 sec.)
+Predition CUDA - 30 sec. data (2.1 sec.)
+
+************* TRAINING **************
+1D filtering time: 4159.7 ms. processing 60 seconds of data
+2D OpenCV filtering time: 642.427 ms. processing 60 seconds of data
+NXCOR all templates time: 13756.4 ms. processing 60 seconds of data
+Train template: 1 thredshold: 0.94 W-F1 score: 0.933608
+Train template: 2 thredshold: 0.8 W-F1 score: 0.990625
+Train template: 3 thredshold: 0.7 W-F1 score: 0.993965
+Train template: 5 thredshold: 0.74 W-F1 score: 0.990658
+Train template: 7 thredshold: 0.72 W-F1 score: 0.998355
+Train template: 8 thredshold: 0.74 W-F1 score: 0.996715
+Train template: 10 thredshold: 0.7 W-F1 score: 0.984724
+Train template: 11 thredshold: 0.5 W-F1 score: 0.998872
+Train template: 12 thredshold: 0.78 W-F1 score: 0.961853
+Train template: 20 thredshold: 0.62 W-F1 score: 1
+Train template: 22 thredshold: 0.76 W-F1 score: 0.997887
+Train template: 23 thredshold: 0.84 W-F1 score: 0.957567
+Train template: 25 thredshold: 0.94 W-F1 score: 0.987357
+Train template: 26 thredshold: 0.76 W-F1 score: 0.883698
+Train template: 27 thredshold: 0.6 W-F1 score: 0.991449
+Train template: 30 thredshold: 0.74 W-F1 score: 0.989214
+Train template: 32 thredshold: 0.72 W-F1 score: 0.990681
+Train template: 35 thredshold: 0.96 W-F1 score: 0.97384
+Train template: 40 thredshold: 0.96 W-F1 score: 0.84914
+Train template: 42 thredshold: 0.66 W-F1 score: 0.998598
+Train template: 47 thredshold: 0.64 W-F1 score: 0.996552
+Train template: 48 thredshold: 0.68 W-F1 score: 0.987233
+Train template: 57 thredshold: 0.84 W-F1 score: 0.989512
+Train template: 60 thredshold: 0.9 W-F1 score: 0.980505
+Train template: 61 thredshold: 0.78 W-F1 score: 0.988315
+Train template: 62 thredshold: 0.46 W-F1 score: 0.997408
+Train template: 64 thredshold: 0.94 W-F1 score: 0.965509
+Train all template models time: 10404 ms. processing 60 seconds of data
+Total CPU Training time: 29021.7 ms. processing 60 seconds of data
+************* PREDICTION CUDA **************
+T01 times: 215(212) threshold 0.94 W-F1 score: 0.92484
+T02 times:  78( 83) threshold 0.80 W-F1 score: 0.981928
+T03 times: 129(126) threshold 0.70 W-F1 score: 0.983721
+T04 times:   0
+T05 times: 225(227) threshold 0.74 W-F1 score: 0.992924
+T06 times:   0
+T07 times: 272(274) threshold 0.72 W-F1 score: 0.994142
+T08 times: 145(145) threshold 0.74 W-F1 score: 0.993104
+T09 times:   0
+T10 times: 110(119) threshold 0.70 W-F1 score: 0.968426
+T11 times: 136(136) threshold 0.50 W-F1 score: 1
+T12 times: 232(231) threshold 0.78 W-F1 score: 0.975403
+T13 times:   0
+T14 times:   0
+T15 times:   0
+T16 times:   0
+T17 times:   0
+T18 times:   0
+T19 times:   0
+T20 times: 176(176) threshold 0.62 W-F1 score: 0.994318
+T21 times:   0
+T22 times:  75( 77) threshold 0.76 W-F1 score: 0.992208
+T23 times: 226(228) threshold 0.84 W-F1 score: 0.95765
+T24 times:   0
+T25 times: 255(267) threshold 0.94 W-F1 score: 0.986517
+T26 times: 171(264) threshold 0.76 W-F1 score: 0.878628
+T27 times: 101(102) threshold 0.60 W-F1 score: 0.997059
+T28 times:   0
+T29 times:   0
+T30 times: 229(231) threshold 0.74 W-F1 score: 0.979981
+T31 times:   0
+T32 times: 219(222) threshold 0.72 W-F1 score: 0.991398
+T33 times:   0
+T34 times:   0
+T35 times: 183(185) threshold 0.96 W-F1 score: 0.985863
+T36 times:   0
+T37 times:   0
+T38 times:   0
+T39 times:   0
+T40 times:  41( 57) threshold 0.96 W-F1 score: 0.871117
+T41 times:   0
+T42 times: 254(254) threshold 0.66 W-F1 score: 1
+T43 times:   0
+T44 times:   0
+T45 times:   0
+T46 times:   0
+T47 times: 270(268) threshold 0.64 W-F1 score: 0.994815
+T48 times: 117(121) threshold 0.68 W-F1 score: 0.98162
+T49 times:   0
+T50 times:   0
+T51 times:   0
+T52 times:   0
+T53 times:   0
+T54 times:   0
+T55 times:   0
+T56 times:   0
+T57 times: 287(295) threshold 0.84 W-F1 score: 0.991864
+T58 times:   0
+T59 times:   0
+T60 times: 136(147) threshold 0.90 W-F1 score: 0.977551
+T61 times: 241(243) threshold 0.78 W-F1 score: 0.989253
+T62 times: 249(247) threshold 0.46 W-F1 score: 0.994377
+T63 times:   0
+T64 times: 104(117) threshold 0.94 W-F1 score: 0.966667
+Total CUDA Prediction time: 2173.15 ms. processing 30 seconds of data
+Press any key to continue . . .
+
+Training OpenCV - 50 sec. data (3.3 sec.)
+Predition CUDA - 30 sec. data (2.1 sec.)
+
+************* TRAINING CUDA **************
+----------- CUDA training results ------------
+Train template: 1 threshold: 0.94 W-F1 score: 0.934109
+Train template: 2 threshold: 0.8 W-F1 score: 0.993513
+Train template: 3 threshold: 0.7 W-F1 score: 0.992797
+Train template: 5 threshold: 0.64 W-F1 score: 0.993562
+Train template: 7 threshold: 0.72 W-F1 score: 0.998
+Train template: 8 threshold: 0.74 W-F1 score: 0.997447
+Train template: 10 threshold: 0.7 W-F1 score: 0.983171
+Train template: 11 threshold: 0.44 W-F1 score: 1
+Train template: 12 threshold: 0.78 W-F1 score: 0.966285
+Train template: 20 threshold: 0.62 W-F1 score: 1
+Train template: 22 threshold: 0.76 W-F1 score: 0.997521
+Train template: 23 threshold: 0.84 W-F1 score: 0.962967
+Train template: 25 threshold: 0.94 W-F1 score: 0.988523
+Train template: 26 threshold: 0.64 W-F1 score: 0.888353
+Train template: 27 threshold: 0.6 W-F1 score: 0.990007
+Train template: 30 threshold: 0.74 W-F1 score: 0.98874
+Train template: 32 threshold: 0.72 W-F1 score: 0.989614
+Train template: 35 threshold: 0.96 W-F1 score: 0.975452
+Train template: 40 threshold: 0.96 W-F1 score: 0.831541
+Train template: 42 threshold: 0.66 W-F1 score: 0.998329
+Train template: 47 threshold: 0.64 W-F1 score: 0.995858
+Train template: 48 threshold: 0.66 W-F1 score: 0.988837
+Train template: 57 threshold: 0.78 W-F1 score: 0.99102
+Train template: 60 threshold: 0.9 W-F1 score: 0.980088
+Train template: 61 threshold: 0.78 W-F1 score: 0.987496
+Train template: 62 threshold: 0.46 W-F1 score: 0.998565
+Train template: 64 threshold: 0.94 W-F1 score: 0.963503
+Total CUDA Training time: 3316.69 ms. processing 50 seconds of data
+************* PREDICTION CUDA **************
+T01 times: 207(207) threshold 0.94 W-F1 score: 0.94686
+T02 times:  87( 93) threshold 0.80 W-F1 score: 0.980645
+T03 times: 135(134) threshold 0.70 W-F1 score: 0.994815
+T04 times:   0
+T05 times: 225(221) threshold 0.64 W-F1 score: 0.97415
+T06 times:   0
+T07 times: 274(275) threshold 0.72 W-F1 score: 0.995263
+T08 times: 130(131) threshold 0.74 W-F1 score: 0.99771
+T09 times:   0
+T10 times: 110(117) threshold 0.70 W-F1 score: 0.982051
+T11 times: 152(149) threshold 0.44 W-F1 score: 0.986184
+T12 times: 245(235) threshold 0.78 W-F1 score: 0.963161
+T13 times:   0
+T14 times:   0
+T15 times:   0
+T16 times:   0
+T17 times:   0
+T18 times:   0
+T19 times:   0
+T20 times: 173(173) threshold 0.62 W-F1 score: 0.99422
+T21 times:   0
+T22 times:  64( 64) threshold 0.76 W-F1 score: 1
+T23 times: 222(224) threshold 0.84 W-F1 score: 0.943412
+T24 times:   0
+T25 times: 236(251) threshold 0.94 W-F1 score: 0.982072
+T26 times: 179(272) threshold 0.64 W-F1 score: 0.872359
+T27 times: 100(101) threshold 0.60 W-F1 score: 0.99703
+T28 times:   0
+T29 times:   0
+T30 times: 240(240) threshold 0.74 W-F1 score: 0.983333
+T31 times:   0
+T32 times: 223(224) threshold 0.72 W-F1 score: 0.994182
+T33 times:   0
+T34 times:   0
+T35 times: 190(191) threshold 0.96 W-F1 score: 0.982665
+T36 times:   0
+T37 times:   0
+T38 times:   0
+T39 times:   0
+T40 times:  42( 59) threshold 0.96 W-F1 score: 0.870057
+T41 times:   0
+T42 times: 235(235) threshold 0.66 W-F1 score: 1
+T43 times:   0
+T44 times:   0
+T45 times:   0
+T46 times:   0
+T47 times: 288(286) threshold 0.64 W-F1 score: 0.995139
+T48 times: 132(135) threshold 0.66 W-F1 score: 0.978283
+T49 times:   0
+T50 times:   0
+T51 times:   0
+T52 times:   0
+T53 times:   0
+T54 times:   0
+T55 times:   0
+T56 times:   0
+T57 times: 267(267) threshold 0.78 W-F1 score: 0.988764
+T58 times:   0
+T59 times:   0
+T60 times: 132(141) threshold 0.90 W-F1 score: 0.980851
+T61 times: 240(244) threshold 0.78 W-F1 score: 0.98679
+T62 times: 242(242) threshold 0.46 W-F1 score: 0.995868
+T63 times:   0
+T64 times: 119(134) threshold 0.94 W-F1 score: 0.966418
+Total CUDA Prediction time: 2131.22 ms. processing 30 seconds of data
+Press any key to continue . . .
+
+
+Training OpenCV - 50 sec. data (3.9 sec.)
+Predition CUDA - 10 sec. data (0.7 sec.)
+
+************* TRAINING CUDA **************
+----------- CUDA training results ------------
+Train template: 1 threshold: 0.86 W-F1 score: 0.928658
+Train template: 2 threshold: 0.8 W-F1 score: 0.993513
+Train template: 3 threshold: 0.7 W-F1 score: 0.992797
+Train template: 5 threshold: 0.66 W-F1 score: 0.992681
+Train template: 7 threshold: 0.72 W-F1 score: 0.998
+Train template: 8 threshold: 0.74 W-F1 score: 0.99617
+Train template: 10 threshold: 0.7 W-F1 score: 0.983171
+Train template: 11 threshold: 0.44 W-F1 score: 1
+Train template: 12 threshold: 0.78 W-F1 score: 0.966285
+Train template: 20 threshold: 0.62 W-F1 score: 1
+Train template: 22 threshold: 0.76 W-F1 score: 0.997521
+Train template: 23 threshold: 0.84 W-F1 score: 0.960285
+Train template: 25 threshold: 0.94 W-F1 score: 0.989185
+Train template: 26 threshold: 0.66 W-F1 score: 0.888353
+Train template: 27 threshold: 0.6 W-F1 score: 0.990007
+Train template: 30 threshold: 0.74 W-F1 score: 0.98874
+Train template: 32 threshold: 0.72 W-F1 score: 0.989614
+Train template: 35 threshold: 0.96 W-F1 score: 0.97252
+Train template: 40 threshold: 0.96 W-F1 score: 0.847761
+Train template: 42 threshold: 0.66 W-F1 score: 0.998329
+Train template: 47 threshold: 0.64 W-F1 score: 0.995858
+Train template: 48 threshold: 0.7 W-F1 score: 0.987442
+Train template: 57 threshold: 0.78 W-F1 score: 0.99102
+Train template: 60 threshold: 0.9 W-F1 score: 0.981416
+Train template: 61 threshold: 0.78 W-F1 score: 0.987496
+Train template: 62 threshold: 0.46 W-F1 score: 0.999282
+Train template: 64 threshold: 0.94 W-F1 score: 0.963503
+Total CUDA Training time: 3996.72 ms. processing 50 seconds of data
+************* PREDICTION CUDA **************
+T01 times:  72( 68) threshold 0.86 W-F1 score: 0.946977
+T02 times:  36( 39) threshold 0.80 W-F1 score: 0.976923
+T03 times:  43( 43) threshold 0.70 W-F1 score: 1
+T04 times:   0
+T05 times:  67( 66) threshold 0.66 W-F1 score: 0.974559
+T06 times:   0
+T07 times:  97( 97) threshold 0.72 W-F1 score: 1
+T08 times:  39( 39) threshold 0.74 W-F1 score: 1
+T09 times:   0
+T10 times:  40( 41) threshold 0.70 W-F1 score: 0.992683
+T11 times:  55( 54) threshold 0.44 W-F1 score: 0.987273
+T12 times:  84( 77) threshold 0.78 W-F1 score: 0.941667
+T13 times:   0
+T14 times:   0
+T15 times:   0
+T16 times:   0
+T17 times:   0
+T18 times:   0
+T19 times:   0
+T20 times:  57( 58) threshold 0.62 W-F1 score: 0.994828
+T21 times:   0
+T22 times:  21( 21) threshold 0.76 W-F1 score: 1
+T23 times:  74( 77) threshold 0.84 W-F1 score: 0.934889
+T24 times:   0
+T25 times:  71( 77) threshold 0.94 W-F1 score: 0.976623
+T26 times:  62( 97) threshold 0.66 W-F1 score: 0.862986
+T27 times:  27( 27) threshold 0.60 W-F1 score: 1
+T28 times:   0
+T29 times:   0
+T30 times:  82( 81) threshold 0.74 W-F1 score: 0.991463
+T31 times:   0
+T32 times:  72( 73) threshold 0.72 W-F1 score: 0.99589
+T33 times:   0
+T34 times:   0
+T35 times:  71( 69) threshold 0.96 W-F1 score: 0.980282
+T36 times:   0
+T37 times:   0
+T38 times:   0
+T39 times:   0
+T40 times:  11( 18) threshold 0.96 W-F1 score: 0.883333
+T41 times:   0
+T42 times:  69( 69) threshold 0.66 W-F1 score: 1
+T43 times:   0
+T44 times:   0
+T45 times:   0
+T46 times:   0
+T47 times: 102(102) threshold 0.64 W-F1 score: 1
+T48 times:  54( 53) threshold 0.70 W-F1 score: 0.987037
+T49 times:   0
+T50 times:   0
+T51 times:   0
+T52 times:   0
+T53 times:   0
+T54 times:   0
+T55 times:   0
+T56 times:   0
+T57 times:  79( 78) threshold 0.78 W-F1 score: 0.978432
+T58 times:   0
+T59 times:   0
+T60 times:  47( 51) threshold 0.90 W-F1 score: 0.976471
+T61 times:  80( 82) threshold 0.78 W-F1 score: 0.992683
+T62 times:  84( 84) threshold 0.46 W-F1 score: 0.988095
+T63 times:   0
+T64 times:  42( 46) threshold 0.94 W-F1 score: 0.973913
+Total CUDA Prediction time: 730.693 ms. processing 10 seconds of data
+Press any key to continue . . .
