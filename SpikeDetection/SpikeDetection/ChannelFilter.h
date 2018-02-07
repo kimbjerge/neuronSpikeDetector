@@ -35,7 +35,7 @@ public:
 	/* Channel functions calls*/
 	void runFilter(T* result, T* signal, uint32_t signalWidth, uint32_t signalLength);
 #ifdef USE_CUDA
-	void runFilterCUDA(float *dev_result, float *dev_signal, float *dev_resultInt, float* dev_coeffsA, float* dev_coeffsB );
+	void runFilterCUDA(float *dev_result, float *dev_signal, float *dev_resultInt, float* dev_coeffsA, float* dev_coeffsB, uint32_t dataLength);
 #endif
 	float* getFilterCoeffsA(void);
 	float* getFilterCoeffsB(void);
@@ -142,11 +142,11 @@ void ChannelFilter<T>::runFilter(T* result, T* signal, uint32_t signalWidth, uin
 * @retval void : none
 */
 template <class T>
-void ChannelFilter<T>::runFilterCUDA(float *dev_result, float *dev_signal, float *dev_resultInt, float* dev_coeffsA, float* dev_coeffsB)
+void ChannelFilter<T>::runFilterCUDA(float *dev_result, float *dev_signal, float *dev_resultInt, float* dev_coeffsA, float* dev_coeffsB, uint32_t dataLength)
 {
 	t1 = high_resolution_clock::now();
 	// Perform filtering
-	ChannelFilterWithCuda(dev_result, dev_signal, dev_resultInt, dev_coeffsA, dev_coeffsB, DATA_CHANNELS, RUNTIME_DATA_LENGTH);
+	ChannelFilterWithCuda(dev_result, dev_signal, dev_resultInt, dev_coeffsA, dev_coeffsB, DATA_CHANNELS, dataLength);
 
 	// Capture execution time
 	t2 = high_resolution_clock::now();

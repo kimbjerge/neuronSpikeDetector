@@ -108,7 +108,7 @@ void SpikeDetectCUDA<T>::runTrainingCUDA(void)
 	t1 = high_resolution_clock::now();
 
 	/**** 1D Filter ****/
-	channelFilter.runFilterCUDA(dev_DataPointer, dev_DataPointer, dev_interMfilteredDataPointer, dev_ChannelFilterCoeffA, dev_ChannelFilterCoeffB);
+	channelFilter.runFilterCUDA(dev_DataPointer, dev_DataPointer, dev_interMfilteredDataPointer, dev_ChannelFilterCoeffA, dev_ChannelFilterCoeffB, TRAINING_DATA_LENGTH);
 
 #ifdef CUDA_VERIFY
 	USED_DATATYPE* filteredResults = new USED_DATATYPE[(uint32_t)(TRAINING_DATA_LENGTH*DATA_CHANNELS)];
@@ -178,8 +178,10 @@ void SpikeDetectCUDA<T>::runTrainingCUDA(void)
 				float featureCUDA = NXCOROutputCUDA[t*TRAINING_DATA_LENGTH + i];
 				if (round(featureCUDA*precision) < floor(feature*precision) || round(featureCUDA*precision) > ceil(feature*precision)) {
 					error++;
-					//printf("T%i %0.4f %0.4f, ", t+1, feature, featureCUDA);
-					//if ((error+1)%10 == 0) std::cout << endl;
+					if (error < 500) {
+						printf("T%i %0.4f %0.4f, ", t + 1, feature, featureCUDA);
+						if ((error + 1) % 10 == 0) std::cout << endl;
+					}
 				}
 			}
 		}
@@ -261,7 +263,7 @@ void SpikeDetectCUDA<T>::runPrediction(void)
 	t1 = high_resolution_clock::now();
 
 	// 1D Filter 
-	channelFilter.runFilterCUDA(dev_DataPointerP, dev_DataPointerP, dev_interMfilteredDataPointerP, dev_ChannelFilterCoeffAP, dev_ChannelFilterCoeffBP);
+	channelFilter.runFilterCUDA(dev_DataPointerP, dev_DataPointerP, dev_interMfilteredDataPointerP, dev_ChannelFilterCoeffAP, dev_ChannelFilterCoeffBP, RUNTIME_DATA_LENGTH);
 
 	// 2D Filter 
 	kernelFilter.runFilterReplicateCUDA(dev_interMfilteredDataPointerP, dev_DataPointerP, dev_kernelFilterCoeffP, DEFAULT_KERNEL_DIM, RUNTIME_DATA_LENGTH, DATA_CHANNELS);
