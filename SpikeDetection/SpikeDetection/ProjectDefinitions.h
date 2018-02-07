@@ -9,10 +9,10 @@
 
 /*********************************** GENERAL SETUP ****************************************************/
 //
-#define					USE_OPENCV
+//#define					USE_OPENCV
 //
 #define					USE_CUDA // Working with 2 seconds train and predict
-//#define                 CUDA_VERIFY
+#define                 CUDA_VERIFY
 #define					PRINT_OUTPUT_INFO
 
 #ifdef USE_OPENCV
@@ -31,8 +31,8 @@
 /*********************************** SAMPLING *********************************************************/
 #define					USED_DATATYPE						float
 #define					SAMPLING_FREQUENCY					30000
-#define					TRAINING_DATA_TIME					2 // 10 s, must be same size
-#define					RUNTIME_DATA_TIME					1 // 4 ms // The runtime/prediction data is assumed to be consecutive to the training data
+#define					TRAINING_DATA_TIME					50 // 10 s, must be same size
+#define					RUNTIME_DATA_TIME					30 // 4 ms // The runtime/prediction data is assumed to be consecutive to the training data
 #define					TRAINING_DATA_LENGTH				SAMPLING_FREQUENCY*TRAINING_DATA_TIME
 #define					RUNTIME_DATA_LENGTH					SAMPLING_FREQUENCY*RUNTIME_DATA_TIME
 #define					DATA_CHANNELS						32		
@@ -64,13 +64,17 @@
 #define					DEFAULT_KERNEL_DIM					3 // Equals 3x3 - Currently only supported!
 
 /*********************************** TRAINED THRESHOLD ************************************************/
-#define					PRECISION_WEIGHT					0.7
-#define					RECALL_WEIGHT						0.3
+#define					PRECISION_WEIGHT					0.7f
+#define					RECALL_WEIGHT						0.3f
 #define					ACCEPTED_TIMELINE_SLACK				3
 #define					NUMBER_OF_THRESHOLDS_TO_TEST		40
-#define				    MINIMUM_THRESHOLD_TO_TEST			0.2
+#define				    MINIMUM_THRESHOLD_TO_TEST			0.2f
 #define				    MAXIMUM_THRESHOLD_TO_TEST			1
 #define					MAXIMUM_PREDICTION_SAMPLES			TRAINING_DATA_TIME*1000 // inidcats a Maximum 1000 spikes per template per second
 
+/*********************************** CUDA OPTIMIZATION ************************************************/
+#define					MAXIMUM_NUMBER_OF_THREADS						1024
+#define					MAXIMUM_NUMBER_OF_THREADS_COMPARING				500
+#define					MAXIMUM_NUMBER_OF_THREADS_DRIFT_HANDLING		1024
 
 #endif

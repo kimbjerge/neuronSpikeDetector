@@ -238,15 +238,15 @@ void ChannelFilter<T>::ReverseArray(T* signal, uint32_t signalWidth, uint32_t si
 template <class T>
 void ChannelFilter<T>::Filter(T* out, const float* b, const float* a, T* in, uint32_t signalWidth, uint32_t signalLength)
 {
-	for (int x = 0; x < signalWidth; x++)
+	for (int x = 0; x < (int)signalWidth; x++)
 	{
-		for (int i = 0; i < signalLength; i++)
+		for (int i = 0; i < (int)signalLength; i++)
 		{
 			uint32_t index = ((i*signalWidth) + x);
 			float tmp = 0.;
 			int j = 0;
 			out[index] = 0.f;
-			for (j = 0; j < bCoeffSize; j++)
+			for (j = 0; j < (int)bCoeffSize; j++)
 			{
 				// Every second b coefficient is 0, thus skipped in the calculation 
 				// and not included in the array holding the coefficients.
@@ -255,7 +255,7 @@ void ChannelFilter<T>::Filter(T* out, const float* b, const float* a, T* in, uin
 			}
 
 
-			for (j = 0; j < aCoeffSize; j++)
+			for (j = 0; j < (int)aCoeffSize; j++)
 			{
 				// The first a coefficient is 1, thus skipped and 
 				// omitted in the array holding the coefficients.
@@ -286,27 +286,27 @@ template <class T>
 void ChannelFilter<T>::ReverseFilter(T* out, const float* b, const float* a, T* in, uint32_t signalWidth, uint32_t signalLength)
 {
 
-	for (int x = signalWidth - 1; x >= 0; x--)
+	for (int x = (int)signalWidth - 1; x >= 0; x--)
 	{
-		for (int i = signalLength - 1; i >= 0; i--)
+		for (int i = (int)signalLength - 1; i >= 0; i--)
 		{
 			uint32_t index = ((i*signalWidth) + x);
 			float tmp = 0.;
 			int j = 0;
 			out[index] = 0.f;
-			for (j = 0; j < bCoeffSize; j++)
+			for (j = 0; j < (int)bCoeffSize; j++)
 			{
 				// Every second b coefficient is 0, thus skipped in the calculation 
 				// and not included in the array holding the coefficients.
-				if (i + (j * 2) > signalLength - 1) continue;
+				if (i + (j * 2) > (int)signalLength - 1) continue;
 				tmp += b[j] * in[(index)+(j * 2)*signalWidth];
 			}
 
-			for (j = 0; j < aCoeffSize; j++)
+			for (j = 0; j < (int)aCoeffSize; j++)
 			{
 				// The first a coefficient is 1, thus skipped and 
 				// omitted in the array holding the coefficients.
-				if (i + (j + 1) > signalLength - 1) continue;
+				if (i + (j + 1) > (int)signalLength - 1) continue;
 				tmp -= a[j] * out[(index)+(j + 1)*signalWidth];
 			}
 

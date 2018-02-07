@@ -69,7 +69,7 @@ private:
 	high_resolution_clock::time_point t3;
 	high_resolution_clock::time_point t4;
 	float f_latestExecutionTime = 0;
-	const float kernelAlphaValue = 0.2;
+	const float kernelAlphaValue = 0.2f;
 	T filterKernel[DEFAULT_KERNEL_DIM*DEFAULT_KERNEL_DIM];
 #ifdef USE_OPENCV
 	cv::Mat imageMat;
@@ -219,7 +219,7 @@ void KernelFilter<T>::runFilterReplicate(T* result, T* signal, uint32_t kernelDi
 	// Perform filtering
 
 	// setup variables
-	uint32_t kernelHalfSize = floor(kernelDim / 2);
+	uint32_t kernelHalfSize = (uint32_t)floor(kernelDim / 2);
 
 	// Running over the entire image
 	for (uint32_t x = 0; x < signalLength; x++)

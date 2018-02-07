@@ -43,7 +43,7 @@ private:
 	void chooseSamples(uint32_t* lowerChannelIndex, uint32_t* upperChannelIndex, uint32_t centerChannel, uint32_t wantedchannelSize, uint32_t maximumNumberOfChannels);
 	void cropTemplate(T* templatePtr, T* templateReturn, uint32_t wantedTemplateLength, uint32_t wantedTemplateWidth, uint32_t currentTemplateLength, uint32_t currentTemplateWidth);
 	
-	DataLoader<USED_DATATYPE> templateLoader;
+	DataLoader<T> templateLoader;
 	uint32_t templateID_;
 	T* templateDataPointer_;
 	T* filteredtemplateDataPointer_;
@@ -275,22 +275,22 @@ void TemplateHandler<T>::chooseSamples(uint32_t* lowerChannelIndex, uint32_t* up
 		return;
 	}
 
-	int32_t minChannelNumber = centerChannel - floor(wantedchannelSize / 2);
-	int32_t maxChannelNumber = centerChannel + floor(wantedchannelSize / 2);
+	int32_t minChannelNumber = centerChannel - (int32_t)floor(wantedchannelSize / 2);
+	int32_t maxChannelNumber = centerChannel + (int32_t)floor(wantedchannelSize / 2);
 
 	if (minChannelNumber < 0)
 	{
-		int32_t minChannelRest = abs(floor(minChannelNumber));
+		int32_t minChannelRest = (int32_t)abs(floor(minChannelNumber));
 		minChannelNumber = 0;
-		if ((maxChannelNumber + minChannelRest) < maximumNumberOfChannels)
+		if ((maxChannelNumber + minChannelRest) < (int32_t)maximumNumberOfChannels)
 		{
 			maxChannelNumber = maxChannelNumber + minChannelRest;
 		}
 	}
 
-	if (maxChannelNumber > maximumNumberOfChannels)
+	if (maxChannelNumber > (int32_t)maximumNumberOfChannels)
 	{
-		int32_t maxChannelRest = abs(floor(maxChannelNumber) - maximumNumberOfChannels);
+		int32_t maxChannelRest = (int32_t)abs(floor(maxChannelNumber) - maximumNumberOfChannels);
 		maxChannelNumber = maximumNumberOfChannels;
 		if ((minChannelNumber - maxChannelRest) >= 0)
 		{

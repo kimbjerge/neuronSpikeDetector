@@ -24,15 +24,18 @@
 int main(void)
 {
 	int returnValue = 0;
-	SpikeDetect<USED_DATATYPE> *spikeDetector;
 
 #ifdef USE_CUDA
+	SpikeDetectCUDA<USED_DATATYPE> *spikeDetector;
 	spikeDetector = new SpikeDetectCUDA<USED_DATATYPE>();
+
+	spikeDetector->runTrainingCUDA();
 #else
+	SpikeDetect<USED_DATATYPE> *spikeDetector;
 	spikeDetector = new SpikeDetect<USED_DATATYPE>();
-#endif
 
 	spikeDetector->runTraining();
+#endif
 
 	spikeDetector->runPrediction();
 

@@ -91,9 +91,6 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CudaCompile Include="CUDAKernels.cu" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="ChannelFilter.h" />
     <ClInclude Include="ClassifierController.h" />
     <ClInclude Include="DataLoader.h" />
@@ -110,6 +107,13 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="Channel_CUDA.cu" />
+    <CudaCompile Include="Classifier_CUDA.cu" />
+    <CudaCompile Include="Kernel_CUDA.cu" />
+    <CudaCompile Include="MemoryHelper_CUDA.cu" />
+    <CudaCompile Include="NXCOR_CUDA.cu" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

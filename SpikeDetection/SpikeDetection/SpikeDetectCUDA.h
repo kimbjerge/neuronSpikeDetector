@@ -162,7 +162,7 @@ void SpikeDetectCUDA<T>::runTrainingCUDA(void)
 	nxcorController.performNXCORWithTemplatesCUDA(dev_NXCOROutput, dev_templates, dev_interMfilteredDataPointer, (uint16_t)TEMPLATE_CROPPED_LENGTH, (uint16_t)TEMPLATE_CROPPED_WIDTH, TRAINING_DATA_LENGTH, DATA_CHANNELS, MAXIMUM_NUMBER_OF_TEMPLATES, dev_lowerChannelIndex);
 
 #ifdef CUDA_VERIFY
-	nxcorController.performNXCORWithTemplates(kernelResults);
+	nxcorController.performNXCORWithTemplates(kernelResults, TRAINING_DATA_LENGTH);
 
 	USED_DATATYPE* NXCOROutputCUDA = new USED_DATATYPE[(uint32_t)(TRAINING_DATA_LENGTH*MAXIMUM_NUMBER_OF_TEMPLATES)];
 	RetreiveResults(dev_NXCOROutput, NXCOROutputCUDA, TRAINING_DATA_LENGTH, MAXIMUM_NUMBER_OF_TEMPLATES, sizeof(USED_DATATYPE));
@@ -178,8 +178,8 @@ void SpikeDetectCUDA<T>::runTrainingCUDA(void)
 				float featureCUDA = NXCOROutputCUDA[t*TRAINING_DATA_LENGTH + i];
 				if (round(featureCUDA*precision) < floor(feature*precision) || round(featureCUDA*precision) > ceil(feature*precision)) {
 					error++;
-					printf("T%i %0.4f %0.4f, ", t+1, feature, featureCUDA);
-					if ((error+1)%10 == 0) std::cout << endl;
+					//printf("T%i %0.4f %0.4f, ", t+1, feature, featureCUDA);
+					//if ((error+1)%10 == 0) std::cout << endl;
 				}
 			}
 		}

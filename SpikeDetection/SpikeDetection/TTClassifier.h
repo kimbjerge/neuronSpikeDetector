@@ -427,7 +427,7 @@ void TTClassifier<T>::compareWithTruthTable(float* precision, float* recall, uin
 	}
 	else
 	{
-		offsetSpike = ceil(peakOffset / 2) ;
+		offsetSpike = (uint32_t)ceil(peakOffset / 2) ;
 	}
 
 	for (uint32_t I = 0; I < sizeOfEstimation; I++)
@@ -438,7 +438,7 @@ void TTClassifier<T>::compareWithTruthTable(float* precision, float* recall, uin
 		}
 		else if (slack > 0)
 		{
-			for (uint32_t Y = 1; Y <= slack; Y++)
+			for (int32_t Y = 1; Y <= (int)slack; Y++)
 			{
 				if (findTimeStampInArray((Estimation[I])+ offsetSpike, Truthtable, sizeOfTruthTable, &startIndex, -Y, true))
 				{
@@ -611,7 +611,7 @@ void TTClassifier<T>::TrainFromCUDAResults(uint32_t TruthtabletableSize, uint32_
 	for (uint32_t i = 0; i < NUMBER_OF_THRESHOLDS_TO_TEST; i++)
 	{
 		thresholds[i] = MINIMUM_THRESHOLD_TO_TEST + ((MAXIMUM_THRESHOLD_TO_TEST - MINIMUM_THRESHOLD_TO_TEST) / ((float)(NUMBER_OF_THRESHOLDS_TO_TEST)))*(i);
-		TP = TPScores[i];
+		TP = (float)TPScores[i];
 		FN = TruthtabletableSize - TP;
 		FP = PredictionNumberOfSpikes[i] - TP;
 

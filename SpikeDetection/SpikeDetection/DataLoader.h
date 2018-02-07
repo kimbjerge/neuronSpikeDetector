@@ -68,9 +68,9 @@ DataLoader<T>::DataLoader(std::string stringPath, uint16_t numberOfChannels, uin
 		{
 			switch (dataType)
 			{
-				case UINT8: {	int8_t dummy;		ifs.read(reinterpret_cast<char*>(&dummy), sizeof(dummy));	DataArrayPtr_[u32_iterator] = isnan((T)dummy) ? 0 : dummy; }	break;
-				case UINT16: {	int16_t dummy;		ifs.read(reinterpret_cast<char*>(&dummy), sizeof(dummy));	DataArrayPtr_[u32_iterator] = isnan((T)dummy) ? 0 : dummy; }	break;
-				case UINT32: {	int32_t dummy;		ifs.read(reinterpret_cast<char*>(&dummy), sizeof(dummy));	DataArrayPtr_[u32_iterator] = isnan((T)dummy) ? 0 : dummy; }	break;
+				case UINT8: {	int8_t dummy;		ifs.read(reinterpret_cast<char*>(&dummy), sizeof(dummy));	DataArrayPtr_[u32_iterator] = isnan((T)dummy) ? 0 : (float)dummy; }	break;
+				case UINT16: {	int16_t dummy;		ifs.read(reinterpret_cast<char*>(&dummy), sizeof(dummy));	DataArrayPtr_[u32_iterator] = isnan((T)dummy) ? 0 : (float)dummy; }	break;
+				case UINT32: {	int32_t dummy;		ifs.read(reinterpret_cast<char*>(&dummy), sizeof(dummy));	DataArrayPtr_[u32_iterator] = isnan((T)dummy) ? 0 : (float)dummy; }	break;
 				case FLOAT: {	float dummy;		ifs.read(reinterpret_cast<char*>(&dummy), sizeof(dummy));	DataArrayPtr_[u32_iterator] = isnan((T)dummy) ? 0 : dummy; }	break;
 				
 				default: {	int16_t dummy;		ifs.read(reinterpret_cast<char*>(&dummy), sizeof(dummy));	DataArrayPtr_[u32_iterator] = (T)dummy; }	break;

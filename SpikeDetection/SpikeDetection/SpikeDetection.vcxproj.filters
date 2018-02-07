@@ -19,6 +19,10 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="CUDAKernels.cu" />
+    <CudaCompile Include="Channel_CUDA.cu" />
+    <CudaCompile Include="Classifier_CUDA.cu" />
+    <CudaCompile Include="NXCOR_CUDA.cu" />
+    <CudaCompile Include="Kernel_CUDA.cu" />
+    <CudaCompile Include="MemoryHelper_CUDA.cu" />
   </ItemGroup>
 </Project>
