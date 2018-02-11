@@ -100,6 +100,8 @@ void SpikeDetect<T>::runTraining(void)
 
 
 	/**** 2D Filter ****/
+#ifdef USE_KERNEL_FILTER
+
 #ifdef USE_OPENCV
 	USED_DATATYPE* kernelResults = new USED_DATATYPE[(uint32_t)(TRAINING_DATA_LENGTH*DATA_CHANNELS)];
 	kernelFilter.runFilterOpenCV(kernelResults, filteredResults, DEFAULT_KERNEL_DIM, TRAINING_DATA_LENGTH, DATA_CHANNELS);
@@ -113,11 +115,15 @@ void SpikeDetect<T>::runTraining(void)
 	std::cout << "2D filtering time: " << kernelFilter.getLatestExecutionTime() / 1000 << " ms. processing " << TRAINING_DATA_TIME << " seconds of data" << std::endl;
 #endif	
 #endif
-
 	/**** NXCOR Filter ****/
-	//KBE??? changed when not using kernel filter
-	//nxcorController.performNXCORWithTemplates(filteredResults, TRAINING_DATA_LENGTH);
 	nxcorController.performNXCORWithTemplates(kernelResults, TRAINING_DATA_LENGTH);
+	delete kernelResults;
+#else
+
+	/**** NXCOR Filter without kernel filter ****/
+	nxcorController.performNXCORWithTemplates(filteredResults, TRAINING_DATA_LENGTH);
+#endif
+
 #ifdef PRINT_OUTPUT_INFO
 	std::cout << "NXCOR all templates time: " << nxcorController.getLatestExecutionTime() / 1000 << " ms. processing " << TRAINING_DATA_TIME << " seconds of data" << std::endl;
 #endif
@@ -129,7 +135,6 @@ void SpikeDetect<T>::runTraining(void)
 	std::cout << "Train all template models time: " << classifierController.getLatestExecutionTime() / 1000 << " ms. processing " << TRAINING_DATA_TIME << " seconds of data" << std::endl;
 #endif
 
-	delete kernelResults;
 	delete filteredResults;
 
 	t2 = high_resolution_clock::now();
@@ -161,8 +166,9 @@ void SpikeDetect<T>::runPrediction(void)
 	std::cout << "1D filtering time: " << channelFilter.getLatestExecutionTime() / 1000 << " ms. processing " << RUNTIME_DATA_TIME << " seconds of data" << std::endl;
 #endif
 
-
 	// 2D Filter 
+#ifdef USE_KERNEL_FILTER
+
 #ifdef USE_OPENCV
 	USED_DATATYPE* kernelResults = new USED_DATATYPE[(uint32_t)(RUNTIME_DATA_LENGTH*DATA_CHANNELS)];
 	kernelFilter.runFilterOpenCV(kernelResults, filteredResults, DEFAULT_KERNEL_DIM, RUNTIME_DATA_LENGTH, DATA_CHANNELS);
@@ -177,15 +183,17 @@ void SpikeDetect<T>::runPrediction(void)
 #endif
 #endif
 
-
 	/**** NXCOR Filter ****/
-	// KBE??? changed when not using kernel filter
-	//nxcorController.performNXCORWithTemplates(filteredResults, RUNTIME_DATA_LENGTH);
 	nxcorController.performNXCORWithTemplates(kernelResults, RUNTIME_DATA_LENGTH);
+	delete kernelResults;
+#else
+	/**** NXCOR Filter without kernel filter****/
+	nxcorController.performNXCORWithTemplates(filteredResults, RUNTIME_DATA_LENGTH);
+#endif
+
 #ifdef PRINT_OUTPUT_INFO
 	std::cout << "NXCOR all templates time: " << nxcorController.getLatestExecutionTime() / 1000 << " ms. processing " << RUNTIME_DATA_TIME << " seconds of data" << std::endl;
 #endif
-
 
 	// Predict
 	classifierController.performPredictionBasedOnTemplates(&nxcorController, &templateController);
@@ -195,7 +203,6 @@ void SpikeDetect<T>::runPrediction(void)
 
 	// TODO:
 	// Make the arrays static instead an save time by avoiding Allocation and deallocation runtime!!
-	delete kernelResults;
 	delete filteredResults;
 
 	t2 = high_resolution_clock::now();

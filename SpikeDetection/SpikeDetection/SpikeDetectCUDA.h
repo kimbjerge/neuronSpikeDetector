@@ -133,6 +133,7 @@ void SpikeDetectCUDA<T>::runTrainingCUDA(void)
 
 
 	/**** 2D Filter ****/
+#ifdef USE_KERNEL_FILTER
 	kernelFilter.runFilterReplicateCUDA(dev_interMfilteredDataPointer, dev_DataPointer, dev_kernelFilterCoeff, DEFAULT_KERNEL_DIM, TRAINING_DATA_LENGTH, DATA_CHANNELS);
 
 #ifdef CUDA_VERIFY
@@ -189,6 +190,13 @@ void SpikeDetectCUDA<T>::runTrainingCUDA(void)
 	std::cout << "NXCOR filter errors : " << error << std::endl;
 	free(kernelResults);
 	free(NXCOROutputCUDA);
+#endif
+
+#else
+	
+	/**** NXCOR Filter without kernel filter ****/
+	nxcorController.performNXCORWithTemplatesCUDA(dev_NXCOROutput, dev_templates, dev_DataPointer, (uint16_t)TEMPLATE_CROPPED_LENGTH, (uint16_t)TEMPLATE_CROPPED_WIDTH, TRAINING_DATA_LENGTH, DATA_CHANNELS, MAXIMUM_NUMBER_OF_TEMPLATES, dev_lowerChannelIndex);
+
 #endif
 
 
@@ -266,10 +274,15 @@ void SpikeDetectCUDA<T>::runPrediction(void)
 	channelFilter.runFilterCUDA(dev_DataPointerP, dev_DataPointerP, dev_interMfilteredDataPointerP, dev_ChannelFilterCoeffAP, dev_ChannelFilterCoeffBP, RUNTIME_DATA_LENGTH);
 
 	// 2D Filter 
+#ifdef USE_KERNEL_FILTER
 	kernelFilter.runFilterReplicateCUDA(dev_interMfilteredDataPointerP, dev_DataPointerP, dev_kernelFilterCoeffP, DEFAULT_KERNEL_DIM, RUNTIME_DATA_LENGTH, DATA_CHANNELS);
 
 	/**** NXCOR Filter ****/
 	nxcorController.performNXCORWithTemplatesCUDA(dev_NXCOROutputP, dev_templatesP, dev_interMfilteredDataPointerP, (uint16_t)TEMPLATE_CROPPED_LENGTH, (uint16_t)TEMPLATE_CROPPED_WIDTH, RUNTIME_DATA_LENGTH, DATA_CHANNELS, MAXIMUM_NUMBER_OF_TEMPLATES, dev_lowerChannelIndexP);
+#else
+	/**** NXCOR Filter without kernel filter  ****/
+	nxcorController.performNXCORWithTemplatesCUDA(dev_NXCOROutputP, dev_templatesP, dev_DataPointerP, (uint16_t)TEMPLATE_CROPPED_LENGTH, (uint16_t)TEMPLATE_CROPPED_WIDTH, RUNTIME_DATA_LENGTH, DATA_CHANNELS, MAXIMUM_NUMBER_OF_TEMPLATES, dev_lowerChannelIndexP);
+#endif
 
 	// Perform prediction on GPU
 	classifierController.performPredictionBasedOnTemplatesCUDA(dev_NXCOROutputP, dev_aboveThresholdIndicatorP, dev_FoundTimesP, dev_FoundTimesCounterP, dev_thresholdsP);

@@ -29,7 +29,8 @@ int main(void)
 	SpikeDetectCUDA<USED_DATATYPE> *spikeDetector;
 	spikeDetector = new SpikeDetectCUDA<USED_DATATYPE>();
 
-	spikeDetector->runTrainingCUDA();
+	spikeDetector->runTraining(); // Training not using CUDA
+	//spikeDetector->runTrainingCUDA();
 #else
 	SpikeDetect<USED_DATATYPE> *spikeDetector;
 	spikeDetector = new SpikeDetect<USED_DATATYPE>();
