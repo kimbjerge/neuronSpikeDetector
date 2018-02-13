@@ -83,7 +83,7 @@ void SpikeDetectCUDA_RTP<T>::runPrediction(void)
 			for (int j = 0; j < MAXIMUM_NUMBER_OF_TEMPLATES; j++)
 				if (host_FoundTimesCounters[j] > 0) {
 					std::cout << "                T" << (j + 1) << " num: " << host_FoundTimesCounters[j] << std::endl;
-					spikesFound++;
+					spikesFound += host_FoundTimesCounters[j];
 				}
 		}
 	} else {

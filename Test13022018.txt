@@ -1,0 +1,441 @@
+Train: C++ without kernel filter - 10 sec 
+Predict CUDA_RTP: 2x1 sec. 
+
+************* TRAINING **************
+1D filtering time: 309.413 ms. processing 10 seconds of data
+NXCOR all templates time: 2460.13 ms. processing 10 seconds of data
+Train template: 1 thredshold: 0.8 W-F1 score: 0.829922
+Train template: 2 thredshold: 0.6 W-F1 score: 0.931419
+Train template: 3 thredshold: 0.5 W-F1 score: 1
+Train template: 5 thredshold: 0.56 W-F1 score: 0.987805
+Train template: 7 thredshold: 0.46 W-F1 score: 1
+Train template: 8 thredshold: 0.5 W-F1 score: 1
+Train template: 10 thredshold: 0.68 W-F1 score: 0.963636
+Train template: 11 thredshold: 0.36 W-F1 score: 1
+Train template: 12 thredshold: 0.54 W-F1 score: 0.982927
+Train template: 20 thredshold: 0.4 W-F1 score: 1
+Train template: 22 thredshold: 0.6 W-F1 score: 1
+Train template: 23 thredshold: 0.68 W-F1 score: 0.848871
+Train template: 25 thredshold: 0.8 W-F1 score: 0.98125
+Train template: 26 thredshold: 0.5 W-F1 score: 0.886845
+Train template: 27 thredshold: 0.4 W-F1 score: 0.97931
+Train template: 30 thredshold: 0.42 W-F1 score: 0.990411
+Train template: 32 thredshold: 0.56 W-F1 score: 0.995946
+Train template: 35 thredshold: 0.76 W-F1 score: 0.990909
+Train template: 40 thredshold: 0.62 W-F1 score: 0.451807
+Train template: 42 thredshold: 0.5 W-F1 score: 1
+Train template: 47 thredshold: 0.54 W-F1 score: 1
+Train template: 48 thredshold: 0.46 W-F1 score: 0.987755
+Train template: 57 thredshold: 0.58 W-F1 score: 0.991262
+Train template: 60 thredshold: 0.7 W-F1 score: 0.914704
+Train template: 61 thredshold: 0.56 W-F1 score: 0.971765
+Train template: 62 thredshold: 0.44 W-F1 score: 1
+Train template: 64 thredshold: 0.86 W-F1 score: 0.762791
+Train all template models time: 712.237 ms. processing 10 seconds of data
+Total CPU Training time: 3495.98 ms. processing 10 seconds of data
+************* CUDA REALTIME PREDICTION **************
+T01 times:   5( 18) threshold 0.80 W-F1 score: 0.783333
+T02 times:   6(  9) threshold 0.60 W-F1 score: 0.9
+T03 times:   8( 13) threshold 0.50 W-F1 score: 0.884615
+T04 times:   0
+T05 times:   6( 13) threshold 0.56 W-F1 score: 0.838462
+T06 times:   0
+T07 times:   7( 14) threshold 0.46 W-F1 score: 0.85
+T08 times:   6(  9) threshold 0.50 W-F1 score: 0.9
+T09 times:   0
+T10 times:   6( 11) threshold 0.68 W-F1 score: 0.863636
+T11 times:   6(  9) threshold 0.36 W-F1 score: 0.9
+T12 times:   7( 14) threshold 0.54 W-F1 score: 0.85
+T13 times:   0
+T14 times:   0
+T15 times:   0
+T16 times:   0
+T17 times:   0
+T18 times:   0
+T19 times:   0
+T20 times:   7( 13) threshold 0.40 W-F1 score: 0.861538
+T21 times:   0
+T22 times:   3(  4) threshold 0.60 W-F1 score: 0.925
+T23 times:   5( 15) threshold 0.68 W-F1 score: 0.64
+T24 times:   0
+T25 times:  16( 22) threshold 0.80 W-F1 score: 0.918182
+T26 times:   4( 20) threshold 0.50 W-F1 score: 0.76
+T27 times:   3(  8) threshold 0.40 W-F1 score: 0.8125
+T28 times:   0
+T29 times:   0
+T30 times:   7( 16) threshold 0.42 W-F1 score: 0.83125
+T31 times:   0
+T32 times:  12( 18) threshold 0.56 W-F1 score: 0.9
+T33 times:   0
+T34 times:   0
+T35 times:   2(  8) threshold 0.76 W-F1 score: 0.775
+T36 times:   0
+T37 times:   0
+T38 times:   0
+T39 times:   0
+T40 times:   2(  2) threshold 0.62 W-F1 score: 0
+T41 times:   0
+T42 times:   8( 12) threshold 0.50 W-F1 score: 0.9
+T43 times:   0
+T44 times:   0
+T45 times:   0
+T46 times:   0
+T47 times:  13( 29) threshold 0.54 W-F1 score: 0.834483
+T48 times:   4(  6) threshold 0.46 W-F1 score: 0.9
+T49 times:   0
+T50 times:   0
+T51 times:   0
+T52 times:   0
+T53 times:   0
+T54 times:   0
+T55 times:   0
+T56 times:   0
+T57 times:  10( 15) threshold 0.58 W-F1 score: 0.81
+T58 times:   0
+T59 times:   0
+T60 times:   6( 12) threshold 0.70 W-F1 score: 0.708333
+T61 times:   6( 16) threshold 0.56 W-F1 score: 0.8125
+T62 times:  11( 25) threshold 0.44 W-F1 score: 0.832
+T63 times:   0
+T64 times:   2(  5) threshold 0.86 W-F1 score: 0.82
+RTP: 942.943 ms
+                T1 num: 5
+                T2 num: 6
+                T3 num: 8
+                T5 num: 6
+                T7 num: 7
+                T8 num: 6
+                T10 num: 6
+                T11 num: 6
+                T12 num: 7
+                T20 num: 7
+                T22 num: 3
+                T23 num: 5
+                T25 num: 16
+                T26 num: 4
+                T27 num: 3
+                T30 num: 7
+                T32 num: 12
+                T35 num: 2
+                T40 num: 2
+                T42 num: 8
+                T47 num: 13
+                T48 num: 4
+                T57 num: 10
+                T60 num: 6
+                T61 num: 6
+                T62 num: 11
+                T64 num: 2
+T01 times:   3( 18) threshold 0.80 W-F1 score: 0
+T02 times:   3(  9) threshold 0.60 W-F1 score: 0
+T03 times:   5( 13) threshold 0.50 W-F1 score: 0
+T04 times:   0
+T05 times:   6( 13) threshold 0.56 W-F1 score: 0
+T06 times:   0
+T07 times:   8( 14) threshold 0.46 W-F1 score: 0
+T08 times:   3(  9) threshold 0.50 W-F1 score: 0
+T09 times:   0
+T10 times:   3( 11) threshold 0.68 W-F1 score: 0
+T11 times:   3(  9) threshold 0.36 W-F1 score: 0
+T12 times:   6( 14) threshold 0.54 W-F1 score: 0
+T13 times:   0
+T14 times:   0
+T15 times:   0
+T16 times:   0
+T17 times:   0
+T18 times:   0
+T19 times:   0
+T20 times:   7( 13) threshold 0.40 W-F1 score: 0
+T21 times:   0
+T22 times:   1(  4) threshold 0.60 W-F1 score: 0
+T23 times:   4( 15) threshold 0.68 W-F1 score: 0
+T24 times:   0
+T25 times:   6( 22) threshold 0.80 W-F1 score: 0
+T26 times:  10( 20) threshold 0.50 W-F1 score: 0
+T27 times:   5(  8) threshold 0.40 W-F1 score: 0
+T28 times:   0
+T29 times:   0
+T30 times:   9( 16) threshold 0.42 W-F1 score: 0
+T31 times:   0
+T32 times:   6( 18) threshold 0.56 W-F1 score: 0
+T33 times:   0
+T34 times:   0
+T35 times:   6(  8) threshold 0.76 W-F1 score: 0
+T36 times:   0
+T37 times:   0
+T38 times:   0
+T39 times:   0
+T40 times:   8(  2) threshold 0.62 W-F1 score: 0
+T41 times:   0
+T42 times:   4( 12) threshold 0.50 W-F1 score: 0
+T43 times:   0
+T44 times:   0
+T45 times:   0
+T46 times:   0
+T47 times:  16( 29) threshold 0.54 W-F1 score: 0
+T48 times:   2(  6) threshold 0.46 W-F1 score: 0
+T49 times:   0
+T50 times:   0
+T51 times:   0
+T52 times:   0
+T53 times:   0
+T54 times:   0
+T55 times:   0
+T56 times:   0
+T57 times:   7( 15) threshold 0.58 W-F1 score: 0
+T58 times:   0
+T59 times:   0
+T60 times:   4( 12) threshold 0.70 W-F1 score: 0
+T61 times:   8( 16) threshold 0.56 W-F1 score: 0
+T62 times:  14( 25) threshold 0.44 W-F1 score: 0
+T63 times:   0
+T64 times:   0(  5) threshold 0.86 W-F1 score: -nan(ind)
+RTP: 977.929 ms
+                T1 num: 3
+                T2 num: 3
+                T3 num: 5
+                T5 num: 6
+                T7 num: 8
+                T8 num: 3
+                T10 num: 3
+                T11 num: 3
+                T12 num: 6
+                T20 num: 7
+                T22 num: 1
+                T23 num: 4
+                T25 num: 6
+                T26 num: 10
+                T27 num: 5
+                T30 num: 9
+                T32 num: 6
+                T35 num: 6
+                T40 num: 8
+                T42 num: 4
+                T47 num: 16
+                T48 num: 2
+                T57 num: 7
+                T60 num: 4
+                T61 num: 8
+                T62 num: 14
+Number of neuron spikes : 335
+Press any key to continue . . .
+
+Train: C++ without kernel filter and drift handling - 10 sec 
+Predict CUDA_RTP: 2x1 sec. 
+
+************* TRAINING **************
+1D filtering time: 303.835 ms. processing 10 seconds of data
+NXCOR all templates time: 7323.4 ms. processing 10 seconds of data
+Train template: 1 thredshold: 0.88 W-F1 score: 0.726786
+Train template: 2 thredshold: 0.64 W-F1 score: 0.921053
+Train template: 3 thredshold: 0.8 W-F1 score: 0.977358
+Train template: 5 thredshold: 0.74 W-F1 score: 0.956098
+Train template: 7 thredshold: 0.78 W-F1 score: 0.842443
+Train template: 8 thredshold: 0.74 W-F1 score: 0.9175
+Train template: 10 thredshold: 0.68 W-F1 score: 0.963636
+Train template: 11 thredshold: 0.36 W-F1 score: 1
+Train template: 12 thredshold: 0.84 W-F1 score: 0.7375
+Train template: 20 thredshold: 0.76 W-F1 score: 0.989394
+Train template: 22 thredshold: 0.7 W-F1 score: 0.982353
+Train template: 23 thredshold: 0.68 W-F1 score: 0.848871
+Train template: 25 thredshold: 0.8 W-F1 score: 0.963068
+Train template: 26 thredshold: 0.54 W-F1 score: 0.884286
+Train template: 27 thredshold: 0.76 W-F1 score: 0.751724
+Train template: 30 thredshold: 0.62 W-F1 score: 0.93973
+Train template: 32 thredshold: 0.66 W-F1 score: 0.987838
+Train template: 35 thredshold: 0.78 W-F1 score: 0.990909
+Train template: 40 thredshold: 0.62 W-F1 score: 0.40678
+Train template: 42 thredshold: 0.5 W-F1 score: 1
+Train template: 47 thredshold: 0.78 W-F1 score: 0.979091
+Train template: 48 thredshold: 0.8 W-F1 score: 0.742857
+Train template: 57 thredshold: 0.7 W-F1 score: 0.98135
+Train template: 60 thredshold: 0.84 W-F1 score: 0.72449
+Train template: 61 thredshold: 0.68 W-F1 score: 0.843606
+Train template: 62 thredshold: 0.52 W-F1 score: 1
+Train template: 64 thredshold: 0.86 W-F1 score: 0.762791
+Train all template models time: 801.722 ms. processing 10 seconds of data
+Total CPU Training time: 8443.62 ms. processing 10 seconds of data
+************* CUDA REALTIME PREDICTION **************
+T01 times:   0( 18) threshold 0.88 W-F1 score: -nan(ind)
+T02 times:   5(  9) threshold 0.64 W-F1 score: 0
+T03 times:   6( 13) threshold 0.80 W-F1 score: 0
+T04 times:   0
+T05 times:   6( 13) threshold 0.74 W-F1 score: 0
+T06 times:   0
+T07 times:   4( 14) threshold 0.78 W-F1 score: 0
+T08 times:   5(  9) threshold 0.74 W-F1 score: 0
+T09 times:   0
+T10 times:   6( 11) threshold 0.68 W-F1 score: 0
+T11 times:   6(  9) threshold 0.36 W-F1 score: 0
+T12 times:   2( 14) threshold 0.84 W-F1 score: 0
+T13 times:   0
+T14 times:   0
+T15 times:   0
+T16 times:   0
+T17 times:   0
+T18 times:   0
+T19 times:   0
+T20 times:   6( 13) threshold 0.76 W-F1 score: 0
+T21 times:   0
+T22 times:   3(  4) threshold 0.70 W-F1 score: 0
+T23 times:   5( 15) threshold 0.68 W-F1 score: 0
+T24 times:   0
+T25 times:  15( 22) threshold 0.80 W-F1 score: 0
+T26 times:   4( 20) threshold 0.54 W-F1 score: 0
+T27 times:   1(  8) threshold 0.76 W-F1 score: 0
+T28 times:   0
+T29 times:   0
+T30 times:   7( 16) threshold 0.62 W-F1 score: 0
+T31 times:   0
+T32 times:  12( 18) threshold 0.66 W-F1 score: 0
+T33 times:   0
+T34 times:   0
+T35 times:   2(  8) threshold 0.78 W-F1 score: 0
+T36 times:   0
+T37 times:   0
+T38 times:   0
+T39 times:   0
+T40 times:   5(  2) threshold 0.62 W-F1 score: 0
+T41 times:   0
+T42 times:   8( 12) threshold 0.50 W-F1 score: 0
+T43 times:   0
+T44 times:   0
+T45 times:   0
+T46 times:   0
+T47 times:  14( 29) threshold 0.78 W-F1 score: 0
+T48 times:   1(  6) threshold 0.80 W-F1 score: 0
+T49 times:   0
+T50 times:   0
+T51 times:   0
+T52 times:   0
+T53 times:   0
+T54 times:   0
+T55 times:   0
+T56 times:   0
+T57 times:   9( 15) threshold 0.70 W-F1 score: 0
+T58 times:   0
+T59 times:   0
+T60 times:   1( 12) threshold 0.84 W-F1 score: 0
+T61 times:   3( 16) threshold 0.68 W-F1 score: 0
+T62 times:  12( 25) threshold 0.52 W-F1 score: 0
+T63 times:   0
+T64 times:   2(  5) threshold 0.86 W-F1 score: 0
+RTP: 3314.01 ms
+                T2 num: 5
+                T3 num: 6
+                T5 num: 6
+                T7 num: 4
+                T8 num: 5
+                T10 num: 6
+                T11 num: 6
+                T12 num: 2
+                T20 num: 6
+                T22 num: 3
+                T23 num: 5
+                T25 num: 15
+                T26 num: 4
+                T27 num: 1
+                T30 num: 7
+                T32 num: 12
+                T35 num: 2
+                T40 num: 5
+                T42 num: 8
+                T47 num: 14
+                T48 num: 1
+                T57 num: 9
+                T60 num: 1
+                T61 num: 3
+                T62 num: 12
+                T64 num: 2
+T01 times:   0( 18) threshold 0.88 W-F1 score: -nan(ind)
+T02 times:   2(  9) threshold 0.64 W-F1 score: 0
+T03 times:   5( 13) threshold 0.80 W-F1 score: 0
+T04 times:   0
+T05 times:   6( 13) threshold 0.74 W-F1 score: 0
+T06 times:   0
+T07 times:   4( 14) threshold 0.78 W-F1 score: 0
+T08 times:   2(  9) threshold 0.74 W-F1 score: 0
+T09 times:   0
+T10 times:   3( 11) threshold 0.68 W-F1 score: 0
+T11 times:   3(  9) threshold 0.36 W-F1 score: 0
+T12 times:   1( 14) threshold 0.84 W-F1 score: 0
+T13 times:   0
+T14 times:   0
+T15 times:   0
+T16 times:   0
+T17 times:   0
+T18 times:   0
+T19 times:   0
+T20 times:   6( 13) threshold 0.76 W-F1 score: 0
+T21 times:   0
+T22 times:   1(  4) threshold 0.70 W-F1 score: 0
+T23 times:   4( 15) threshold 0.68 W-F1 score: 0
+T24 times:   0
+T25 times:   6( 22) threshold 0.80 W-F1 score: 0
+T26 times:   9( 20) threshold 0.54 W-F1 score: 0
+T27 times:   1(  8) threshold 0.76 W-F1 score: 0
+T28 times:   0
+T29 times:   0
+T30 times:  10( 16) threshold 0.62 W-F1 score: 0
+T31 times:   0
+T32 times:   4( 18) threshold 0.66 W-F1 score: 0
+T33 times:   0
+T34 times:   0
+T35 times:   5(  8) threshold 0.78 W-F1 score: 0
+T36 times:   0
+T37 times:   0
+T38 times:   0
+T39 times:   0
+T40 times:   9(  2) threshold 0.62 W-F1 score: 0
+T41 times:   0
+T42 times:   5( 12) threshold 0.50 W-F1 score: 0
+T43 times:   0
+T44 times:   0
+T45 times:   0
+T46 times:   0
+T47 times:  13( 29) threshold 0.78 W-F1 score: 0
+T48 times:   1(  6) threshold 0.80 W-F1 score: 0
+T49 times:   0
+T50 times:   0
+T51 times:   0
+T52 times:   0
+T53 times:   0
+T54 times:   0
+T55 times:   0
+T56 times:   0
+T57 times:   7( 15) threshold 0.70 W-F1 score: 0
+T58 times:   0
+T59 times:   0
+T60 times:   0( 12) threshold 0.84 W-F1 score: -nan(ind)
+T61 times:   6( 16) threshold 0.68 W-F1 score: 0
+T62 times:  15( 25) threshold 0.52 W-F1 score: 0
+T63 times:   0
+T64 times:   0(  5) threshold 0.86 W-F1 score: -nan(ind)
+RTP: 3378.07 ms
+                T2 num: 2
+                T3 num: 5
+                T5 num: 6
+                T7 num: 4
+                T8 num: 2
+                T10 num: 3
+                T11 num: 3
+                T12 num: 1
+                T20 num: 6
+                T22 num: 1
+                T23 num: 4
+                T25 num: 6
+                T26 num: 9
+                T27 num: 1
+                T30 num: 10
+                T32 num: 4
+                T35 num: 5
+                T40 num: 9
+                T42 num: 5
+                T47 num: 13
+                T48 num: 1
+                T57 num: 7
+                T61 num: 6
+                T62 num: 15
+Number of neuron spikes : 278
+Press any key to continue . . .
+
