@@ -14,6 +14,7 @@
     <ClInclude Include="TTClassifier.h" />
     <ClInclude Include="SpikeDetect.h" />
     <ClInclude Include="SpikeDetectCUDA.h" />
+    <ClInclude Include="SpikeDetectCUDA_RTP.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

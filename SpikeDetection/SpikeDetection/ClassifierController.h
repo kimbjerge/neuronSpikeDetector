@@ -41,7 +41,7 @@ public:
 												   uint32_t *dev_TPCounter, uint16_t *dev_peaksOffsets, uint32_t *devTruthTable, uint32_t *devTruthTableSize, uint32_t *devTruthTableStartInd);
 	void performTrainingBasedOnTemplatesPart2(uint32_t *host_TPCounter, uint32_t *host_predictionSize);
 
-	void performPredictionBasedOnTemplatesCUDA(const float *dev_signal, char *dev_aboveThreshold, uint32_t *dev_foundTimes, uint32_t *dev_foundTimesCounter, float *dev_threshold);
+	void performPredictionBasedOnTemplatesCUDA(const float *dev_signal, char *dev_aboveThreshold, uint32_t *dev_foundTimes, uint32_t *dev_foundTimesCounter, float *dev_threshold, uint32_t dataLength);
 	void verifyPredictionBasedOnTemplatesCUDA(uint32_t* foundTimesCounter, uint32_t* foundTimesP, TemplateController<T> * templateController);
 #endif	
 	void performPredictionBasedOnTemplates(NXCORController<T>* nxcorRef, TemplateController<T> * templateController);
@@ -249,11 +249,11 @@ void ClassifierController<T>::performTrainingBasedOnTemplatesPart2(uint32_t *hos
 * @retval void : none
 */
 template <class T>
-void ClassifierController<T>::performPredictionBasedOnTemplatesCUDA(const float *dev_signal, char *dev_aboveThreshold, uint32_t *dev_foundTimes, uint32_t *dev_foundTimesCounter, float *dev_threshold)
+void ClassifierController<T>::performPredictionBasedOnTemplatesCUDA(const float *dev_signal, char *dev_aboveThreshold, uint32_t *dev_foundTimes, uint32_t *dev_foundTimesCounter, float *dev_threshold, uint32_t dataLength)
 {
 	t1 = high_resolution_clock::now();
 
-	PredictCUDA(dev_signal, dev_aboveThreshold, dev_foundTimes, dev_foundTimesCounter, (uint16_t)TEMPLATE_CROPPED_LENGTH, (uint32_t)RUNTIME_DATA_LENGTH, (uint16_t)MAXIMUM_NUMBER_OF_TEMPLATES, dev_threshold);
+	PredictCUDA(dev_signal, dev_aboveThreshold, dev_foundTimes, dev_foundTimesCounter, (uint16_t)TEMPLATE_CROPPED_LENGTH, dataLength, (uint16_t)MAXIMUM_NUMBER_OF_TEMPLATES, dev_threshold);
 
 	t2 = high_resolution_clock::now();
 

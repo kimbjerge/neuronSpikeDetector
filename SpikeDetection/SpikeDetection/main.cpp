@@ -9,7 +9,8 @@
 #include "ProjectDefinitions.h"
 
 #ifdef USE_CUDA
-#include "SpikeDetectCUDA.h"
+//#include "SpikeDetectCUDA.h"
+#include "SpikeDetectCUDA_RTP.h"
 #else
 #include "SpikeDetect.h"
 #endif
@@ -26,8 +27,10 @@ int main(void)
 	int returnValue = 0;
 
 #ifdef USE_CUDA
-	SpikeDetectCUDA<USED_DATATYPE> *spikeDetector;
-	spikeDetector = new SpikeDetectCUDA<USED_DATATYPE>();
+	//SpikeDetectCUDA<USED_DATATYPE> *spikeDetector;
+	//spikeDetector = new SpikeDetectCUDA<USED_DATATYPE>();
+	SpikeDetectCUDA_RTP<USED_DATATYPE> *spikeDetector;
+	spikeDetector = new SpikeDetectCUDA_RTP<USED_DATATYPE>();
 
 	spikeDetector->runTraining(); // Training not using CUDA
 	//spikeDetector->runTrainingCUDA();

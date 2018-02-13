@@ -36,11 +36,11 @@ public:
 	/* Methods */
 	void runTrainingCUDA(void);
 	virtual void runPrediction(void);
-private:
+protected:
 	cudaError_t prepareCUDATraining(void);
-	cudaError_t prepareCUDAPrediction(void);
+	virtual cudaError_t prepareCUDAPrediction(void);
 	void CUDACleanUpTraining(void);
-	void CUDACleanUpPrediction(void);
+	virtual void CUDACleanUpPrediction(void);
 
 	float *dev_DataPointer;
 	float *dev_interMfilteredDataPointer;
@@ -285,7 +285,7 @@ void SpikeDetectCUDA<T>::runPrediction(void)
 #endif
 
 	// Perform prediction on GPU
-	classifierController.performPredictionBasedOnTemplatesCUDA(dev_NXCOROutputP, dev_aboveThresholdIndicatorP, dev_FoundTimesP, dev_FoundTimesCounterP, dev_thresholdsP);
+	classifierController.performPredictionBasedOnTemplatesCUDA(dev_NXCOROutputP, dev_aboveThresholdIndicatorP, dev_FoundTimesP, dev_FoundTimesCounterP, dev_thresholdsP, RUNTIME_DATA_LENGTH);
 
 	if (CheckForCudaError() != cudaError_t::cudaSuccess)
 	{

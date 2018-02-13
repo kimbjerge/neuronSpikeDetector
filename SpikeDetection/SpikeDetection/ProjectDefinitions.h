@@ -9,11 +9,11 @@
 
 /*********************************** GENERAL SETUP ****************************************************/
 //
-//#define					USE_OPENCV
+#define					USE_OPENCV
 //
 #define					USE_CUDA // Working with 2 seconds train and predict
 //#define                 CUDA_VERIFY
-#define					PRINT_OUTPUT_INFO
+//#define					PRINT_OUTPUT_INFO
 
 #ifdef USE_OPENCV
 #ifdef USE_CUDA
@@ -33,8 +33,10 @@
 #define					SAMPLING_FREQUENCY					30000
 #define					TRAINING_DATA_TIME					10 // 10 s, must be same size
 #define					RUNTIME_DATA_TIME					2 // 4 ms // The runtime/prediction data is assumed to be consecutive to the training data
+#define                 RTP_DATA_TIME                       0.005f // Runtime buffer length in seconds
 #define					TRAINING_DATA_LENGTH				SAMPLING_FREQUENCY*TRAINING_DATA_TIME
 #define					RUNTIME_DATA_LENGTH					SAMPLING_FREQUENCY*RUNTIME_DATA_TIME
+#define                 RTP_DATA_LENGTH						SAMPLING_FREQUENCY*RTP_DATA_TIME
 #define					DATA_CHANNELS						32		
 
 /*********************************** MATLAB OUTPUT ****************************************************/
@@ -61,7 +63,7 @@
 #define					NUMBER_OF_B_COEFF					4
 
 /*********************************** KERNEL FILTERING *************************************************/
-#define                 USE_KERNEL_FILTER
+//#define                 USE_KERNEL_FILTER
 #define					DEFAULT_KERNEL_DIM					3 // Equals 3x3 - Currently only supported!
 
 /*********************************** TRAINED THRESHOLD ************************************************/
