@@ -12,7 +12,7 @@ PrePath = 'C:\neuronSpikeDetector\Matlab\'; % Path to the root of this project
 % DataPath = 'C:\Users\Morten Buhl\Desktop';
 % DiectoryToEvaluate = strcat(DataPath,'\Simulation_10min_30kHz_2Noise_DefVals'); % Path to the data, rez file and more
 
-DiectoryToEvaluate = 'C:\Users\cvlab\Desktop\2017-04-21_16-58-45'; % Path to the data, rez file and more
+DiectoryToEvaluate = 'C:\2017-04-21_16-58-45'; % Path to the data, rez file and more
 RecordFile = strcat(DiectoryToEvaluate, '\piroska_example_short.dat');
 TemplatesFile = strcat(DiectoryToEvaluate,'\templates.npy');
 addpath(DiectoryToEvaluate);

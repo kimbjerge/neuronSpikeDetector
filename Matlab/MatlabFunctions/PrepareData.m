@@ -18,7 +18,8 @@ NumberOfChannelsReal = 34;
 
 %% - Read data from file
 fileID = fopen(inputFilePath);
-Data = fread(fileID, 'int16');
+%Data = fread(fileID, 'int16');
+Data = fread(fileID, NumberOfChannelsReal*(SignalLength_s+InputOffset_s)*fs, 'int16');
 fclose(fileID);
 
 %% - Get data from file and setup accoring to channel map
