@@ -169,7 +169,7 @@ void SpikeDetectCUDA<T>::runTrainingCUDA(void)
 	RetreiveResults(dev_NXCOROutput, NXCOROutputCUDA, TRAINING_DATA_LENGTH, MAXIMUM_NUMBER_OF_TEMPLATES, sizeof(USED_DATATYPE));
 
 	error = 0;
-	float precision = 1000;
+	float precision = 50;
 	for (int t = 0; t < MAXIMUM_NUMBER_OF_TEMPLATES; t++) {
 		if (projectInfo.isTemplateUsedTraining(t + 1) > 0)
 		{

@@ -23,8 +23,8 @@ public:
 	uint32_t* getFoundTimesCounters(void);
 	virtual cudaError_t prepareCUDAPrediction(void);
 	virtual void CUDACleanUpPrediction(void);
-protected:
 	cudaError_t runPredictionRTP(T *dataPointerP);
+protected:
 	uint32_t* host_FoundTimesCounters;
 	uint32_t* host_FoundTimesP;
 	uint32_t myArray[(uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES] = { 0 };
@@ -154,6 +154,7 @@ cudaError_t SpikeDetectCUDA_RTP<T>::runPredictionRTP(T *dataPointerP)
 		return cudaStatus;
 	}
 
+
 #ifdef PRINT_OUTPUT_INFO
 	classifierController.verifyPredictionBasedOnTemplatesCUDA(host_FoundTimesCounters, host_FoundTimesP, &templateController);
 #endif
@@ -161,11 +162,7 @@ cudaError_t SpikeDetectCUDA_RTP<T>::runPredictionRTP(T *dataPointerP)
 	t2 = high_resolution_clock::now();
 	auto duration = duration_cast<microseconds>(t2 - t1).count();
 	f_latestExecutionTime = (float)duration;
-
-//#ifdef PRINT_OUTPUT_INFO
-	//std::cout << "RTP time: " << f_latestExecutionTime / 1000 << " ms. processing " << RTP_DATA_TIME << " sec. data" << std::endl;
 	std::cout << "RTP: " << f_latestExecutionTime / 1000 << " ms" << std::endl;
-//#endif
 
 	return cudaStatus;
 }
