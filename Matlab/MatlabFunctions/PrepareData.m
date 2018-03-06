@@ -13,7 +13,7 @@ SecondsOffset = InputOffset_s;
 RecordSampleRate = fs; %30kHz preferably
 TotalSamples = RecordLength*RecordSampleRate;
 TotalSamplesOffset = SecondsOffset*RecordSampleRate;
-NumberOfChannelsReal = 34;
+NumberOfChannelsReal = ChannelsInDataToUse(end);
 
 
 %% - Read data from file
@@ -26,7 +26,7 @@ fclose(fileID);
 NumberOfSamples = TotalSamples;
 channelData = zeros(NumberOfSamples, NumberOfChannelsReal);
 
-invChanMap(rezFile.ops.chanMap) = (1:34); 
+invChanMap(rezFile.ops.chanMap) = (1:NumberOfChannelsReal); 
 
 counter = 1;
 SampleIndex = 1;
@@ -35,7 +35,7 @@ for I = startIndex: (startIndex-1) + NumberOfSamples*NumberOfChannelsReal
     modules = mod(I,NumberOfChannelsReal);
     
     if modules == 0
-    channelData(SampleIndex, invChanMap(34)) = Data(I); 
+    channelData(SampleIndex, invChanMap(NumberOfChannelsReal)) = Data(I); 
     else
     channelData(SampleIndex, invChanMap(modules)) = Data(I);
     end
