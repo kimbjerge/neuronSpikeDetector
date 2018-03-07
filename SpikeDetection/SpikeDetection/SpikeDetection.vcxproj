@@ -108,6 +108,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ProjectInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="Channel_CUDA.cu" />

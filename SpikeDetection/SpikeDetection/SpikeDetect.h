@@ -36,6 +36,7 @@ public:
 	virtual void runPrediction(void);
 	/* Helper functions */
 	float getLatestExecutionTime(void);
+	ProjectInfo *getProjectInfo(void) { return &projectInfo; };
 protected:
 	KernelFilter<T> kernelFilter;
 	ProjectInfo projectInfo; 

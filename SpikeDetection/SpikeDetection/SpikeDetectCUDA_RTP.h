@@ -68,8 +68,16 @@ void SpikeDetectCUDA_RTP<T>::runPrediction(void)
 	cudaError_t cudaStatus;
 	T *currentDataPointer;
 	int numIterations = (int)((float)RUNTIME_DATA_TIME / RTP_DATA_TIME);
+	uint32_t *TotalFoundTimesCounters = new uint32_t[MAXIMUM_NUMBER_OF_TEMPLATES];
 
 	std::cout << "************* CUDA REALTIME PREDICTION **************" << std::endl;
+
+	for (int i = 0; i < MAXIMUM_NUMBER_OF_TEMPLATES; i++) {
+		TotalFoundTimesCounters[i] = 0;
+		if (projectInfo.isTemplateUsedTraining(i+1))
+			printf("T%02d ", i + 1);
+	}
+	std::cout << std::endl;
 
 	cudaStatus = prepareCUDAPrediction();
 	if (cudaStatus == cudaError_t::cudaSuccess)
@@ -80,18 +88,25 @@ void SpikeDetectCUDA_RTP<T>::runPrediction(void)
 			if (cudaStatus != cudaError_t::cudaSuccess) break;
 			currentDataPointer += (int)(RTP_DATA_LENGTH*DATA_CHANNELS);
 			//std::cout << i << std::endl;
-			for (int j = 0; j < MAXIMUM_NUMBER_OF_TEMPLATES; j++)
+			for (int j = 0; j < MAXIMUM_NUMBER_OF_TEMPLATES; j++) {
 				if (host_FoundTimesCounters[j] > 0) {
-					std::cout << "                T" << (j + 1) << " num: " << host_FoundTimesCounters[j] << std::endl;
+					//std::cout << "                T" << (j + 1) << " num: " << host_FoundTimesCounters[j] << std::endl;
 					spikesFound += host_FoundTimesCounters[j];
+					TotalFoundTimesCounters[j] += host_FoundTimesCounters[j];
 				}
+				if (projectInfo.isTemplateUsedTraining(j + 1))
+					printf("%3d ", TotalFoundTimesCounters[j]%1000);
+			}
+			printf("\r");
 		}
 	} else {
 		std::cout << "CUDA Error allocating memory, processing stopped" << std::endl;
 	}
 
-	std::cout << "Number of neuron spikes : " << spikesFound << std::endl;
+	std::cout << std::endl << "Total number of neuron spikes : " << spikesFound << std::endl;
+
 	// Clean up GPU and Memory
+	delete TotalFoundTimesCounters;
 	CUDACleanUpPrediction();
 }
 
@@ -117,7 +132,7 @@ cudaError_t SpikeDetectCUDA_RTP<T>::runPredictionRTP(T *dataPointerP)
 	}
 
 	// 1D Filter 
-	channelFilter.runFilterCUDA(dev_DataPointerP, dev_DataPointerP, dev_interMfilteredDataPointerP, dev_ChannelFilterCoeffAP, dev_ChannelFilterCoeffBP, RTP_DATA_LENGTH);
+	channelFilter.runFilterCUDA(dev_DataPointerP, dev_DataPointerP, dev_interMfilteredDataPointerP, dev_ChannelFilterCoeffAP, dev_ChannelFilterCoeffBP, (uint32_t)RTP_DATA_LENGTH);
 
 	// 2D Filter 
 #ifdef USE_KERNEL_FILTER
@@ -127,11 +142,11 @@ cudaError_t SpikeDetectCUDA_RTP<T>::runPredictionRTP(T *dataPointerP)
 	nxcorController.performNXCORWithTemplatesCUDA(dev_NXCOROutputP, dev_templatesP, dev_interMfilteredDataPointerP, (uint16_t)TEMPLATE_CROPPED_LENGTH, (uint16_t)TEMPLATE_CROPPED_WIDTH, RTP_DATA_LENGTH, DATA_CHANNELS, MAXIMUM_NUMBER_OF_TEMPLATES, dev_lowerChannelIndexP);
 #else
 	/**** NXCOR Filter without kernel filter  ****/
-	nxcorController.performNXCORWithTemplatesCUDA(dev_NXCOROutputP, dev_templatesP, dev_DataPointerP, (uint16_t)TEMPLATE_CROPPED_LENGTH, (uint16_t)TEMPLATE_CROPPED_WIDTH, RTP_DATA_LENGTH, DATA_CHANNELS, MAXIMUM_NUMBER_OF_TEMPLATES, dev_lowerChannelIndexP);
+	nxcorController.performNXCORWithTemplatesCUDA(dev_NXCOROutputP, dev_templatesP, dev_DataPointerP, (uint16_t)TEMPLATE_CROPPED_LENGTH, (uint16_t)TEMPLATE_CROPPED_WIDTH, (uint32_t)RTP_DATA_LENGTH, DATA_CHANNELS, MAXIMUM_NUMBER_OF_TEMPLATES, dev_lowerChannelIndexP);
 #endif
 
 	// Perform prediction on GPU
-	classifierController.performPredictionBasedOnTemplatesCUDA(dev_NXCOROutputP, dev_aboveThresholdIndicatorP, dev_FoundTimesP, dev_FoundTimesCounterP, dev_thresholdsP, RTP_DATA_LENGTH);
+	classifierController.performPredictionBasedOnTemplatesCUDA(dev_NXCOROutputP, dev_aboveThresholdIndicatorP, dev_FoundTimesP, dev_FoundTimesCounterP, dev_thresholdsP, (uint32_t)RTP_DATA_LENGTH);
 
 	cudaStatus = CheckForCudaError();
 	if (cudaStatus != cudaError_t::cudaSuccess)
@@ -156,13 +171,13 @@ cudaError_t SpikeDetectCUDA_RTP<T>::runPredictionRTP(T *dataPointerP)
 
 
 #ifdef PRINT_OUTPUT_INFO
-	classifierController.verifyPredictionBasedOnTemplatesCUDA(host_FoundTimesCounters, host_FoundTimesP, &templateController);
+//	classifierController.verifyPredictionBasedOnTemplatesCUDA(host_FoundTimesCounters, host_FoundTimesP, &templateController);
 #endif
 
 	t2 = high_resolution_clock::now();
 	auto duration = duration_cast<microseconds>(t2 - t1).count();
 	f_latestExecutionTime = (float)duration;
-	std::cout << "RTP: " << f_latestExecutionTime / 1000 << " ms" << std::endl;
+	//std::cout << "RTP: " << f_latestExecutionTime / 1000 << " ms" << std::endl;
 
 	return cudaStatus;
 }

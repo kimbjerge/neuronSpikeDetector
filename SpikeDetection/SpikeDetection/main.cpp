@@ -32,8 +32,12 @@ int main(void)
 	SpikeDetectCUDA_RTP<USED_DATATYPE> *spikeDetector;
 	spikeDetector = new SpikeDetectCUDA_RTP<USED_DATATYPE>();
 
+#ifdef USE_CUDA_TRAIN
+	spikeDetector->runTrainingCUDA();
+#else
 	spikeDetector->runTraining(); // Training not using CUDA
-	//spikeDetector->runTrainingCUDA();
+#endif
+
 #else
 	SpikeDetect<USED_DATATYPE> *spikeDetector;
 	spikeDetector = new SpikeDetect<USED_DATATYPE>();

@@ -8,17 +8,15 @@
 #define PROJECT_DEFINITIONS_H
 
 /*********************************** GENERAL SETUP ****************************************************/
-//
-#define					USE_OPENCV
-//
-#define					USE_CUDA // Working with 2 seconds train and predict
-//#define                 CUDA_VERIFY
-//#define					PRINT_OUTPUT_INFO
+#define					USE_OPENCV // Use OPENCV for training, when training with C++/OPENCV
+#define                 USE_CUDA_TRAIN // Use CUDA for training
 
-#ifdef USE_OPENCV
-#ifdef USE_CUDA
-//#error Selecting both USE_OPENCV and USE_CUDA is not allowed
-#endif
+#define					USE_CUDA // The USE_CUDA define must always be enabled for prediction
+//#define                 CUDA_VERIFY // ONLY valid with USE_KERNEL_FILTER
+#define					PRINT_OUTPUT_INFO
+
+#ifndef USE_CUDA 
+#error Only woriking with USE_CUDA defined for single neuron stimulator and prediction
 #endif
 
 /*********************************** PATHS ************************************************************/
@@ -31,12 +29,12 @@
 /*********************************** SAMPLING *********************************************************/
 #define					USED_DATATYPE						float
 #define					SAMPLING_FREQUENCY					30000
-#define					TRAINING_DATA_TIME					10 // 10 s, must be same size
-#define					RUNTIME_DATA_TIME					2 // 4 ms // The runtime/prediction data is assumed to be consecutive to the training data
-#define                 RTP_DATA_TIME                       0.005f // Runtime buffer length in seconds
+#define					TRAINING_DATA_TIME					10 // Training time must same size as generated from MATLAB
+#define					RUNTIME_DATA_TIME					2  // The runtime/prediction data is assumed to be consecutive to the training data
+#define                 RTP_DATA_TIME                       0.005f // Runtime buffer length in seconds, must be equal to DELAY_MS in defs.h!!
 #define					TRAINING_DATA_LENGTH				SAMPLING_FREQUENCY*TRAINING_DATA_TIME
 #define					RUNTIME_DATA_LENGTH					SAMPLING_FREQUENCY*RUNTIME_DATA_TIME
-#define                 RTP_DATA_LENGTH						SAMPLING_FREQUENCY*RTP_DATA_TIME
+#define                 RTP_DATA_LENGTH						(SAMPLING_FREQUENCY*RTP_DATA_TIME)
 #define					DATA_CHANNELS						32		
 
 /*********************************** MATLAB OUTPUT ****************************************************/
