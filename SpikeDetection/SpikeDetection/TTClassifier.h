@@ -169,6 +169,12 @@ void TTClassifier<T>::Train(T* Features, uint32_t* Truthtable, uint32_t numberOf
 		}
 	}
 
+	/*
+	if (bestScoreIndex == 0) { // False template - set to max thredshold KBE!!!
+		bestScoreIndex = NumberOfThresohldToTest - 1;
+	}
+	*/
+
 	// selecting the optimum
 	trainedThreshold = thresholds[bestScoreIndex];
 
@@ -639,6 +645,12 @@ void TTClassifier<T>::TrainFromCUDAResults(uint32_t TruthtabletableSize, uint32_
 			bestScoreIndex = i;
 		}
 	}
+
+	/*
+	if (bestScoreIndex == 0) { // False template - set to max thredshold KBE!!!
+		bestScoreIndex = NumberOfThresohldToTest - 1;
+	}
+	*/
 
 	// selecting the optimum
 	trainedThreshold = thresholds[bestScoreIndex];

@@ -9,7 +9,7 @@
 
 /*********************************** GENERAL SETUP ****************************************************/
 #define					USE_OPENCV // Use OPENCV for training, when training with C++/OPENCV
-#define                 USE_CUDA_TRAIN // Use CUDA for training
+//#define                 USE_CUDA_TRAIN // Use CUDA for training
 
 #define					USE_CUDA // The USE_CUDA define must always be enabled for prediction
 //#define                 CUDA_VERIFY // ONLY valid with USE_KERNEL_FILTER
@@ -30,7 +30,7 @@
 #define					USED_DATATYPE						float
 #define					SAMPLING_FREQUENCY					30000
 #define					TRAINING_DATA_TIME					10 // Training time must same size as generated from MATLAB
-#define					RUNTIME_DATA_TIME					2  // The runtime/prediction data is assumed to be consecutive to the training data
+#define					RUNTIME_DATA_TIME					2 // The runtime/prediction data is assumed to be consecutive to the training data
 #define                 RTP_DATA_TIME                       0.005f // Runtime buffer length in seconds, must be equal to DELAY_MS in defs.h!!
 #define					TRAINING_DATA_LENGTH				SAMPLING_FREQUENCY*TRAINING_DATA_TIME
 #define					RUNTIME_DATA_LENGTH					SAMPLING_FREQUENCY*RUNTIME_DATA_TIME
@@ -71,7 +71,10 @@
 #define					NUMBER_OF_THRESHOLDS_TO_TEST		40
 #define				    MINIMUM_THRESHOLD_TO_TEST			0.2f
 #define				    MAXIMUM_THRESHOLD_TO_TEST			1
-#define					MAXIMUM_PREDICTION_SAMPLES			TRAINING_DATA_TIME*1000 // inidcats a Maximum 1000 spikes per template per second
+#define					MAXIMUM_TRAINING_SAMPLES			TRAINING_DATA_TIME*1000 // inidcats a Maximum 1000 spikes per template per second
+//#define					MAXIMUM_PREDICTION_SAMPLES			(RTP_DATA_TIME*4000) // inidcats a Maximum peak 4000 spikes per template per second
+#define					MAXIMUM_PREDICTION_SAMPLES			RUNTIME_DATA_TIME*1000 // inidcats an average of 1000 spikes per template per second
+//#define					MAXIMUM_PREDICTION_SAMPLES			TRAINING_DATA_TIME*1000 // inidcats a Maximum 1000 spikes per template per second
 
 /*********************************** CUDA OPTIMIZATION ************************************************/
 #define					MAXIMUM_NUMBER_OF_THREADS						1024

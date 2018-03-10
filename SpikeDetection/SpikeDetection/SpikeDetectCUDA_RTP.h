@@ -25,6 +25,9 @@ public:
 	virtual void CUDACleanUpPrediction(void);
 	cudaError_t runPredictionRTP(T *dataPointerP);
 protected:
+	/* Helper variables */
+	high_resolution_clock::time_point t1RTP;
+	high_resolution_clock::time_point t2RTP;
 	uint32_t* host_FoundTimesCounters;
 	uint32_t* host_FoundTimesP;
 	uint32_t myArray[(uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES] = { 0 };
@@ -39,6 +42,7 @@ template <class T>
 SpikeDetectCUDA_RTP<T>::SpikeDetectCUDA_RTP() :
 	SpikeDetectCUDA()
 {
+	t1RTP = high_resolution_clock::now(); // Init start time t1
 	host_FoundTimesCounters = NULL;
 	host_FoundTimesP = NULL;
 }
@@ -58,7 +62,7 @@ uint32_t* SpikeDetectCUDA_RTP<T>::getFoundTimesCounters(void)
 /*----------------------------------------------------------------------------*/
 /**
 * @brief The testing/prediction loop using the trained model upon new data.
-*
+* 
 * @retval void : none
 */
 template <class T>
@@ -103,7 +107,11 @@ void SpikeDetectCUDA_RTP<T>::runPrediction(void)
 		std::cout << "CUDA Error allocating memory, processing stopped" << std::endl;
 	}
 
-	std::cout << std::endl << "Total number of neuron spikes : " << spikesFound << std::endl;
+	std::cout << std::endl;
+	for (int j = 0; j < MAXIMUM_NUMBER_OF_TEMPLATES; j++) {
+		printf("Template: %2d spike counts: %5d\r\n", j + 1, TotalFoundTimesCounters[j]);
+	}
+	std::cout << "Total number of neuron spikes : " << spikesFound << std::endl;
 
 	// Clean up GPU and Memory
 	delete TotalFoundTimesCounters;
@@ -115,7 +123,7 @@ cudaError_t SpikeDetectCUDA_RTP<T>::runPredictionRTP(T *dataPointerP)
 {
 	cudaError_t cudaStatus = cudaError_t::cudaSuccess;
 
-	t1 = high_resolution_clock::now();
+	//t1RTP = high_resolution_clock::now(); // Duration approx 1.0 ms for 5.0 ms data
 
 	/* Memory copy raw data to GPU*/
 	cudaStatus = MemCpyCUDAData(dev_DataPointerP, dataPointerP, (uint32_t)RTP_DATA_LENGTH, (uint32_t)DATA_CHANNELS, (uint16_t)sizeof(USED_DATATYPE));
@@ -162,21 +170,24 @@ cudaError_t SpikeDetectCUDA_RTP<T>::runPredictionRTP(T *dataPointerP)
 		return cudaStatus;
 	}
 
+	/* NOT USED YET! - save time to copy result - takes 4-5 ms
 	cudaStatus = RetreiveResultsU32(dev_FoundTimesP, host_FoundTimesP, (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)MAXIMUM_PREDICTION_SAMPLES, (uint16_t)sizeof(uint32_t));
 	if (cudaStatus != cudaError_t::cudaSuccess)
 	{
 		std::cout << "CUDA Error fetching times array" << std::endl;
 		return cudaStatus;
 	}
-
+	*/
 
 #ifdef PRINT_OUTPUT_INFO
 //	classifierController.verifyPredictionBasedOnTemplatesCUDA(host_FoundTimesCounters, host_FoundTimesP, &templateController);
 #endif
 
-	t2 = high_resolution_clock::now();
-	auto duration = duration_cast<microseconds>(t2 - t1).count();
-	f_latestExecutionTime = (float)duration;
+	//t2RTP = high_resolution_clock::now();
+	//auto duration = duration_cast<microseconds>(t2RTP - t1RTP).count();
+	//f_latestExecutionTime = (float)duration;
+	//t1RTP = high_resolution_clock::now(); // Measure turn total turnaround time
+
 	//std::cout << "RTP: " << f_latestExecutionTime / 1000 << " ms" << std::endl;
 
 	return cudaStatus;
@@ -292,7 +303,7 @@ cudaError_t SpikeDetectCUDA_RTP<T>::prepareCUDAPrediction(void)
 	cudaStatus = MemCpyCUDAData(dev_thresholdsP, thresholdsArray, (uint32_t)MAXIMUM_NUMBER_OF_TEMPLATES, (uint32_t)1, (uint16_t)sizeof(USED_DATATYPE));
 	
 	host_FoundTimesCounters = new uint32_t[MAXIMUM_NUMBER_OF_TEMPLATES];
-	host_FoundTimesP = new uint32_t[MAXIMUM_NUMBER_OF_TEMPLATES*MAXIMUM_PREDICTION_SAMPLES];
+	host_FoundTimesP = new uint32_t[MAXIMUM_NUMBER_OF_TEMPLATES*(int)MAXIMUM_PREDICTION_SAMPLES];
 
 	return cudaStatus;
 }
