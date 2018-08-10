@@ -9,7 +9,8 @@ load(strcat(DiectoryToEvaluate, '\rez.mat')); % Loads the rez file from KiloSort
 
 %PathToOutputFiles = strcat(PrePath,'ConvertToC++');
 %PathToOutputFiles = 'C:\neuronSpikeDetector\SpikeDetection\SpikeDetection\TestData\'
-PathToOutputFiles = 'C:\cameraZeiss\stimulateSpikeDetector\stimulateSpikeDetector\TestData'
+%PathToOutputFiles = 'C:\neuronSpikeDetector\Matlab\ConvertToC++\'
+PathToOutputFiles = 'C:\AxiocamSDK\cameraZeiss\stimulateSpikeDetector\stimulateSpikeDetector\TestData'
 
 if strcmp(UsingSimulatedData, 'YES')
     ChannelsInDataToUse = 3:34;
@@ -24,10 +25,14 @@ if exist(PathToOutputFiles) == 0
     mkdir(PathToOutputFiles);
 end
 
-if strcmp(isKiloSortTemplateMerged, 'YES')
-    RezToSave = rez.st3(:, [1 5]);
+if strcmp(filterType, 'Dsort')
+    RezToSave = rez.st(:, [1 8]);
 else
-    RezToSave = rez.st3(:, [1 2]);
+    if strcmp(isKiloSortTemplateMerged, 'YES')
+        RezToSave = rez.st3(:, [1 5]);
+    else
+        RezToSave = rez.st3(:, [1 2]);
+    end
 end
 
 [fileID meassage] = fopen(fullFileName, 'w');
@@ -44,7 +49,11 @@ if exist(PathToOutputFiles) == 0
     mkdir(PathToOutputFiles);
 end
 
-rezFileSize = size(rez.st3);
+if strcmp(filterType, 'Dsort')
+    rezFileSize = size(rez.st);
+else
+    rezFileSize = size(rez.st3);
+end
 projectInfo = rezFileSize(1);
 
 [fileID meassage] = fopen(fullFileName, 'w');
@@ -56,13 +65,22 @@ fclose('all');
 %% Make training data
 %RecordFile = strcat(DiectoryToEvaluate, '\sim_binary.dat');
 signalOffset = 0;
-signalLength_s = 50;
+signalLength_s = 30;
 signalGain = 1; 
 %signalGain = 6; % 15.6 db
-ViewFiguresRunning = 'YES';
+ViewFiguresRunning = 'NO';
 ShowFunctionExcTime = 'NO';
 
-Oldsignal = PrepareData( RecordFile, ChannelsInDataToUse, rez, signalOffset, ...
+if strcmp(filterType, 'Dsort')
+    %map = load(rez.ops.chanMap);
+    chanMap = 1:32;
+    dataType = 'uint16';
+else
+    chanMap = rez.ops.chanMap;
+    dataType = 'int16';
+end
+
+Oldsignal = PrepareData( RecordFile, dataType, ChannelsInDataToUse, chanMap, signalOffset, ...
                          signalLength_s, signalGain, fs, ViewFiguresRunning, ShowFunctionExcTime);
 
 fullFileName = fullfile(PathToOutputFiles, 'rawData300000x32.bin');
@@ -80,14 +98,14 @@ fclose('all');
 
 %% Make Prediction data
 %RecordFile = strcat(DiectoryToEvaluate, '\sim_binary.dat');
-signalOffset = 50;
-signalLength_s = 20;
+signalOffset = 30;
+signalLength_s = 30;
 signalGain = 1;
 %signalGain = 6; % 15.6 db
-ViewFiguresRunning = 'YES';
+ViewFiguresRunning = 'NO';
 ShowFunctionExcTime = 'NO';
 
-Oldsignal = PrepareData( RecordFile, ChannelsInDataToUse, rez, signalOffset, ...
+Newsignal = PrepareData( RecordFile, dataType, ChannelsInDataToUse, chanMap, signalOffset, ...
                          signalLength_s, signalGain, fs, ViewFiguresRunning, ShowFunctionExcTime);
 
 fullFileName = fullfile(PathToOutputFiles, 'rawDataForPrediction300000x32.bin');
@@ -99,7 +117,7 @@ end
 
 [fileID meassage] = fopen(fullFileName, 'w');
 if length(meassage) == 0
-    fwrite(fileID, Oldsignal', 'float');
+    fwrite(fileID, Newsignal', 'float');
 end
 fclose('all');
 
@@ -113,11 +131,21 @@ ViewFiguresRunning = 'NO';
 ShowFunctionExcTime = 'NO';
 
 
-for Y = 1: 64
+for Y = 1: MaximumNumberOfTemplates
+
+if strcmp(filterType, 'Dsort')
+    template = rez.M_template(:,:,Y);
+    if( strcmp(ViewFiguresRunning, 'YES') == 1)
+        figure
+        surf(template)
+        title(['Template: ' num2str(Y)])
+        xlabel('Channel [#]'),ylabel('sampling points'), zlabel('Amplitude')
+    end    
+else
     templateCurrentlyTesting = Y;
     template = PrepareTemplate( TemplatesFile, templateCurrentlyTesting, [1:MaximumChannelsToUse], ...
                             templateGain, pathToNPYMaster, ViewFiguresRunning, ShowFunctionExcTime);
-                        
+end                        
     fullFileName = fullfile(strcat(PathToOutputFiles, '\Templates'), strcat('template_', num2str(Y), '.bin'));
 
     if exist(strcat(PathToOutputFiles, '\Templates')) == 0

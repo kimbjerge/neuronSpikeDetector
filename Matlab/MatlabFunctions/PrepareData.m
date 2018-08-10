@@ -1,4 +1,4 @@
-function [ channelData ] = PrepareData( inputFilePath,  ChannelsInDataToUse, rezFile, ...
+function [ channelData ] = PrepareData( inputFilePath,  dataType, ChannelsInDataToUse, chanMap, ...
                                           InputOffset_s, SignalLength_s, SignalGain, fs, PlotRunning, ShowFunctionTime )
 %PREPAREDATA Summary of this function goes here
 %   Detailed explanation goes here
@@ -19,14 +19,17 @@ NumberOfChannelsReal = ChannelsInDataToUse(end);
 %% - Read data from file
 fileID = fopen(inputFilePath);
 %Data = fread(fileID, 'int16');
-Data = fread(fileID, NumberOfChannelsReal*(SignalLength_s+InputOffset_s)*fs, 'int16');
+Data = fread(fileID, NumberOfChannelsReal*(SignalLength_s+InputOffset_s)*fs, dataType);
 fclose(fileID);
+if (strcmp(dataType, 'uint16'))
+    Data = Data-32767;
+end
 
 %% - Get data from file and setup accoring to channel map
 NumberOfSamples = TotalSamples;
 channelData = zeros(NumberOfSamples, NumberOfChannelsReal);
 
-invChanMap(rezFile.ops.chanMap) = (1:NumberOfChannelsReal); 
+invChanMap(chanMap) = (1:NumberOfChannelsReal); 
 
 counter = 1;
 SampleIndex = 1;
@@ -54,7 +57,7 @@ end
 channelData = channelData(:, ChannelsInDataToUse);
 
 %% - Mulitply signal
-if strcmp(SignalGain, 'Squared');
+if strcmp(SignalGain, 'Squared')
     channelData = channelData .* abs(channelData);
 else
     channelData = channelData .* SignalGain;
